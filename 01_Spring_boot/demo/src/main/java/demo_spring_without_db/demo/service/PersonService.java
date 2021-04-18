@@ -1,12 +1,10 @@
-package Demo18042021.demo.service;
+package demo_spring_without_db.demo.service;
 
-import Demo18042021.demo.dao.PersonDao;
-import Demo18042021.demo.model.Person;
+import demo_spring_without_db.demo.dao.PersonDao;
+import demo_spring_without_db.demo.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;

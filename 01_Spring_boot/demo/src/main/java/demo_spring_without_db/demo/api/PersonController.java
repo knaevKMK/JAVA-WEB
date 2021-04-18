@@ -1,7 +1,7 @@
-package Demo18042021.demo.api;
+package demo_spring_without_db.demo.api;
 
-import Demo18042021.demo.model.Person;
-import Demo18042021.demo.service.PersonService;
+import demo_spring_without_db.demo.model.Person;
+import demo_spring_without_db.demo.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;

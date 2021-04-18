@@ -1,6 +1,6 @@
-package Demo18042021.demo.dao;
+package demo_spring_without_db.demo.dao;
 
-import Demo18042021.demo.model.Person;
+import demo_spring_without_db.demo.model.Person;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;

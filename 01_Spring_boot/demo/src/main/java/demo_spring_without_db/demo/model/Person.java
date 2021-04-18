@@ -1,4 +1,4 @@
-package Demo18042021.demo.model;
+package demo_spring_without_db.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
