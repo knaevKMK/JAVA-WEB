@@ -43,16 +43,19 @@ public class ClientService {
         if (temp == null) {
             throw new IllegalArgumentException("Client does not exist");
         }
-        System.out.println(client);
+
         Client tempEgn = this.clientRepository.findClientByEgn(client.getEgn());
-        if (tempEgn!=null ) {
+        if (tempEgn != null) {
             if (temp.getId() != tempEgn.getId()) {
                 throw new IllegalArgumentException("Another client with same EGN exist");
             }
         }
-
+        temp.setFistName(client.getFistName());
+        temp.setMiddleName(client.getMiddleName());
+        temp.setLastName(client.getLastName());
+        temp.setIdCardNumber(client.getIdCardNumber());
         temp.setEgn(client.getEgn());
-        temp.setName(client.getName());
+
         return this.clientRepository.save(temp);
     }
 }
