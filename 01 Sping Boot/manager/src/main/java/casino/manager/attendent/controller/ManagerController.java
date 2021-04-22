@@ -1,14 +1,12 @@
 package casino.manager.attendent.controller;
 
-import casino.manager.attendent.entity.Accountant;
-import casino.manager.attendent.entity.Attendant;
-import casino.manager.attendent.entity.Client;
-import casino.manager.attendent.entity.GamblingMachine;
+import casino.manager.attendent.entity.*;
 import casino.manager.attendent.service.AccountantService;
 import casino.manager.attendent.service.AttendantService;
 import casino.manager.attendent.service.ClientService;
 import casino.manager.attendent.service.GamblingMachineService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,7 +24,11 @@ public class ManagerController {
     @Autowired
     private AccountantService accountantService;
 
-
+//User
+    public String showRegistrationForm(Model model){
+        model.addAttribute("user",new User());
+        return "signup_form";
+    }
     //Accountant
     @GetMapping("/acc")
     public List<Accountant> getAllAccountant() {
@@ -88,5 +90,10 @@ public class ManagerController {
                                @RequestBody Client client) {
         return this.clientService.updateClient(id, client);
 
+    }
+
+@GetMapping("/")
+    public String homePage(){
+        return "index";
     }
 }
