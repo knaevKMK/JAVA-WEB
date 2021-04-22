@@ -6,19 +6,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.UUID;
+import java.util.List;
+
 
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "clients")
-public class Client {
+public class Client extends BaseEntity{
 
-    @Id
-    @Column(name = "id", length = 16, unique = true, nullable = false)
-    private UUID id= UUID.randomUUID();
+
+
 
     @Column(name = "first_name", columnDefinition ="varchar(25)")
     private String fistName;
@@ -32,13 +31,9 @@ public class Client {
      @Column(name = "egn", length = 10, unique = true)
     private String egn;
 
-    @Column(name = "id_card_number", length = 10, unique = true)
+    @Column(name = "idcard_number", length = 10, unique = true)
     private String idCardNumber;
 
-
-    @Column(name= "total_balance", columnDefinition = "INT")
-    private Integer totalBalance;
-
-    @Column(name= "total_bonus", columnDefinition = "INT")
-    private Integer totalBonus;
+    @OneToMany(mappedBy = "client", targetEntity = Attendant.class)
+    private List<Attendant> attendants;
 }
