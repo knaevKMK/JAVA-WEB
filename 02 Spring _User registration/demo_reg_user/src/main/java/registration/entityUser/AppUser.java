@@ -1,22 +1,21 @@
 package registration.entityUser;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 @Data
 @Entity
 @NoArgsConstructor
+@Getter
+@Setter
 @Table(name = "users")
 public class AppUser implements UserDetails {
     @Id
@@ -29,6 +28,9 @@ public class AppUser implements UserDetails {
     private AppUserRole role;
     private boolean isLocked=false;
     private boolean isEnabled=false;
+
+//    @OneToMany(mappedBy = "appUser",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+//    private List<ConfirmationToken>confirmationTokens;
 
     public AppUser(String firstName, String lastName, String userName, String email, String password, AppUserRole appUserRole) {
         this.firstName = firstName;

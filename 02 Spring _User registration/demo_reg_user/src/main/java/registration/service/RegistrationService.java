@@ -12,8 +12,8 @@ import registration.validator.EmailValidator;
 @AllArgsConstructor
 public class RegistrationService {
 
-    private AppUserService appUserService;
-    private EmailValidator emailValidator;
+    private final AppUserService appUserService;
+    private final EmailValidator emailValidator;
 
     public String register(RegistrationRequest registrationRequest) {
         boolean isValidEmail = emailValidator.test(registrationRequest.getEmail());

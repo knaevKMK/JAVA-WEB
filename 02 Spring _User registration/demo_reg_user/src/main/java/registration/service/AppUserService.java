@@ -7,7 +7,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import registration.entityUser.AppUser;
+import registration.entityUser.ConfirmationToken;
 import registration.repository.AppUserRepository;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -16,6 +20,7 @@ public class AppUserService implements UserDetailsService {
 
     private final AppUserRepository appUserRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final ConfirmationTokenService confirmationTokenService;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -25,14 +30,24 @@ public class AppUserService implements UserDetailsService {
 
     public String signUpUser(AppUser appUser) {
         boolean userExist = this.appUserRepository.findAppUserByEmail(appUser.getEmail()).isPresent();
-        if(userExist){
+        if (userExist) {
             throw new IllegalStateException("email already taken");
         }
 
         appUser.setPassword(bCryptPasswordEncoder.encode(appUser.getPassword()));
-
         this.appUserRepository.save(appUser);
-        //TODO Send confirmation token
-        return "Welcome: "+ appUser.getUsername();
+
+        String token = String.valueOf(UUID.randomUUID());
+        ConfirmationToken confirmationToken = new ConfirmationToken(
+                token,
+                LocalDateTime.now(),
+                LocalDateTime.now().plusMinutes(15),
+                appUser);
+
+        this.confirmationTokenService
+                .saveConfirmationToken(confirmationToken);
+
+        //TODO send email
+        return token;
     }
 }
