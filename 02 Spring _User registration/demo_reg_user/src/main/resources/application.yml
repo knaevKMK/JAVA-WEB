@@ -7,11 +7,11 @@ spring:
   datasource:
     username: root
     password: c!!2211paKev
-    url: jdbc:mysql://localhost:3306/reception_db
+    url: jdbc:mysql://localhost:3306/casino_manager_db
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
-#      ddl-auto: update
+#      ddl-auto: create-drop
+     ddl-auto: update
     properties.hibernate.dialect: org.hibernate.dialect.MySQL5Dialect

@@ -16,24 +16,32 @@ import java.util.UUID;
 
 @Data
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
-@Table(name="users")
+@Table(name = "users")
 public class AppUser implements UserDetails {
     @Id
-    private UUID id=UUID.randomUUID();
+    private UUID id = UUID.randomUUID();
     private String firstName;
     private String lastName;
     private String userName;
     private String email;
     private String password;
     private AppUserRole role;
-    private boolean isLocked;
-    private boolean isEnabled;
+    private boolean isLocked=false;
+    private boolean isEnabled=false;
+
+    public AppUser(String firstName, String lastName, String userName, String email, String password, AppUserRole appUserRole) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userName = userName;
+        this.email = email;
+        this.password = password;
+        this.role = appUserRole;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority simpleGrantedAuthority= new SimpleGrantedAuthority(role.name());
+        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(role.name());
         return Collections.singletonList(simpleGrantedAuthority);
     }
 
@@ -54,7 +62,7 @@ public class AppUser implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return !this.isLocked ;
+        return !this.isLocked;
     }
 
     @Override
