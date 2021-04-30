@@ -3,6 +3,7 @@ package registration.entityUser;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -28,8 +29,8 @@ public class ConfirmationToken {
 
     private LocalDateTime confirmAt;
 
-    @ManyToOne
-    @JoinColumn(nullable = false, name = "user_id",referencedColumnName = "id")
+    @ManyToOne()
+    @JoinColumn(nullable = false, name = "user_id")
     private AppUser appUser;
 
     public ConfirmationToken(String token,
@@ -39,6 +40,6 @@ public class ConfirmationToken {
         this.token = token;
         this.createAt = createAt;
         this.expiredAt = expiredAt;
-       this.appUser = appUser;
+        this.appUser = appUser;
     }
 }

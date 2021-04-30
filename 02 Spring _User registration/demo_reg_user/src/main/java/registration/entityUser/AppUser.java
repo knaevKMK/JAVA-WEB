@@ -19,7 +19,8 @@ import java.util.UUID;
 @Table(name = "users")
 public class AppUser implements UserDetails {
     @Id
-    private UUID id = UUID.randomUUID();
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String firstName;
     private String lastName;
     private String userName;
@@ -29,7 +30,7 @@ public class AppUser implements UserDetails {
     private boolean isLocked=false;
     private boolean isEnabled=false;
 
-//    @OneToMany(mappedBy = "appUser",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+//    @OneToMany(mappedBy = "appUser",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 //    private List<ConfirmationToken>confirmationTokens;
 
     public AppUser(String firstName, String lastName, String userName, String email, String password, AppUserRole appUserRole) {
