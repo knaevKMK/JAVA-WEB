@@ -14,7 +14,12 @@ public class RegisterController {
     private final RegistrationService registrationService;
 
     @PostMapping("/registration")
-    public String registration(@RequestBody RegistrationRequest registrationRequest){
+    public String registration(@RequestBody RegistrationRequest registrationRequest) {
         return this.registrationService.register(registrationRequest);
+    }
+
+    @GetMapping("/confirm")
+    public String confirm(@RequestParam("token") String token) {
+        return registrationService.confirmToken(token);
     }
 }

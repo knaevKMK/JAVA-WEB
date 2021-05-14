@@ -28,6 +28,7 @@ public class AppUser implements UserDetails {
     private String password;
     private AppUserRole role;
     private boolean isLocked=false;
+    @Column(name="enabled")
     private boolean isEnabled=false;
 
 //    @OneToMany(mappedBy = "appUser",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
