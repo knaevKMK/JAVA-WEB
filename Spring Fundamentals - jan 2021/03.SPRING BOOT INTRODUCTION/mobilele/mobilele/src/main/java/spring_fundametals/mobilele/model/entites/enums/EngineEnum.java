@@ -1,4 +1,4 @@
-package spring_fundametals.mobilele.entites.enums;
+package spring_fundametals.mobilele.model.entites.enums;
 
 public enum EngineEnum {
     GASOLINE, DIESEL, ELECTRIC, HYBRID;

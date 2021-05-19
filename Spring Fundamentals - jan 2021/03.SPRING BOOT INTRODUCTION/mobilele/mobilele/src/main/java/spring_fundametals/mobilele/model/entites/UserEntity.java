@@ -1,8 +1,7 @@
-package spring_fundametals.mobilele.entites;
+package spring_fundametals.mobilele.model.entites;
 
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.List;

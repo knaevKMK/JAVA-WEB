@@ -1,7 +1,7 @@
-package spring_fundametals.mobilele.entites;
+package spring_fundametals.mobilele.model.entites;
 
-import spring_fundametals.mobilele.entites.enums.EngineEnum;
-import spring_fundametals.mobilele.entites.enums.TransmissionEnum;
+import spring_fundametals.mobilele.model.entites.enums.EngineEnum;
+import spring_fundametals.mobilele.model.entites.enums.TransmissionEnum;
 
 import javax.persistence.*;
 import java.math.BigDecimal;

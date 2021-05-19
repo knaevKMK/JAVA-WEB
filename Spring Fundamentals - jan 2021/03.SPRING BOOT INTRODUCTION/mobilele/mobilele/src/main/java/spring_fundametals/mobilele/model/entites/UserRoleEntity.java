@@ -1,6 +1,6 @@
-package spring_fundametals.mobilele.entites;
+package spring_fundametals.mobilele.model.entites;
 
-import spring_fundametals.mobilele.entites.enums.UserRoleEnum;
+import spring_fundametals.mobilele.model.entites.enums.UserRoleEnum;
 
 import javax.persistence.*;
 
