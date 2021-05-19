@@ -2,6 +2,7 @@ package spring_fundametals.mobilele.model.entites;
 
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.List;
@@ -11,17 +12,19 @@ import java.util.List;
 public class UserEntity extends BaseEntity {
 
     private String username;
+    private String password;
     private String firstName;
     private String lastName;
+
     private boolean isActive;
 
 
+//    @OneToMany
 //    @ManyToMany
 //    private List<UserRoleEntity> userRoles;
 
-
-    @OneToMany
-    private List<UserRoleEntity> userRoles;
+    @ManyToOne
+    private UserRoleEntity userRoles;
 
 
     private String imageUrl;
@@ -62,14 +65,14 @@ public class UserEntity extends BaseEntity {
         return this;
     }
 
-    public List<UserRoleEntity> getUserRoles() {
-        return userRoles;
-    }
-
-    public UserEntity setUserRoles(List<UserRoleEntity> userRoles) {
-        this.userRoles = userRoles;
-        return this;
-    }
+//    public List<UserRoleEntity> getUserRoles() {
+//        return userRoles;
+//    }
+//
+//    public UserEntity setUserRoles(List<UserRoleEntity> userRoles) {
+//        this.userRoles = userRoles;
+//        return this;
+//    }
 
     public String getImageUrl() {
         return imageUrl;

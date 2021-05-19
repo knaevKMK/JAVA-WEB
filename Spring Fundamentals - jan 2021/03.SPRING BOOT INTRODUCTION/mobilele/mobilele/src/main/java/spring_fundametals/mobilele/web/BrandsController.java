@@ -19,7 +19,7 @@ public class BrandsController {
 
     @GetMapping("/all")
     public String allBrands(Model model) {
-        model.addAttribute("allBrands", brandService.getAllBrands());
+        model.addAttribute("brands", brandService.getAllBrands(model));
         return "";
     }
 }
