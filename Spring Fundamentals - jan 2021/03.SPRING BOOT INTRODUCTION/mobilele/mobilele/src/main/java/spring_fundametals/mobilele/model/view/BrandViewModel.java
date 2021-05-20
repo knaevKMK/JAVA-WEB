@@ -1,14 +1,21 @@
 package spring_fundametals.mobilele.model.view;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BrandViewModel {
 
     private String name;
-    private List<ModelViewModel> models;
+    private List<ModelViewModel> models = new ArrayList<>();
 
     public List<ModelViewModel> getModels() {
         return models;
+    }
+
+    public BrandViewModel addModel(ModelViewModel modelViewModel) {
+        // System.out.println(modelViewModel);
+        this.models.add(modelViewModel);
+        return this;
     }
 
     public BrandViewModel setModels(List<ModelViewModel> models) {
@@ -24,6 +31,7 @@ public class BrandViewModel {
         this.name = name;
         return this;
     }
+
     @Override
     public String toString() {
         return "BrandViewModel{" +

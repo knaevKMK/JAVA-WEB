@@ -7,10 +7,15 @@ import org.springframework.transaction.annotation.Transactional;
 import spring_fundametals.mobilele.model.entites.BaseEntity;
 import spring_fundametals.mobilele.model.entites.BrandEntity;
 import spring_fundametals.mobilele.model.entites.ModelEntity;
+import spring_fundametals.mobilele.model.entites.OfferEntity;
 import spring_fundametals.mobilele.model.entites.enums.CategoryEnum;
+import spring_fundametals.mobilele.model.entites.enums.EngineEnum;
+import spring_fundametals.mobilele.model.entites.enums.TransmissionEnum;
 import spring_fundametals.mobilele.repositories.BrandRepository;
 import spring_fundametals.mobilele.repositories.ModelRepository;
+import spring_fundametals.mobilele.repositories.OfferRepository;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
@@ -19,10 +24,12 @@ public class DBinit implements CommandLineRunner {
 
     private final ModelRepository modelRepository;
     private final BrandRepository brandRepository;
+    private final OfferRepository offerRepository;
 
-    public DBinit(ModelRepository modelRepository, BrandRepository brandRepository) {
+    public DBinit(ModelRepository modelRepository, BrandRepository brandRepository, OfferRepository offerRepository) {
         this.modelRepository = modelRepository;
         this.brandRepository = brandRepository;
+        this.offerRepository = offerRepository;
     }
 
     @Transactional
@@ -32,6 +39,13 @@ public class DBinit implements CommandLineRunner {
         fordBrand.setName("Ford");
         setCurrentTimestamps(fordBrand);
 
+
+        BrandEntity bmwBrand = new BrandEntity();
+        bmwBrand.setName("BMW");
+        setCurrentTimestamps(bmwBrand);
+
+        brandRepository.saveAll(List.of(fordBrand, bmwBrand));
+
         ModelEntity fiesta = initModel(
                 fordBrand
                 , "fiesta"
@@ -40,19 +54,62 @@ public class DBinit implements CommandLineRunner {
                 , 1976
                 , null);
 
+        ModelEntity transit = initModel(
+                fordBrand
+                , "Transit"
+                , CategoryEnum.BUSS
+                , "https://st.mascus.com/imagetilewm/product/vehoalkali/ford-transit,aw102165_1.jpg"
+                , 1987
+                , null);
 
-        BrandEntity bmwBrand = new BrandEntity();
-        bmwBrand.setName("BMW");
-        setCurrentTimestamps(bmwBrand);
         ModelEntity e46 = initModel(
                 bmwBrand
                 , "e46"
                 , CategoryEnum.CAR
                 , "https://cdn3.focus.bg/autodata/i/bmw/3er/3er-e46/medium/e97806ef0fcb34e9a093dc3021772ede.jpg"
                 , 1996
-                , 2008);
-        brandRepository.saveAll(List.of(fordBrand, bmwBrand));
-        modelRepository.saveAll(List.of(fiesta,e46));
+                , 2020);
+        ModelEntity s100rr = initModel(
+                bmwBrand
+                , "S1000RR"
+                , CategoryEnum.MOTORCYCLE
+                , "https://www.bmw-motorrad.bg/content/dam/bmwmotorradnsc/common/images/models/modeloverview/2020/nsc-master-modeloverview-m1000rr-P0N3H_600x360.jpg.asset.1600851390437.jpg"
+                , 2011
+                , null);
+
+        modelRepository.saveAll(List.of(fiesta, transit, e46, s100rr));
+
+        createOffer(fiesta
+                , EngineEnum.GASOLINE
+                , "https://autobild.bg/wp-content/uploads/2020/02/Ford-Fiesta-ST-2016-Gebraucht-MK7-PS-Turbo-474x316-2a9fa0357398d94c.jpg"
+                , 15000
+                , new BigDecimal(12000)
+                , 2019
+                , "Deutche grany drive it. Stay in garage"
+                , TransmissionEnum.MANUAL);
+
+        createOffer(e46
+                , EngineEnum.DIESEL
+                , "https://www.nastarta.com/wp-content/uploads/2019/05/30-years-of-BMW-M3-E46-M3-CSL.jpg"
+                , 150000
+                , new BigDecimal(3000)
+                , 2007
+                , "Deutche grany drive it. Stay in garage"
+                , TransmissionEnum.AUTOMATIC);
+    }
+
+    private void createOffer(ModelEntity model, EngineEnum engine, String imgUrl, int millage, BigDecimal price, int year, String descritpition, TransmissionEnum transmision) {
+        OfferEntity offer = new OfferEntity();
+        offer.setModel(model)
+                .setEngine(engine)
+                .setImageUrl(imgUrl)
+                .setMileage(millage)
+                .setPrice(price)
+                .setYear(year)
+                .setDescription(descritpition)
+                .setTransmission(transmision);
+        setCurrentTimestamps(offer);
+        offerRepository.save(offer);
     }
 
     private ModelEntity initModel(BrandEntity brand, String name, CategoryEnum category, String imgUrl, int startYear, Integer endYear) {

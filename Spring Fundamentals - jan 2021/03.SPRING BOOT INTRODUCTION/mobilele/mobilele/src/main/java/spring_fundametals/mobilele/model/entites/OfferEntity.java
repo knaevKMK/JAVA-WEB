@@ -29,8 +29,8 @@ public class OfferEntity extends BaseEntity {
     @ManyToOne
     private ModelEntity model;
 
-    @ManyToOne
-    private UserEntity seller;
+//    @ManyToOne
+//    private UserEntity seller;
 
 
 
@@ -106,12 +106,12 @@ public class OfferEntity extends BaseEntity {
         return this;
     }
 
-    public UserEntity getSeller() {
-        return seller;
-    }
-
-    public OfferEntity setSeller(UserEntity seller) {
-        this.seller = seller;
-        return this;
-    }
+//    public UserEntity getSeller() {
+//        return seller;
+//    }
+//
+//    public OfferEntity setSeller(UserEntity seller) {
+//        this.seller = seller;
+//        return this;
+//    }
 }

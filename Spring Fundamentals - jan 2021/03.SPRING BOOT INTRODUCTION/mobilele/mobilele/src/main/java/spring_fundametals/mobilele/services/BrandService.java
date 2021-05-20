@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface BrandService {
 
-    List<BrandViewModel> getAllBrands(Model module);
+    List<BrandViewModel> getAllBrands();
 }
