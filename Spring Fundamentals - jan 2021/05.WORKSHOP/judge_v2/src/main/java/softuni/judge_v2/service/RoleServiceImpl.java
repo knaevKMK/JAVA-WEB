@@ -25,4 +25,9 @@ public class RoleServiceImpl implements RoleService {
             repository.saveAll(List.of(admin, user));
         }
     }
+
+    @Override
+    public RoleEntity findRole(RoleUserEnum roleUserEnum) {
+        return repository.findByName((roleUserEnum)).orElse(null);
+    }
 }
