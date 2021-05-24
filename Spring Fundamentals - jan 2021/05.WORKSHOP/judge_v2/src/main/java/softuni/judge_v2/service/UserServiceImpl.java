@@ -22,5 +22,14 @@ public class UserServiceImpl implements UserService {
     public void registerUser(UserServiceModel userServiceModel) {
         UserEntity user = mapper.map(userServiceModel, UserEntity.class);
         user.setRole(roleService.findRole(RoleUserEnum.USER));
+        repository.save(user);
+    }
+
+    @Override
+    public UserServiceModel findByUsernameAndPassword(String username, String password) {
+        return repository
+                .findByUsernameAndPassword(username, password)
+                .map(user -> mapper.map(user, UserServiceModel.class))
+                .orElse(null);
     }
 }
