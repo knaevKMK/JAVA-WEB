@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method="post" action="/category/add" th:object="${categoryBindingModel}">
+    <label>
+        Enter category name:
+    <br>
+        <div>
+            <h1 th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></h1>
+            <br>
+        </div>
+        <input th:field="*{name}" th:errorclass="bg-danger" type="text" name="name" >
+    <br>
+        <input type="submit" value="Add">
+    </label>
+
+
+</form>
+</body>
+</html>

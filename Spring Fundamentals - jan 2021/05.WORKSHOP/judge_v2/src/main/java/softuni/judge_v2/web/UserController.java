@@ -33,9 +33,7 @@ public class UserController {
 //
         if (!model.containsAttribute("userLoginBindingModel")) {
             model.addAttribute("userLoginBindingModel", new UserLoginBindingModel());
-            //return "redirect:login";
-
-        }
+                 }
         return "login";
     }
 

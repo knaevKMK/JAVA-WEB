@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <h2>Hi</h2>
+    <h1>Choose option from: </h1>
+    <ul>
+        <li><a href="/category/add">1 - for Add Category</a></li>
+        <li><a href="/town/add">2 - for Add Town</a> </li>
+        <li><a href="/shop/add">3 - for Add Shop</a></li>
+        <li><a href="/seller/add">4 - for Add Seller</a></li>
+        <li><a href="/product/add">5 - for Add Product</a></li>
+        <li><a href="/seller/set">6 - for Set seller new manager</a></li>
+        <li><a href="/product/set">7 - for Distributing products in shops</a></li>
+        <li><a href="/seller/all">8 - for Showing all sellers in Shop</a></li>
+        <li><a href="/product/all">9 - for Showing all products in Shop</a></li>
+    </ul>
+    <br>
+</div>
+<div>
+    <h2  th:text="${homeBindingModel.name}"></h2>
+</div>
+</body>
+</html>

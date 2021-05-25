@@ -4,6 +4,7 @@ package com.shop.SuperMarket.model.entities;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -13,10 +14,11 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Category extends BaseEntity{
+@ToString
+public class Category extends BaseEntity {
 
 
-    private String category;
+    private String name;
 //    @OneToMany
 //    private List<Product> products;
 
