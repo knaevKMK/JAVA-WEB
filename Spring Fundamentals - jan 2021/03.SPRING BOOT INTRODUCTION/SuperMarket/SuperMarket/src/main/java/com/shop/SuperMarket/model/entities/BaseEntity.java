@@ -1,7 +1,4 @@
-package com.shop.SuperMarket.entities;
-
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+package com.shop.SuperMarket.model.entities;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -14,6 +11,4 @@ public abstract class BaseEntity {
     protected UUID id= UUID.randomUUID();
 
 
-    @Column(name = "name")
-    protected String name;
 }
