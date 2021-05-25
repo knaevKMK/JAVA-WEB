@@ -17,7 +17,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void addCategory(CategoryServiceModel categoryServiceModel) {
         Category category = modelMapper.map(categoryServiceModel, Category.class);
-        System.out.println(category.toString());
+
         this.categoryRepository.save(category);
     }
 }

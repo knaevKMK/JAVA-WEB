@@ -26,12 +26,7 @@ public class HomeController {
     }
 
 
-//    @PostMapping("/2")
-//    public String addTown() {
-//        //TODO add category
-//        return "home";
-//    }
-//
+
 //    @PostMapping("/3")
 //    public String addShop() {
 //        //TODO add category
