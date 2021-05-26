@@ -21,4 +21,8 @@ public class TownServiceImpl implements TownService {
         Town town = modelMapper.map(townServiceModel, Town.class);
         this.townRepository.save(town);
     }
+
+    public Town findTownByName(String name) {
+        return this.townRepository.findTownByName(name);
+    }
 }

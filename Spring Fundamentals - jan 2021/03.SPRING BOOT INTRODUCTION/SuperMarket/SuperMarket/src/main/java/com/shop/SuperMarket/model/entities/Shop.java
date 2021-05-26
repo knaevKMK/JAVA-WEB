@@ -23,9 +23,6 @@ public class Shop extends BaseEntity {
     @ManyToOne
     private Town town;
 
-
-
     @ManyToMany(mappedBy = "shops",targetEntity = Product.class)
-
     private List<Product> products;
 }

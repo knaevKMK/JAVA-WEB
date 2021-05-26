@@ -1,20 +1,28 @@
 package com.shop.SuperMarket.model.binding;
 
 
+import com.shop.SuperMarket.model.entities.Product;
 import com.shop.SuperMarket.model.entities.Town;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.Length;
+
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import java.util.List;
 
 
-@Getter
-@Setter
 @NoArgsConstructor
-@AllArgsConstructor
-public class TownBindingModel {
+@Getter
 
-    @Length(min = 2, message = "Name must be min 2 characters")
+
+public class ShopBindingModel {
+
     private String name;
+    private String address;
+    private Town town;
+
+
+
 }

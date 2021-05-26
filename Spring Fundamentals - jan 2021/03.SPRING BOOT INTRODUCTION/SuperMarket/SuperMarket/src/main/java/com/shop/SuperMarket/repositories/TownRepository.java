@@ -9,4 +9,6 @@ import java.util.UUID;
 
 @Repository
 public interface TownRepository extends JpaRepository<Town, UUID> {
+
+    Town findTownByName(String name);
 }

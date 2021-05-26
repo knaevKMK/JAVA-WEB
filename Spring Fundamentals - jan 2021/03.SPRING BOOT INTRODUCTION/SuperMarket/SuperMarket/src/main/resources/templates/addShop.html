@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method="post" action="/town/add" th:object="${townBindingModel}">
+  <label>
+    Enter shop details in format: name address town
+    <br>
+    <div>
+      <h1 th:if="${#fields.hasErrors('name')}" th:errors="${townBindingModel.name}"></h1>
+      <br>
+    </div>
+    <input th:field="${townBindingModel.name}" th:errorclass="bg-danger" type="text" name="name" >
+    <br>
+    <input type="submit" value="Add">
+  </label>
+
+
+</form>
+</body>
+</html>
