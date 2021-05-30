@@ -29,8 +29,8 @@ public class OfferEntity extends BaseEntity {
     @ManyToOne
     private ModelEntity model;
 
-//    @ManyToOne
-//    private UserEntity seller;
+    @ManyToOne
+    private UserEntity seller;
 
 
 

@@ -2,18 +2,17 @@ package spring_fundametals.mobilele;
 
 
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import spring_fundametals.mobilele.model.entites.BaseEntity;
-import spring_fundametals.mobilele.model.entites.BrandEntity;
-import spring_fundametals.mobilele.model.entites.ModelEntity;
-import spring_fundametals.mobilele.model.entites.OfferEntity;
+import spring_fundametals.mobilele.model.entites.*;
 import spring_fundametals.mobilele.model.entites.enums.CategoryEnum;
 import spring_fundametals.mobilele.model.entites.enums.EngineEnum;
 import spring_fundametals.mobilele.model.entites.enums.TransmissionEnum;
 import spring_fundametals.mobilele.repositories.BrandRepository;
 import spring_fundametals.mobilele.repositories.ModelRepository;
 import spring_fundametals.mobilele.repositories.OfferRepository;
+import spring_fundametals.mobilele.repositories.UserRepository;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -25,12 +24,19 @@ public class DBinit implements CommandLineRunner {
     private final ModelRepository modelRepository;
     private final BrandRepository brandRepository;
     private final OfferRepository offerRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
 
-    public DBinit(ModelRepository modelRepository, BrandRepository brandRepository, OfferRepository offerRepository) {
+    public DBinit(ModelRepository modelRepository, BrandRepository brandRepository,
+                  OfferRepository offerRepository, PasswordEncoder pe,
+                  UserRepository userRepository) {
         this.modelRepository = modelRepository;
         this.brandRepository = brandRepository;
         this.offerRepository = offerRepository;
+        this.passwordEncoder = pe;
+        this.userRepository = userRepository;
     }
+
 
     @Transactional
     @Override
@@ -96,9 +102,23 @@ public class DBinit implements CommandLineRunner {
                 , 2007
                 , "Deutche grany drive it. Stay in garage"
                 , TransmissionEnum.AUTOMATIC);
+
+        initAdmin();
+
     }
 
-    private void createOffer(ModelEntity model, EngineEnum engine, String imgUrl, int millage, BigDecimal price, int year, String descritpition, TransmissionEnum transmision) {
+    private void initAdmin() {
+        UserEntity admin = new UserEntity();
+
+        admin.setFirstName("Peter")
+                .setLastName("Smith")
+                .setUsername("admin")
+                .setPassword(this.passwordEncoder.encode("top"));
+        userRepository.save(admin);
+    }
+
+    private void createOffer(ModelEntity model, EngineEnum engine, String imgUrl, int millage, BigDecimal price, int year,
+                             String descritpition, TransmissionEnum transmision) {
         OfferEntity offer = new OfferEntity();
         offer.setModel(model)
                 .setEngine(engine)

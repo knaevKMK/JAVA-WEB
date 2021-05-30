@@ -20,6 +20,24 @@ public class UserEntity extends BaseEntity {
 
 
 //    @OneToMany
+
+    public String getPassword() {
+        return password;
+    }
+
+    public UserEntity setPassword(String password) {
+        this.password = password;
+        return this;
+    }
+
+    public UserRoleEntity getUserRoles() {
+        return userRoles;
+    }
+
+    public UserEntity setUserRoles(UserRoleEntity userRoles) {
+        this.userRoles = userRoles;
+        return this;
+    }
 //    @ManyToMany
 //    private List<UserRoleEntity> userRoles;
 

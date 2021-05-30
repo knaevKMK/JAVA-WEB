@@ -8,5 +8,5 @@ import spring_fundametals.mobilele.model.entites.UserEntity;
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
-    UserEntity findByUsernameAAndPassword(String username, String password);
+    UserEntity findByUsernameAndPassword(String username, String password);
 }
