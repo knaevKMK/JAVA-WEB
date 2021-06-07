@@ -9,10 +9,8 @@ import spring_fundametals.mobilele.model.entites.*;
 import spring_fundametals.mobilele.model.entites.enums.CategoryEnum;
 import spring_fundametals.mobilele.model.entites.enums.EngineEnum;
 import spring_fundametals.mobilele.model.entites.enums.TransmissionEnum;
-import spring_fundametals.mobilele.repositories.BrandRepository;
-import spring_fundametals.mobilele.repositories.ModelRepository;
-import spring_fundametals.mobilele.repositories.OfferRepository;
-import spring_fundametals.mobilele.repositories.UserRepository;
+import spring_fundametals.mobilele.repositories.*;
+
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -24,17 +22,22 @@ public class DBinit implements CommandLineRunner {
     private final ModelRepository modelRepository;
     private final BrandRepository brandRepository;
     private final OfferRepository offerRepository;
-    private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final UserRoleRepository userRoleRepository;
 
-    public DBinit(ModelRepository modelRepository, BrandRepository brandRepository,
-                  OfferRepository offerRepository, PasswordEncoder pe,
-                  UserRepository userRepository) {
+    public DBinit(ModelRepository modelRepository,
+                  BrandRepository brandRepository,
+                  OfferRepository offerRepository,
+                  UserRepository userRepository,
+                  PasswordEncoder passwordEncoder,
+                  UserRoleRepository userRoleRepository) {
         this.modelRepository = modelRepository;
         this.brandRepository = brandRepository;
         this.offerRepository = offerRepository;
-        this.passwordEncoder = pe;
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.userRoleRepository = userRoleRepository;
     }
 
 
@@ -114,6 +117,8 @@ public class DBinit implements CommandLineRunner {
                 .setLastName("Smith")
                 .setUsername("admin")
                 .setPassword(this.passwordEncoder.encode("top"));
+
+        setCurrentTimestamps(admin);
         userRepository.save(admin);
     }
 

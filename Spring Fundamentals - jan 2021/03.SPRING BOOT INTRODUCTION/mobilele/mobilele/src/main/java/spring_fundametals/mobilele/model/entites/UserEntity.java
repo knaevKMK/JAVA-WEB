@@ -17,6 +17,7 @@ public class UserEntity extends BaseEntity {
     private String lastName;
 
     private boolean isActive;
+    private String imageUrl;
 
 
 //    @OneToMany
@@ -30,22 +31,21 @@ public class UserEntity extends BaseEntity {
         return this;
     }
 
-    public UserRoleEntity getUserRoles() {
-        return userRoles;
-    }
-
-    public UserEntity setUserRoles(UserRoleEntity userRoles) {
-        this.userRoles = userRoles;
-        return this;
-    }
+//    public UserRoleEntity getUserRoles() {
+//        return userRoles;
+//    }
+//
+//    public UserEntity setUserRoles(UserRoleEntity userRoles) {
+//        this.userRoles = userRoles;
+//        return this;
+//    }
 //    @ManyToMany
 //    private List<UserRoleEntity> userRoles;
 
-    @ManyToOne
-    private UserRoleEntity userRoles;
+//    @ManyToOne
+//    private UserRoleEntity userRoles;
 
 
-    private String imageUrl;
 
     public String getUsername() {
         return username;
@@ -79,7 +79,7 @@ public class UserEntity extends BaseEntity {
     }
 
     public UserEntity setActive(boolean active) {
-        isActive = active;
+        isActive = true;
         return this;
     }
 
