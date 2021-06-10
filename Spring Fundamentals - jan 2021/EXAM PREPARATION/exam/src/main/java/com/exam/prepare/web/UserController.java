@@ -21,13 +21,11 @@ import javax.validation.Valid;
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
-    private final HttpSession httpSession;
-    private final ModelMapper modelMapper;
+     private final ModelMapper modelMapper;
 
     public UserController(UserService userService, HttpSession httpSession, ModelMapper modelMapper) {
         this.userService = userService;
-        this.httpSession = httpSession;
-        this.modelMapper = modelMapper;
+                this.modelMapper = modelMapper;
     }
 
     @GetMapping("/login")
@@ -41,7 +39,9 @@ public class UserController {
 
     @PostMapping("/login")
     public String loginConfirm(@Valid UserLoginBindingModel userLoginBindingModel,
-                               BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+                               BindingResult bindingResult,
+                               RedirectAttributes redirectAttributes,
+                               HttpSession httpSession) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("userLoginBindingModel", userLoginBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userLoginBindingModel", bindingResult);
@@ -54,8 +54,10 @@ public class UserController {
             redirectAttributes.addFlashAttribute("notFound", true);
             return "redirect:login";
         }
-        this.httpSession.setAttribute("user", userServiceModel);
-        return "redirect:/home";
+
+        httpSession.setAttribute("user", userServiceModel);
+
+        return "redirect:/app/";
     }
 
     @GetMapping("/register")
@@ -68,7 +70,8 @@ public class UserController {
 
     @PostMapping("/register")
     public String registerConfirm(@Valid UserRegisterBindingModel userRegisterBindingModel,
-                                  BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+                                  BindingResult bindingResult,
+                                  RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()
                 ) {
@@ -83,8 +86,8 @@ public class UserController {
     }
 
     @GetMapping("/logout")
-    public String logout() {
-        this.httpSession.invalidate();
-        return "redirect:index";
+    public String logout(HttpSession httpSession) {
+        httpSession.invalidate();
+        return "redirect:/app/";
     }
 }

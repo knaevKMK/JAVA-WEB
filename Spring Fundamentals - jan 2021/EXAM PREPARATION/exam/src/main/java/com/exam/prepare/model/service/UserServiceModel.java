@@ -44,4 +44,14 @@ public class UserServiceModel {
         this.email = email;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "UserServiceModel{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }
