@@ -36,7 +36,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 // Cross-Site Request Forgery:
                 // enabled - for browser clients
                 // disbled - for NON browser clients
-            //    .csrf().disable()
+                //    .csrf().disable()
 
                 //token: receive as XSRF-TOKEN  send with header: X-XSRF-TOKEN
                 .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
@@ -44,7 +44,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
 
                 .authorizeRequests()
-                .antMatchers("/","index", "/css/","/js/*").permitAll()
+                .antMatchers("/", "index", "/css/", "/js/*").permitAll()
                 .antMatchers("/api/**").hasRole(STUDENT.name())
 
                 //replace with @PreAuthorised in StudentManagementController.java
@@ -57,7 +57,16 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated()
                 .and()
-                .httpBasic();
+
+                //spring build in form login
+                .formLogin()
+                //make loginPage
+              .loginPage("/login").permitAll()
+//redirect after succes login
+          .defaultSuccessUrl("/courses",true);
+
+        //spring build in pop-up login
+//                .httpBasic();
     }
 
     @Override
@@ -66,23 +75,23 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         UserDetails admin = User.builder()
                 .username("admin")
                 .password(passwordEncoder.encode("123"))
-               // .roles("ADMIN")
+                // .roles("ADMIN")
                 .authorities(ADMIN.getGrantedAuthority())
                 .build();
 
-        UserDetails  studentAna = User.builder()
+        UserDetails studentAna = User.builder()
                 .username("ana")
                 .password(passwordEncoder.encode("123"))
-          //      .roles("STUDENT")
+                //      .roles("STUDENT")
                 .authorities(STUDENT.getGrantedAuthority())
                 .build();
 
-        UserDetails  moderator = User.builder()
+        UserDetails moderator = User.builder()
                 .username("mode")
                 .password(passwordEncoder.encode("123"))
-   //             .roles("MODERATOR")
+                //             .roles("MODERATOR")
                 .authorities(MODERATOR.getGrantedAuthority())
                 .build();
-        return new InMemoryUserDetailsManager(studentAna,admin,moderator);
+        return new InMemoryUserDetailsManager(studentAna, admin, moderator);
     }
 }
