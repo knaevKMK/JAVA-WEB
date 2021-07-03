@@ -31,6 +31,10 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+
+                // Cross-Site Request Forgery:
+                // enabled - for browser clients
+                // disbled - for NON browser clients
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/","index", "/css/","/js/*").permitAll()
