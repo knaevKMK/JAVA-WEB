@@ -1,10 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<h1>All students</h1>
+<div class="container-fluid">
+    <h2 class="text-center text-white mt-5">All Students</h2>
+    <div class="offers row mx-auto d-flex flex-row justify-content-center">
+        <div
+                th:each="student:${students}"
+                th:object="${student}"
+                class="offer card col-sm-6 col-md-3  col-lg-2 m-1 p-0">
+            <div class="card-img-top-wrapper">
+                <img class="card-img-top" th:src="*{imageUrl}" alt="Car image">
+            </div>
+            <div class="card-body pb-1">
+                <h5 th:text="*{'Student: ' + lastName}"
+                    class="card-title">
+                    Offer year Brand name Model name</h5>
+            </div>
+            <ul class="offer-details list-group list-group-flush">
+                <li class="list-group-item">
+                    <div th:text="*{'First Name: ' + firstName}" class="card-text"><span>• Mileage</span></div>
+                    <div th:text="*{'Course: '+ course}" class="card-text"><span>• Price</span></div>
+                    <div th:text="*{'Start education: '+ startEducation}" class="card-text"><span>• Engine type</span>
+                    </div>
+                </li>
+            </ul>
+            <div class="card-body">
+                <a class="card-link" th:href="@{'/students/'+ id}">Details</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

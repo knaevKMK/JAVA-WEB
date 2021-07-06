@@ -14,10 +14,13 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter
 @Setter
-public class StudentEntity extends BaseEntity{
+public class StudentEntity extends BaseEntity {
 
-    private String first_name;
-    private String last_name;
+    private String firstName;
+    private String lastName;
     private LocalDate dateOfBirth;
-
+    private Gender gender;
+    private LocalDate startEducation;
+    private String course;
+    private String imageUrl;
 }

@@ -9,29 +9,34 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 
 @Service
 @AllArgsConstructor
 public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
-    private final ModelMapper modelMapper;
 
-    public void registrateStudent(StudentBindingModel studentBindingModel) {
-        this.studentRepository.save(convertDtoToEntity(studentBindingModel));
-    }
-
-    private StudentEntity convertDtoToEntity(StudentBindingModel studentBindingModel) {
-        return modelMapper.map(studentBindingModel, StudentEntity.class);
-    }
-
-    private StudentViewModel convertEntitytoView(StudentEntity studentEntity) {
-        return modelMapper.map(studentEntity, StudentViewModel.class);
-    }
     @Override
-    public StudentViewModel getStudentById(Long id) {
-        StudentEntity studentEntity= this.studentRepository.findById(id)
-                .orElse(null);
-     return   this.convertEntitytoView(studentEntity);
+    public void registrateStudent(StudentEntity studentEntity) {
+        this.studentRepository.save(studentEntity);
+    }
 
+    @Override
+    public Optional<StudentEntity> getStudentById(Long id) {
+       return this.studentRepository.findById(id);
+
+
+    }
+
+    @Override
+    public Set<StudentEntity> getAllStudents() {
+        return this.studentRepository
+                .findAll()
+                .stream().limit(10)
+                .collect(Collectors.toSet());
     }
 }
