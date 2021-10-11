@@ -1,10 +1,7 @@
 package com.exam.examandery01.model.entity;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "categories")
@@ -16,7 +13,7 @@ public class Category extends BaseEntity {
     public Category() {
     }
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     public CategoryName getCategoryName() {
         return categoryName;
     }
