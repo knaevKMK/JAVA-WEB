@@ -17,7 +17,6 @@ public class HomeController {
         if (session.getAttribute("user") == null) {
             return "index";
         }
-        //model.addAttribute("totalSum", this.productService.totalPrice());
         return "home";
     }
 }

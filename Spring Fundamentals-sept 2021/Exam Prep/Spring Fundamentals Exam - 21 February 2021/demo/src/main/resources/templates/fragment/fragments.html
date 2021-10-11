@@ -16,21 +16,21 @@
   </a>
   <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
     <ul class="navbar-nav row">
-      <li class="nav-item col-md-4">
         <th:block th:if="${session.user==null}">
-        <a class="nav-link text-white active h5" href="/">Login</a>
+      <li class="nav-item col-md-4">
+        <a class="nav-link text-white active h5" href="/user/login">Login</a>
       </li>
       <li class="nav-item col-md-4">
-        <a class="nav-link text-white active h5" href="/">Register</a>
+        <a class="nav-link text-white active h5" href="/user/register">Register</a>
       </li>
       </th:block>
 
       <th:block th:unless ="${session.user==null}">
               <li class="nav-item col-md-4">
-        <a class="nav-link text-white active h5" href="/">Add Album</a>
+        <a class="nav-link text-white active h5" href="/album/add">Add Album</a>
       </li>
       <li class="nav-item col-md-4">
-        <a class="nav-link text-white active h5" href="/">Logout</a>
+        <a class="nav-link text-white active h5" href="/user/logout">Logout</a>
       </li>
       </th:block>
     </ul>
