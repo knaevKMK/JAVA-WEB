@@ -43,7 +43,7 @@ public class UserController {
         if (!bindingResult.hasErrors()) {
 
 
-        //    return "redirect:login";
+            //    return "redirect:login";
         }
         UserServiceModel user = this.userService.FindByUsername(model);
         if (!user.getPassword().equals(model.getPassword())) {

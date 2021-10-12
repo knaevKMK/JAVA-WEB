@@ -13,7 +13,7 @@ public class Item extends BaseEntity {
     private String name;
     private String description;
     private BigDecimal price;
-    private String gender;
+    private GenderName gender;
     private Category category;
 
     public Item() {
@@ -47,11 +47,11 @@ public class Item extends BaseEntity {
         return this;
     }
 
-    public String getGender() {
+    public GenderName getGender() {
         return gender;
     }
 
-    public Item setGender(String gender) {
+    public Item setGender(GenderName gender) {
         this.gender = gender;
         return this;
     }
