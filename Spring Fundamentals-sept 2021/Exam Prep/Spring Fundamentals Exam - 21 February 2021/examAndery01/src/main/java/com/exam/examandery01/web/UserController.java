@@ -51,7 +51,7 @@ public class UserController {
             return "redirect:login";
         }
         session.setAttribute("user", user);
-        return "home";
+        return "redirect:/";
     }
 
     @GetMapping("/register")

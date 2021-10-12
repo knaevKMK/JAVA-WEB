@@ -13,8 +13,18 @@ public class ItemServiceModel {
     private CategoryServiceModel category;
     private GenderName gender;
     private BigDecimal price;
+    private String imageUrl;
 
     public ItemServiceModel() {
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public ItemServiceModel setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+        return this;
     }
 
     public String getName() {

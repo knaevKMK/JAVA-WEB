@@ -15,8 +15,18 @@ public class Item extends BaseEntity {
     private BigDecimal price;
     private GenderName gender;
     private Category category;
+    private  String imageUrl;
 
     public Item() {
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public Item setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+        return this;
     }
 
     // Todo validations

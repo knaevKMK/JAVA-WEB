@@ -2,11 +2,16 @@ package com.exam.examandery01.service.impl;
 
 import com.exam.examandery01.model.entity.Item;
 import com.exam.examandery01.model.services.ItemServiceModel;
+import com.exam.examandery01.model.view.ItemViewModel;
 import com.exam.examandery01.repository.ItemRepository;
 import com.exam.examandery01.service.CategoryService;
 import com.exam.examandery01.service.ItemService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -25,7 +30,32 @@ private final CategoryService categoryService;
     public String add(ItemServiceModel model) {
         Item item = modelMapper.map(model, Item.class);
      item.setCategory(this.categoryService.findByCategoryName(model.getCategory()));
-        System.out.println();
+      //  System.out.println();
       return   this.itemRepository.saveAndFlush(item).getId();
+    }
+
+    @Override
+    public ItemViewModel GetItemById(String id) {
+        return this.itemRepository.findById(id).map(item -> modelMapper.map(item,ItemViewModel.class)).orElse(null);
+    }
+
+    @Override
+    public List<ItemViewModel> getAll() {
+        return this.itemRepository.findAll()
+                .stream()
+                .map(item -> {
+                    ItemViewModel map = modelMapper.map(item, ItemViewModel.class);
+                    map.setImageUrl(String.format("/img/%s-%s.jpg", item.getGender(), item.getCategory().getCategoryName().name()));
+                    return  map;
+                })
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void delete(String id) {
+
+       this.itemRepository.deleteById(id);
+
+
     }
 }
