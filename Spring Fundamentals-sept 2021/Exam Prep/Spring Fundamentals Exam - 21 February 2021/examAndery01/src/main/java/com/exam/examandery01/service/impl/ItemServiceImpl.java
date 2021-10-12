@@ -30,6 +30,7 @@ private final CategoryService categoryService;
     public String add(ItemServiceModel model) {
         Item item = modelMapper.map(model, Item.class);
      item.setCategory(this.categoryService.findByCategoryName(model.getCategory()));
+     item.setImageUrl(String.format("/img/%s-%s.jpg", model.getGender(), model.getCategory().getCategory().name()));
       //  System.out.println();
       return   this.itemRepository.saveAndFlush(item).getId();
     }
@@ -43,11 +44,7 @@ private final CategoryService categoryService;
     public List<ItemViewModel> getAll() {
         return this.itemRepository.findAll()
                 .stream()
-                .map(item -> {
-                    ItemViewModel map = modelMapper.map(item, ItemViewModel.class);
-                    map.setImageUrl(String.format("/img/%s-%s.jpg", item.getGender(), item.getCategory().getCategoryName().name()));
-                    return  map;
-                })
+                .map(item ->  modelMapper.map(item, ItemViewModel.class))
                 .collect(Collectors.toList());
     }
 

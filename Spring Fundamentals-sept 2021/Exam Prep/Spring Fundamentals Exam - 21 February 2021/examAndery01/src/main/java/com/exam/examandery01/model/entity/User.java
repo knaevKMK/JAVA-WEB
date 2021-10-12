@@ -1,7 +1,12 @@
 package com.exam.examandery01.model.entity;
 
+import org.springframework.beans.factory.annotation.Value;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 
 @Entity
@@ -15,7 +20,7 @@ public class User extends  BaseEntity{
 
     public User() {
     }
-//TODO validations
+@Column(unique = true)
     public String getUsername() {
         return username;
     }
@@ -33,7 +38,7 @@ public class User extends  BaseEntity{
         this.password = password;
         return this;
     }
-
+@Email
     public String getEmail() {
         return email;
     }
@@ -42,7 +47,7 @@ public class User extends  BaseEntity{
         this.email = email;
         return this;
     }
-
+@Positive
     public BigDecimal getBudget() {
         return budget;
     }

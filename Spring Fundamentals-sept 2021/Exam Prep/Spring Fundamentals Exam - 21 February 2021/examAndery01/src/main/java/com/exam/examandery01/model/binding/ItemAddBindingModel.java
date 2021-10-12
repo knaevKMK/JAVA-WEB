@@ -2,8 +2,10 @@ package com.exam.examandery01.model.binding;
 
 import com.exam.examandery01.model.entity.CategoryName;
 import com.exam.examandery01.model.entity.GenderName;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 
 public class ItemAddBindingModel {
@@ -15,7 +17,8 @@ public class ItemAddBindingModel {
 
     public ItemAddBindingModel() {
     }
-
+@NotNull(message = "Username is required")
+@Length(min = 2, message = "Username min length is 2 characters")
     public String getName() {
         return name;
     }
@@ -24,7 +27,8 @@ public class ItemAddBindingModel {
         this.name = name;
         return this;
     }
-
+    @NotNull(message = "Description is required")
+    @Length(min = 3, message = "Description min length is 2 characters")
     public String getDescription() {
         return description;
     }
@@ -51,7 +55,7 @@ public class ItemAddBindingModel {
         this.gender = gender;
         return this;
     }
-
+@Positive
     public BigDecimal getPrice() {
         return price;
     }

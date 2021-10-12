@@ -1,7 +1,10 @@
 package com.exam.examandery01.model.binding;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 
 public class UserRegisterBindingModel {
@@ -15,6 +18,7 @@ public class UserRegisterBindingModel {
     public UserRegisterBindingModel() {
     }
 
+    @Positive(message = "Budget must be positive")
     public BigDecimal getBudget() {
         return budget;
     }
@@ -24,7 +28,8 @@ public class UserRegisterBindingModel {
         return this;
     }
 
-    @NotNull
+    @NotNull(message = "Username is Required")
+    @Length(min = 2, message = "USERNAME MIN LENGTH IS 2 CHARACTERS")
     public String getUsername() {
         return username;
     }
@@ -44,7 +49,8 @@ public class UserRegisterBindingModel {
         return this;
     }
 
-    @NotNull
+    @NotNull(message = "Password is Required")
+    @Length(min = 2, message = "PASSWORD MIN LENGTH IS 2 CHARACTERS")
     public String getPassword() {
         return password;
     }
@@ -54,7 +60,7 @@ public class UserRegisterBindingModel {
         return this;
     }
 
-    @NotNull
+
     public String getConfirmPassword() {
         return confirmPassword;
     }

@@ -1,8 +1,8 @@
 package com.exam.examandery01.model.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 
 @Entity
@@ -19,7 +19,7 @@ public class Item extends BaseEntity {
 
     public Item() {
     }
-
+@Column(nullable = false)
     public String getImageUrl() {
         return imageUrl;
     }
@@ -29,7 +29,7 @@ public class Item extends BaseEntity {
         return this;
     }
 
-    // Todo validations
+    @Column(unique = true, nullable = false)
     public String getName() {
         return name;
     }
@@ -38,7 +38,7 @@ public class Item extends BaseEntity {
         this.name = name;
         return this;
     }
-
+@Column(nullable = false)
     public String getDescription() {
         return description;
     }
@@ -47,7 +47,7 @@ public class Item extends BaseEntity {
         this.description = description;
         return this;
     }
-
+@Positive
     public BigDecimal getPrice() {
         return price;
     }
@@ -56,7 +56,7 @@ public class Item extends BaseEntity {
         this.price = price;
         return this;
     }
-
+@Enumerated
     public GenderName getGender() {
         return gender;
     }

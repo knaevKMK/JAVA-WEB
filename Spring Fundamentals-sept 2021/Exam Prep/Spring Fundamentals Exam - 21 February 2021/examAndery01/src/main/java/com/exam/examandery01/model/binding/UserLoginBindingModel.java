@@ -1,5 +1,7 @@
 package com.exam.examandery01.model.binding;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.validation.constraints.NotNull;
 
 public class UserLoginBindingModel {
@@ -9,7 +11,9 @@ public class UserLoginBindingModel {
     public UserLoginBindingModel() {
     }
 
-    @NotNull
+    @NotNull(message = "Username is Required")
+    @Length(min = 2, message = "Username MIN LENGTH IS 2 CHARACTERS")
+
     public String getUsername() {
         return username;
     }
@@ -19,7 +23,9 @@ public class UserLoginBindingModel {
         return this;
     }
 
-    @NotNull
+    @NotNull(message = "Password is required")
+    @Length(min = 2, message = "PASSWORD MIN LENGTH IS 2 CHARACTERS")
+
     public String getPassword() {
         return password;
     }
