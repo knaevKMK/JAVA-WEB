@@ -4,9 +4,7 @@ import org.hibernate.validator.constraints.Length;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -75,7 +73,7 @@ public class Album extends BaseEntity {
         this.price = price;
         return this;
     }
-//date cannot be in the future
+@PastOrPresent
     public LocalDate getReleasedDate() {
         return releasedDate;
     }

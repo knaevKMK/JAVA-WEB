@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -76,6 +77,7 @@ public class AlbumAddBindingModel {
         return this;
     }
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @PastOrPresent
     public LocalDate getReleasedDate() {
         return releasedDate;
     }
