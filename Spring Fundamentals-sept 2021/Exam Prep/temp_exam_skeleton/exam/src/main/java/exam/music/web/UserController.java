@@ -51,16 +51,16 @@ public class UserController {
             redirectAttributes.addFlashAttribute("userLoginBindingModel", userLoginBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userLoginBindingModel", bindingResult);
 
-            return "redirect:login";
+            return "redirect:/users/login";
         }
         UserServiceModel user = this.userService.FindByUsername(userLoginBindingModel);
         if (user==null){
             redirectAttributes.addFlashAttribute("notFound", true);
-            return "redirect:login";
+            return "redirect:/users/login";
         }
         if (!user.getPassword().equals(userLoginBindingModel.getPassword())) {
             redirectAttributes.addFlashAttribute("notFound", true);
-            return "redirect:login";
+            return "redirect:/users/login";
         }
         session.setAttribute("user", modelMapper.map(user, UserViewModel.class));
         return "redirect:/";

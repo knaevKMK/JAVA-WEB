@@ -1,8 +1,11 @@
 package exam.music.model.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "users")
@@ -13,7 +16,7 @@ public class User extends BaseEntity{
 
     public User() {
     }
-//TODO VALIDATE
+@Column(unique = true, nullable = false, columnDefinition = "VARCHAR(20)")
     public String getUsername() {
         return username;
     }
@@ -22,7 +25,10 @@ public class User extends BaseEntity{
         this.username = username;
         return this;
     }
-@Email
+    @NotEmpty
+    @Email
+    @Size(max = 255)
+    @Column(unique = true)
     public String getEmail() {
         return email;
     }
@@ -31,7 +37,7 @@ public class User extends BaseEntity{
         this.email = email;
         return this;
     }
-    //TODO VALIDATE
+    @Column(nullable = false)
     public String getPassword() {
         return password;
     }
