@@ -31,7 +31,7 @@ public class ProductController {
     @GetMapping("/add")
     public String add(Model model, HttpSession session){
         if (session.getAttribute("user") == null) {
-            return "redirect:/users/login";
+            return "redirect:login";
         }
         if (!model.containsAttribute("productBindingModel")) {
             model.addAttribute("productBindingModel", new ProductBindingModel());
@@ -44,7 +44,7 @@ public class ProductController {
                       RedirectAttributes redirectAttributes,
                       HttpSession session){
         if (session.getAttribute("user") == null) {
-            return "redirect:/users/login";
+            return "redirect:login";
         }
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("productBindingModel", productBindingModel);
