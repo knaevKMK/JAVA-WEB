@@ -1,7 +1,5 @@
-package com.project.shop.model;
+package com.project.shop.model.entity;
 
-
-import org.hibernate.annotations.GenericGenerator;
 
 import org.hibernate.annotations.GenericGenerator;
 
