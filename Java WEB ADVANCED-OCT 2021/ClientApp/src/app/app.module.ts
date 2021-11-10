@@ -6,13 +6,17 @@ import { AppComponent } from './app.component';
 import { AllListingsComponent } from './listings/all-listings/all-listings.component';
 import { CreateListingComponent } from './listings/create-listing/create-listing.component';
 import { DetailsListingComponent } from './listings/details-listing/details-listing.component';
+import { NavBarComponent } from './fragments/nav-bar/nav-bar/nav-bar.component';
+import { FooterComponent } from './fragments/footer/footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AllListingsComponent,
     CreateListingComponent,
-    DetailsListingComponent
+    DetailsListingComponent,
+    NavBarComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
