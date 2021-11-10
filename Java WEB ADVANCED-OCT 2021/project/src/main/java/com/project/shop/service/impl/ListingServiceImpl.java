@@ -50,17 +50,17 @@ public class ListingServiceImpl implements ListingService {
     }
 
     @Override
-    public ListingViewModel createListing(ListingServiceModel listingServiceModel) {
+    public String createListing(ListingServiceModel listingServiceModel) {
 
         Listing listing = modelMapper.map(listingServiceModel, Listing.class);
             listing.setActive(true);
         listingRepository.saveAndFlush(listing);
-        return modelMapper.map(listing,ListingViewModel.class);
+        return listing.getId().toString();
     }
 
     @Override
     @Transactional
-    public ListingViewModel updateListing(ListingServiceModel listingServiceModel) {
+    public String updateListing(ListingServiceModel listingServiceModel) {
         Listing listing = listingRepository.findById(listingServiceModel.getId())
                 .orElseThrow(() -> new NullPointerException("Listing with this "
                         + listingServiceModel.getId().toString() + " does not exist"));
@@ -68,6 +68,6 @@ public class ListingServiceImpl implements ListingService {
         Listing  listingMapped=modelMapper.map(listingServiceModel,Listing.class);
 
         Listing listing1 = listingRepository.saveAndFlush(listingMapped);
-        return modelMapper.map(listing1,ListingViewModel.class);
+        return listing1.getId().toString();
     }
 }

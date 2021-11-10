@@ -15,7 +15,7 @@ public interface ListingService {
 
     void deleteListing(UUID id);
 
-    ListingViewModel createListing(ListingServiceModel listingServiceModel);
+    String createListing(ListingServiceModel listingServiceModel);
 
-    ListingViewModel updateListing(ListingServiceModel listingServiceModel);
+    String updateListing(ListingServiceModel listingServiceModel);
 }

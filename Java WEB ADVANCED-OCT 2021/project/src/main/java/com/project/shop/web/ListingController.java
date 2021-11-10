@@ -1,7 +1,5 @@
 package com.project.shop.web;
 
-
-import com.fasterxml.jackson.annotation.JsonView;
 import com.project.shop.model.binding.ListingCreateModel;
 import com.project.shop.model.service.ListingServiceModel;
 import com.project.shop.model.view.ListingViewModel;
@@ -9,7 +7,7 @@ import com.project.shop.service.ListingService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.Collection;
@@ -29,46 +27,62 @@ public class ListingController {
     }
 
     @GetMapping("all")
-    @JsonView(ListingViewModel.class)
-    public Collection<ListingViewModel> all() {
-        return listingService.getAllListings();
+    public ResponseEntity<Collection<ListingViewModel>> getAllListings() {
+        return ResponseEntity.ok(listingService.getAllListings());
     }
 
     @GetMapping("listing/{id}")
-    @JsonView(ListingViewModel.class)
-    public ListingViewModel listingById(@PathVariable UUID id) {
-        return listingService.getListingById(id);
+    public ResponseEntity<ListingViewModel> getListingById(@PathVariable UUID id) {
+        try{
+        return ResponseEntity.ok(listingService.getListingById(id));
+        }catch (Exception e){
+            return ResponseEntity.notFound().build();
+        }
     }
     @DeleteMapping("delete/{id}")
-    public ResponseEntity<Boolean> delete(@PathVariable UUID id) {
-             //   listingService.deleteListing(id);
+    public ResponseEntity<Boolean> deleteListingById(@PathVariable UUID id) {
+        try{
+            listingService.deleteListing(id);
         return ResponseEntity.ok(true);
+        }catch (Exception e){
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping("add")
-    @JsonView(ListingViewModel.class)
-    public ResponseEntity<ListingViewModel> add(@RequestBody ListingCreateModel listingCreateModel
+    public ResponseEntity<ListingViewModel> createListing(@RequestBody ListingCreateModel listingCreateModel
                                                      //   , Authentication authentication
-    ) {
-//        User author = userService.getUserByUsername(authentication.getName());
-//        offer.setAuthor(author);
-        ListingViewModel created = listingService.createListing(modelMapper.map(listingCreateModel, ListingServiceModel.class));
-        URI location = MvcUriComponentsBuilder.fromMethodName(ListingController.class, "addListing", listingCreateModel
-        //        , authentication
-        )
-                .pathSegment("{id}").buildAndExpand(created.getId()).toUri() ;
-        return ResponseEntity.created(location).body(created);
-//        return ResponseEntity.status(303).location(location).body(created);
-    }
+      , UriComponentsBuilder builder) {
+        String listingId = listingService.createListing(modelMapper.map(listingCreateModel,ListingServiceModel.class));
+
+        URI location = builder.path("/api/listing/{id}").
+                buildAndExpand(listingId).toUri();
+
+        return ResponseEntity.
+                created(location).
+                build();
+        }
 
     @PutMapping("update/{id}")
-    @JsonView(ListingViewModel.class)
-    public ResponseEntity<ListingViewModel> update(@PathVariable UUID id, @RequestBody ListingCreateModel listingCreateModel) {
-        if(listingCreateModel.getId() != id) throw new NullPointerException(
-                String.format("Listing ID=%s from path is different from Entity ID=%s", id, listingCreateModel.getId()));
-        ListingViewModel updated = listingService.updateListing(modelMapper.map(listingCreateModel,ListingServiceModel.class));
-     //   log.info("Offer updated: {}", updated);
-        return ResponseEntity.ok(updated);
-    }
+    public ResponseEntity<ListingViewModel> updateListing(@PathVariable("id") UUID id,
+                                                          @RequestBody ListingCreateModel listingCreateModel,UriComponentsBuilder builder) {
+        if(listingCreateModel.getId() != id){
+            return ResponseEntity.notFound().build();
+        }
 
+        try{
+            String listingId = listingService.updateListing(modelMapper.map(listingCreateModel,ListingServiceModel.class));
+            //   log.info("Offer updated: {}", updated);
+
+                URI location = builder.path("/api/listing/{id}").
+                        buildAndExpand(listingId).toUri();
+            return     ResponseEntity.
+                        created(location).
+                        build();
+
+        }catch (Exception e){
+
+            return  ResponseEntity.badRequest().build();
+        }
+    }
 }
