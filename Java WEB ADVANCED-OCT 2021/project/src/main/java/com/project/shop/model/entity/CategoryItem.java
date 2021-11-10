@@ -1,6 +1,7 @@
 package com.project.shop.model.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -30,7 +31,7 @@ public class CategoryItem extends BaseEntity{
         this.categoryDescription = categoryDescription;
         return this;
     }
-
+@ManyToOne
     public CategoryItem getParentCategory() {
         return parentCategoryItem;
     }

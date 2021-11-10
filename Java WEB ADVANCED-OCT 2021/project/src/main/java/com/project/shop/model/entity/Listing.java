@@ -11,7 +11,7 @@ public class Listing extends Item {
     private String imageUrl;
     private CategoryItem itemCategoryItem;
     private ConditionItem itemCondition;
-   // private Account seller;
+    private Account seller;
 
     private SellingFormat sellingFormat;
     private DeliveryOptions deliveryOptions;
@@ -20,6 +20,15 @@ public class Listing extends Item {
     private PaymentMethod payment;
 
     public Listing() {
+    }
+@ManyToOne
+    public Account getSeller() {
+        return seller;
+    }
+
+    public Listing setSeller(Account seller) {
+        this.seller = seller;
+        return this;
     }
 
     public String getImageUrl() {

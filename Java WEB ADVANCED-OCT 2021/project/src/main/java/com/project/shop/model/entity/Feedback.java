@@ -1,6 +1,7 @@
 package com.project.shop.model.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -30,7 +31,7 @@ public class Feedback extends BaseEntity{
         this.response = response;
         return this;
     }
-
+@OneToOne
     public Order getOrder() {
         return order;
     }
