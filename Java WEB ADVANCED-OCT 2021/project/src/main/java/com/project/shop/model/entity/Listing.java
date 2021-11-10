@@ -13,6 +13,7 @@ public class Listing extends Item {
     private ConditionItem itemCondition;
     private Account seller;
 
+
     private SellingFormat sellingFormat;
     private DeliveryOptions deliveryOptions;
 

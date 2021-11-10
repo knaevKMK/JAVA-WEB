@@ -17,7 +17,7 @@ private List<Order> purchaseList;
 
     public Account() {
     }
-@OneToMany
+    @OneToMany
     public List<Listing> getWatchList() {
         return watchList;
     }
