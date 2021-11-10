@@ -5,57 +5,29 @@ import javax.persistence.*;
 @MappedSuperclass
 public abstract class Item extends  BaseEntity{
 
-    private String itemTitle;
-    private String itemDescription;
-    private String imageUrl;
-    private CategoryItem itemCategoryItem;
-    private ConditionItem itemCondition;
+    private String title;
+    private String description;
+
 
     public Item() {
     }
 @Column(nullable = false)
-    public String getItemTitle() {
-        return itemTitle;
+    public String getTitle() {
+        return title;
     }
 
-    public Item setItemTitle(String itemTitle) {
-        this.itemTitle = itemTitle;
+    public Item setTitle(String itemTitle) {
+        this.title = itemTitle;
         return this;
     }
 @Column(columnDefinition = "TEXT",nullable = false)
-    public String getItemDescription() {
-        return itemDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public Item setItemDescription(String itemDescription) {
-        this.itemDescription = itemDescription;
+    public Item setDescription(String itemDescription) {
+        this.description = itemDescription;
         return this;
-    }
-@Column(nullable = false)
-    public String getImageUrl() {
-        return imageUrl;
     }
 
-    public Item setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-        return this;
-    }
-@ManyToOne
-    public CategoryItem getItemCategoryItem() {
-        return itemCategoryItem;
-    }
-
-    public Item setItemCategoryItem(CategoryItem itemCategoryItem) {
-        this.itemCategoryItem = itemCategoryItem;
-        return this;
-    }
-@ManyToOne
-    public ConditionItem getItemCondition() {
-        return itemCondition;
-    }
-
-    public Item setItemCondition(ConditionItem itemCondition) {
-        this.itemCondition = itemCondition;
-        return this;
-    }
 }
