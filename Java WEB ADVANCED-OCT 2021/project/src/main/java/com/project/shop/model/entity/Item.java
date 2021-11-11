@@ -21,7 +21,7 @@ public abstract class Item extends  BaseEntity{
         return this;
     }
 @Column(columnDefinition = "TEXT",nullable = false)
-    public String getDescription() {
+public String getDescription() {
         return description;
     }
 

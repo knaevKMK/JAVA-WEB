@@ -6,9 +6,9 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "conditions")
-public class ConditionItem extends BaseEntity{
+public class ConditionItem extends Item{
     private ConditionEnum  conditionTitle;
-    private String conditionDescription;
+
 
     public ConditionItem() {
     }
@@ -22,13 +22,5 @@ public class ConditionItem extends BaseEntity{
         this.conditionTitle = conditionTitle;
         return this;
     }
-@Column(columnDefinition = "TEXT")
-    public String getConditionDescription() {
-        return conditionDescription;
-    }
 
-    public ConditionItem setConditionDescription(String conditionDescription) {
-        this.conditionDescription = conditionDescription;
-        return this;
-    }
 }

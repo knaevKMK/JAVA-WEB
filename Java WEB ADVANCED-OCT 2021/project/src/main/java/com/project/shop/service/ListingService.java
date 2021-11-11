@@ -9,13 +9,13 @@ import java.util.UUID;
 public interface ListingService {
 
 
-    Collection<ListingViewModel> getAllListings();
+    Collection<ListingViewModel> getAllListings(int page,int limit);
 
     ListingViewModel getListingById(UUID id);
 
-    void deleteListing(UUID id);
+    boolean deleteListing(UUID id);
 
-    String createListing(ListingServiceModel listingServiceModel);
+    ListingViewModel createListing(ListingServiceModel listingServiceModel);
 
-    String updateListing(ListingServiceModel listingServiceModel);
+    ListingViewModel updateListing(ListingServiceModel listingServiceModel);
 }

@@ -1,16 +1,20 @@
 package com.project.shop.web;
 
+import com.project.shop.model.Response;
 import com.project.shop.model.binding.ListingCreateModel;
 import com.project.shop.model.service.ListingServiceModel;
 import com.project.shop.model.view.ListingViewModel;
 import com.project.shop.service.ListingService;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -27,62 +31,76 @@ public class ListingController {
     }
 
     @GetMapping("all")
-    public ResponseEntity<Collection<ListingViewModel>> getAllListings() {
-        return ResponseEntity.ok(listingService.getAllListings());
+    public ResponseEntity<Response> getAllListings() {
+        Collection<ListingViewModel> allListings = listingService.getAllListings(0, 30);
+        return ResponseEntity.ok(Response
+                    .builder()
+                    .timeStamp(LocalDateTime.now())
+                    .data(Map.of("listings",allListings))
+                    .message("Listings retrieved")
+                    .status(HttpStatus.OK)
+                    .statusCode(HttpStatus.OK.value())
+                    .build()
+        );
     }
 
     @GetMapping("listing/{id}")
-    public ResponseEntity<ListingViewModel> getListingById(@PathVariable UUID id) {
-        try{
-        return ResponseEntity.ok(listingService.getListingById(id));
-        }catch (Exception e){
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Response> getListingById(@PathVariable UUID id) {
+        ListingViewModel listing = listingService.getListingById(id);
+        return ResponseEntity.ok(Response
+                .builder()
+                .timeStamp(LocalDateTime.now())
+                .data(Map.of("listing" , listing))
+                .message("Listing with id: "+ id.toString()+"  retrieved")
+                .status(HttpStatus.OK)
+                .statusCode(HttpStatus.OK.value())
+                .build()
+        );
     }
     @DeleteMapping("delete/{id}")
-    public ResponseEntity<Boolean> deleteListingById(@PathVariable UUID id) {
-        try{
-            listingService.deleteListing(id);
-        return ResponseEntity.ok(true);
-        }catch (Exception e){
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Response> deleteListingById(@PathVariable UUID id) {
+        return ResponseEntity.ok(Response
+                .builder()
+                .timeStamp(LocalDateTime.now())
+                .data(Map.of("deleted",listingService.deleteListing(id)))
+                .message("Listing with id: "+ id.toString()+"  deleted")
+                .status(HttpStatus.OK)
+                .statusCode(HttpStatus.OK.value())
+                .build()
+        );
     }
 
     @PostMapping("add")
-    public ResponseEntity<ListingViewModel> createListing(@RequestBody ListingCreateModel listingCreateModel
+    public ResponseEntity<Response> createListing(@RequestBody ListingCreateModel listingCreateModel
                                                      //   , Authentication authentication
-      , UriComponentsBuilder builder) {
-        String listingId = listingService.createListing(modelMapper.map(listingCreateModel,ListingServiceModel.class));
-
-        URI location = builder.path("/api/listing/{id}").
-                buildAndExpand(listingId).toUri();
-
-        return ResponseEntity.
-                created(location).
-                build();
-        }
+      ) {
+        return ResponseEntity.ok(Response
+                .builder()
+                .timeStamp(LocalDateTime.now())
+                .data(Map.of("listing",listingService.createListing(modelMapper.map(listingCreateModel,ListingServiceModel.class))))
+                .message("Listing created")
+                .status(HttpStatus.OK)
+                .statusCode(HttpStatus.OK.value())
+                .build()
+        );
+    }
 
     @PutMapping("update/{id}")
-    public ResponseEntity<ListingViewModel> updateListing(@PathVariable("id") UUID id,
+    public ResponseEntity<Response> updateListing(@PathVariable("id") UUID id,
                                                           @RequestBody ListingCreateModel listingCreateModel,UriComponentsBuilder builder) {
         if(listingCreateModel.getId() != id){
             return ResponseEntity.notFound().build();
         }
+        ListingViewModel listing = listingService.createListing(modelMapper.map(listingCreateModel, ListingServiceModel.class));
 
-        try{
-            String listingId = listingService.updateListing(modelMapper.map(listingCreateModel,ListingServiceModel.class));
-            //   log.info("Offer updated: {}", updated);
-
-                URI location = builder.path("/api/listing/{id}").
-                        buildAndExpand(listingId).toUri();
-            return     ResponseEntity.
-                        created(location).
-                        build();
-
-        }catch (Exception e){
-
-            return  ResponseEntity.badRequest().build();
-        }
+        return ResponseEntity.ok(Response
+                .builder()
+                .timeStamp(LocalDateTime.now())
+                .data(Map.of("listing",listing))
+                .message("Listing updated")
+                .status(HttpStatus.OK)
+                .statusCode(HttpStatus.OK.value())
+                .build()
+        );
     }
 }

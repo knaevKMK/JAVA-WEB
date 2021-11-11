@@ -1,7 +1,9 @@
 package com.project.shop.model.entity;
 
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -16,6 +18,7 @@ public abstract class BaseEntity {
 
     private UUID id;
     private LocalDateTime createOn;
+    private String createFrom;
     private boolean isActive;
     private LocalDateTime modifiedOn;
     private String  modifiedFrom;
@@ -36,6 +39,15 @@ public abstract class BaseEntity {
         return this;
     }
 
+    public String getCreateFrom() {
+        return createFrom;
+    }
+
+    public BaseEntity setCreateFrom(String createFrom) {
+        this.createFrom = createFrom;
+        return this;
+    }
+    @CreationTimestamp
     public LocalDateTime getCreateOn() {
         return createOn;
     }
@@ -53,7 +65,7 @@ public abstract class BaseEntity {
         isActive = active;
         return this;
     }
-
+    @UpdateTimestamp
     public LocalDateTime getModifiedOn() {
         return modifiedOn;
     }
