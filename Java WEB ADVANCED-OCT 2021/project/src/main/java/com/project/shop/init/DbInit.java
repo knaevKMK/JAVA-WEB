@@ -19,8 +19,8 @@ private final DeliveryService deliveryService;
 
     @Override
     public void run(String... args) throws Exception {
-        conditionService.seedData();
-        categoryService.seedData();
-        deliveryService.seedData();
+//        conditionService.seedData();
+//        categoryService.seedData();
+//        deliveryService.seedData();
     }
 }

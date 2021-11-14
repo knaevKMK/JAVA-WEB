@@ -7,12 +7,12 @@ import java.util.List;
 @Table(name = "orders")
 public class Order extends  Item{
     private List<Listing> listings;
-    private Account Buyer;
+    private Account buyer;
     private Feedback feedback;
 
     public Order() {
     }
-@OneToMany
+@OneToMany(mappedBy = "order")
     public List<Listing> getListings() {
         return listings;
     }
@@ -21,13 +21,14 @@ public class Order extends  Item{
         this.listings = listings;
         return this;
     }
-@ManyToOne
+@ManyToOne(cascade={CascadeType.ALL})
+@JoinColumn(name = "buyer_id")
 public Account getBuyer() {
-        return Buyer;
+        return buyer;
     }
 
     public Order setBuyer(Account buyer) {
-        Buyer = buyer;
+        this.buyer = buyer;
         return this;
     }
 @OneToOne

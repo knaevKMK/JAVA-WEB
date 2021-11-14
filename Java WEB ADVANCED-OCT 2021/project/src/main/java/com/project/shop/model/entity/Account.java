@@ -1,8 +1,6 @@
 package com.project.shop.model.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -17,7 +15,11 @@ private List<Order> purchaseList;
 
     public Account() {
     }
-    @OneToMany
+    @ManyToMany
+    @JoinTable(
+            name = "buyer_watchings",
+            joinColumns = @JoinColumn(name = "buyer_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "listing_id", referencedColumnName = "id"))
     public List<Listing> getWatchList() {
         return watchList;
     }
@@ -26,7 +28,7 @@ private List<Order> purchaseList;
         this.watchList = watchList;
         return this;
     }
-    @OneToMany
+    @OneToMany(mappedBy = "seller")
     public List<Listing> getSellingList() {
         return sellingList;
     }
@@ -35,7 +37,7 @@ private List<Order> purchaseList;
         this.sellingList = sellingList;
         return this;
     }
-    @OneToMany
+    @OneToMany(mappedBy = "buyer")
     public List<Order> getPurchaseList() {
         return purchaseList;
     }

@@ -1,9 +1,8 @@
 package com.project.shop.model.entity;
 
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "listings")
@@ -14,6 +13,8 @@ public class Listing extends Item {
     private ConditionItem itemCondition;
     private Account seller;
 
+    private Set<Account> watchers;
+    private Order order;
     private SellingFormat sellingFormat;
     private DeliveryOptions deliveryOptions;
 
@@ -21,7 +22,29 @@ public class Listing extends Item {
 
     public Listing() {
     }
-@ManyToOne
+@ManyToOne(cascade={CascadeType.ALL})
+@JoinColumn(name = "order_id")
+    public Order getOrder() {
+        return order;
+    }
+
+    public Listing setOrder(Order order) {
+        this.order = order;
+        return this;
+    }
+
+    @ManyToMany(mappedBy = "watchList", targetEntity = Account.class)
+    public Set<Account> getWatchers() {
+        return watchers;
+    }
+
+    public Listing setWatchers(Set<Account> watchers) {
+        this.watchers = watchers;
+        return this;
+    }
+
+    @ManyToOne(cascade={CascadeType.ALL})
+@JoinColumn(name = "seller_id")
     public Account getSeller() {
         return seller;
     }
