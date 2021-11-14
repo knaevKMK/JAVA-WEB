@@ -1,7 +1,9 @@
 package com.project.shop.model.entity;
 
 
+
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,13 +19,24 @@ public class Listing extends Item {
     private Order order;
     private SellingFormat sellingFormat;
     private DeliveryOptions deliveryOptions;
-
+    private List<Offer> offers;
     private PaymentMethod payment;
 
     public Listing() {
     }
-@ManyToOne(cascade={CascadeType.ALL})
-@JoinColumn(name = "order_id")
+
+    @OneToMany(mappedBy = "listing")
+    public List<Offer> getOffers() {
+        return offers;
+    }
+
+    public Listing setOffers(List<Offer> offers) {
+        this.offers = offers;
+        return this;
+    }
+
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "order_id")
     public Order getOrder() {
         return order;
     }
@@ -43,8 +56,8 @@ public class Listing extends Item {
         return this;
     }
 
-    @ManyToOne(cascade={CascadeType.ALL})
-@JoinColumn(name = "seller_id")
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "seller_id")
     public Account getSeller() {
         return seller;
     }
@@ -62,7 +75,8 @@ public class Listing extends Item {
         this.imageUrl = imageUrl;
         return this;
     }
-@ManyToOne
+
+    @ManyToOne
     public CategoryItem getItemCategoryItem() {
         return itemCategoryItem;
     }
@@ -71,7 +85,8 @@ public class Listing extends Item {
         this.itemCategoryItem = itemCategoryItem;
         return this;
     }
-@ManyToOne
+
+    @ManyToOne
     public ConditionItem getItemCondition() {
         return itemCondition;
     }
@@ -80,7 +95,8 @@ public class Listing extends Item {
         this.itemCondition = itemCondition;
         return this;
     }
-@ManyToOne
+
+    @ManyToOne
     public SellingFormat getSellingFormat() {
         return sellingFormat;
     }
@@ -89,7 +105,8 @@ public class Listing extends Item {
         this.sellingFormat = sellingFormat;
         return this;
     }
-@ManyToOne
+
+    @ManyToOne
     public DeliveryOptions getDeliveryOptions() {
         return deliveryOptions;
     }
@@ -98,7 +115,8 @@ public class Listing extends Item {
         this.deliveryOptions = deliveryOptions;
         return this;
     }
-@ManyToOne
+
+    @ManyToOne
     public PaymentMethod getPayment() {
         return payment;
     }

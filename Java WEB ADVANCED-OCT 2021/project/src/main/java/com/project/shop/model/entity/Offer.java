@@ -1,12 +1,12 @@
 package com.project.shop.model.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "offers")
 public class Offer extends BaseEntity {
+    private  Listing listing;
     private BigDecimal placedOfferPrice;
     private BigDecimal highBoundAcceptOfferPrice;
     private BigDecimal minBoundDeclinedOfferPrice;
@@ -14,6 +14,16 @@ public class Offer extends BaseEntity {
     private boolean accepted;
 
     public Offer() {
+    }
+@ManyToOne(cascade = {CascadeType.ALL})
+@JoinColumn(name = "selling_id")
+    public Listing getListing() {
+        return listing;
+    }
+
+    public Offer setListing(Listing listing) {
+        this.listing = listing;
+        return this;
     }
 
     public BigDecimal getPlacedOfferPrice() {
