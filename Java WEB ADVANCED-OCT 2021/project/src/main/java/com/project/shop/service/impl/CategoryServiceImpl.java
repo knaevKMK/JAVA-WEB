@@ -1,5 +1,6 @@
 package com.project.shop.service.impl;
 
+import com.project.shop.repository.impl.BaseRepositoryImpl;
 import com.project.shop.model.entity.CategoryItem;
 import com.project.shop.model.enums.CategoryEnum;
 import com.project.shop.model.view.CategoryViewModel;
@@ -10,14 +11,13 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Transactional
 @Service
-public class CategoryServiceImpl implements CategoryService {
+public class CategoryServiceImpl extends BaseRepositoryImpl<CategoryItem> implements CategoryService {
 private final CategoryRepository categoryRepository;
 private final ModelMapper modelMapper;
 
@@ -32,11 +32,15 @@ if (categoryRepository.count()!=0){return;}
         Arrays.stream(CategoryEnum.values())
                 .forEach(en->{
                     CategoryItem parentCategoryItem = new CategoryItem();
-                    parentCategoryItem.setTitle(en.name())
-                            .setDescription("Description for " + en.name())
-                            .setActive(true)
-                            .setCreateOn(LocalDateTime.now())
-                            .setCreateFrom("system");
+                    parentCategoryItem
+                            .setTitle(en.name())
+                            .setDescription("Description for " + en.name());
+//                            .setActive(true)
+//                            .setCreateOn(LocalDateTime.now())
+//                            .setCreateFrom("system");
+
+                    parentCategoryItem=this.onCreate(parentCategoryItem);
+
                     CategoryItem savedCategoryItem = categoryRepository.saveAndFlush(parentCategoryItem);
                     List<CategoryItem> subList = en.getList()
                             .stream()
@@ -45,10 +49,11 @@ if (categoryRepository.count()!=0){return;}
                                 subCategoryItem
                                         .setParentCategory(savedCategoryItem)
                                         .setTitle(subEn)
-                                        .setDescription("Sub Category of "+parentCategoryItem.getTitle())
-                                        .setActive(true)
-                                        .setCreateOn(LocalDateTime.now())
-                                        .setCreateFrom("system");
+                                        .setDescription("Sub Category of "+savedCategoryItem.getTitle());
+                                subCategoryItem=this.onCreate(subCategoryItem);
+//                                        .setActive(true)
+//                                        .setCreateOn(LocalDateTime.now())
+//                                        .setCreateFrom("system");
                                 return subCategoryItem;
                             }).collect(Collectors.toList());
                     this.categoryRepository.saveAll(subList);
