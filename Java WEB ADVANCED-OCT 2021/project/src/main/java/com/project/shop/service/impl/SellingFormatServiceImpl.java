@@ -1,43 +1,30 @@
 package com.project.shop.service.impl;
 
-import com.project.shop.model.entity.Offer;
+import com.project.shop.model.binding.SellingFormatBindingModel;
 import com.project.shop.model.entity.SellingFormat;
-import com.project.shop.model.enums.SellingFormatEnum;
-import com.project.shop.repository.impl.BaseRepositoryImpl;
-import com.project.shop.service.OfferService;
-import com.project.shop.service.SellingFormatRepository;
+import com.project.shop.repository.SellingFormatRepository;
 import com.project.shop.service.SellingFormatService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
-public class SellingFormatServiceImpl extends BaseRepositoryImpl<SellingFormat> implements SellingFormatService {
+public class SellingFormatServiceImpl extends BaseServiceImpl<SellingFormat> implements SellingFormatService {
     private final SellingFormatRepository sellingRepository;
+    private  final ModelMapper modelMapper;
 
-    public SellingFormatServiceImpl(SellingFormatRepository sellingRepository) {
+    public SellingFormatServiceImpl(SellingFormatRepository sellingRepository, ModelMapper modelMapper) {
         this.sellingRepository = sellingRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Override
     public void seedData() {
-        List<SellingFormat> sellingFormatList = Arrays.stream(SellingFormatEnum.values())
-                .map(sellingEnum -> {
-                    SellingFormat sellingFormat = new SellingFormat();
-                    sellingFormat
-                            .setSellingFormatTitle(sellingEnum.name())
-                            .setPrice(sellingEnum.getPrice())
-                            .setQuantity(sellingEnum.getQuantity())
-                            .setDaysDuration(7);
 
-                    sellingFormat = this.onCreate(sellingFormat);
+    }
 
-                    return sellingFormat;
-                })
-                .collect(Collectors.toList());
-        this.sellingRepository.saveAllAndFlush(sellingFormatList);
+    @Override
+    public SellingFormat create(SellingFormatBindingModel sellingFormatModel) {
+        SellingFormat sellingFormat= modelMapper.map(sellingFormatModel,SellingFormat.class);
+        return sellingRepository.saveAndFlush(sellingFormat);
     }
 }

@@ -1,9 +1,9 @@
-package com.project.shop.repository;
+package com.project.shop.service;
 
 import com.project.shop.model.entity.BaseEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface BaseRepository<T> {
+public interface BaseService<T> {
     <T extends BaseEntity> T onCreate(T entity);
     <T extends BaseEntity> T onModify(T entity);
 }

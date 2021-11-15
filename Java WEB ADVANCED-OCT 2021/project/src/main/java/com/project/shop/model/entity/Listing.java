@@ -2,6 +2,9 @@ package com.project.shop.model.entity;
 
 
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
@@ -11,8 +14,8 @@ import java.util.Set;
 public class Listing extends Item {
 
     private String imageUrl;
-    private CategoryItem itemCategoryItem;
-    private ConditionItem itemCondition;
+    private CategoryItem category;
+    private ConditionItem condition;
     private Account seller;
 
     private Set<Account> watchers;
@@ -20,7 +23,7 @@ public class Listing extends Item {
     private SellingFormat sellingFormat;
     private DeliveryOptions deliveryOptions;
     private List<Offer> offers;
-    private PaymentMethod payment;
+    private String payment;
 
     public Listing() {
     }
@@ -76,27 +79,32 @@ public class Listing extends Item {
         return this;
     }
 
-    @ManyToOne
-    public CategoryItem getItemCategoryItem() {
-        return itemCategoryItem;
+    @ManyToOne(optional = true,fetch = FetchType.LAZY)
+    @NotFound(action= NotFoundAction.IGNORE)
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    public CategoryItem getCategory() {
+        return category;
     }
 
-    public Listing setItemCategoryItem(CategoryItem itemCategoryItem) {
-        this.itemCategoryItem = itemCategoryItem;
+    public Listing setCategory(CategoryItem itemCategoryItem) {
+        this.category = itemCategoryItem;
         return this;
     }
 
-    @ManyToOne
-    public ConditionItem getItemCondition() {
-        return itemCondition;
+    @ManyToOne(optional = true,fetch = FetchType.LAZY)
+    @NotFound(action= NotFoundAction.IGNORE)
+    @JoinColumn(name = "condition_id", referencedColumnName = "id")
+    public ConditionItem getCondition() {
+        return condition;
     }
 
-    public Listing setItemCondition(ConditionItem itemCondition) {
-        this.itemCondition = itemCondition;
+    public Listing setCondition(ConditionItem itemCondition) {
+        this.condition = itemCondition;
         return this;
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "selling_format_id", referencedColumnName = "id")
     public SellingFormat getSellingFormat() {
         return sellingFormat;
     }
@@ -106,7 +114,8 @@ public class Listing extends Item {
         return this;
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "delivery_id", referencedColumnName = "id")
     public DeliveryOptions getDeliveryOptions() {
         return deliveryOptions;
     }
@@ -116,12 +125,12 @@ public class Listing extends Item {
         return this;
     }
 
-    @ManyToOne
-    public PaymentMethod getPayment() {
+ //   @ManyToOne
+    public String getPayment() {
         return payment;
     }
 
-    public Listing setPayment(PaymentMethod payment) {
+    public Listing setPayment(String payment) {
         this.payment = payment;
         return this;
     }

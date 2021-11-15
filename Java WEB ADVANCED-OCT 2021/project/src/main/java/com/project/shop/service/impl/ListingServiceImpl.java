@@ -5,14 +5,13 @@ import com.project.shop.model.entity.Listing;
 import com.project.shop.model.service.ListingServiceModel;
 import com.project.shop.model.view.ListingViewModel;
 import com.project.shop.repository.ListingRepository;
-import com.project.shop.service.ListingService;
+import com.project.shop.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
@@ -22,15 +21,23 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @Slf4j
-public class ListingServiceImpl implements ListingService {
+public class ListingServiceImpl extends BaseServiceImpl<Listing> implements ListingService {
 
     private final ListingRepository listingRepository;
     private final ModelMapper modelMapper;
+    private final CategoryService categoryService;
+    private final ConditionService conditionService;
+    private final SellingFormatService sellingFormatService;
+    private final DeliveryService deliveryService;
 
     public ListingServiceImpl(ListingRepository listingRepository,
-                              ModelMapper modelMapper) {
+                              ModelMapper modelMapper, CategoryService categoryService, ConditionService conditionService, SellingFormatService sellingFormatService, DeliveryService deliveryService) {
         this.listingRepository = listingRepository;
         this.modelMapper = modelMapper;
+        this.categoryService = categoryService;
+        this.conditionService = conditionService;
+        this.sellingFormatService = sellingFormatService;
+        this.deliveryService = deliveryService;
     }
 
 
@@ -64,17 +71,24 @@ public class ListingServiceImpl implements ListingService {
         }
         log.info("Deleted listing id: " + id);
         listing.get().setActive(false);
-        listingRepository.saveAndFlush(listing.get());
+        Listing listing1 = this.onModify(listing.get());
+        listingRepository.saveAndFlush(listing1);
         return true;
     }
 
     @Override
     public ListingViewModel createListing(ListingServiceModel listingServiceModel) {
         Listing listing = modelMapper.map(listingServiceModel, Listing.class);
-      listing=seedCreateLog(listing);
-        Listing listing1 = listingRepository.saveAndFlush(listing);
+
+        listing.setCategory(categoryService.find(listingServiceModel.getItemCategoryItem()));
+        listing.setCondition(conditionService.find(listingServiceModel.getItemCondition()));
+        listing.setSellingFormat(sellingFormatService.create(listingServiceModel.getSellingFormat()));
+        listing.setDeliveryOptions(deliveryService.create(listingServiceModel.getDeliveryOptions()));
+        listing = this.onCreate(listing);
+
+           Listing listing1 = listingRepository.saveAndFlush(listing);
         log.info("Create listing id: " + listing.getId().toString());
-        return modelMapper.map(listing1,ListingViewModel.class);
+        return modelMapper.map(listing, ListingViewModel.class);
     }
 
     @Override
@@ -85,22 +99,10 @@ public class ListingServiceImpl implements ListingService {
                         + listingServiceModel.getId().toString() + " does not exist"));
 
         Listing listingMapped = modelMapper.map(listingServiceModel, Listing.class);
-
+        listingMapped = this.onModify(listingMapped);
         Listing listing1 = listingRepository.saveAndFlush((listingMapped));
         log.info("Updated listing id: " + listing1.getId().toString());
-        return modelMapper.map(listing1,ListingViewModel.class);
+        return modelMapper.map(listing1, ListingViewModel.class);
     }
-    private Listing seedModifyLog(Listing listing){
 
-              listing.setModifiedOn(LocalDateTime.now());
-      //todo set
-      listing.setModifiedFrom("system");
-        return listing;
-    }
-    private Listing seedCreateLog(Listing listing){
-        //todo set
-      listing.setCreateFrom("system");
-        listing.setCreateOn(LocalDateTime.now());
-        return seedModifyLog(listing);
-    }
 }

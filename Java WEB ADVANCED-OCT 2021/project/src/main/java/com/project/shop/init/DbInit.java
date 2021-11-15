@@ -11,22 +11,16 @@ import org.springframework.stereotype.Component;
 public class DbInit implements CommandLineRunner {
 private final ConditionService conditionService;
 private final CategoryService categoryService;
-private final DeliveryService deliveryService;
-private final SellingFormatService sellingFormatService;
 
 
-    public DbInit(ConditionService conditionService, CategoryService categoryService, DeliveryService deliveryService, SellingFormatService sellingFormatService) {
+    public DbInit(ConditionService conditionService, CategoryService categoryService) {
         this.conditionService = conditionService;
         this.categoryService = categoryService;
-        this.deliveryService = deliveryService;
-        this.sellingFormatService = sellingFormatService;
     }
 
     @Override
     public void run(String... args) throws Exception {
         conditionService.seedData();
         categoryService.seedData();
-        deliveryService.seedData();
-        sellingFormatService.seedData();
     }
 }

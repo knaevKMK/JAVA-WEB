@@ -1,14 +1,15 @@
 package com.project.shop.model.entity;
 
+import com.project.shop.model.enums.SellingFormatEnum;
+
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "selling_formats")
 public class SellingFormat extends BaseEntity {
-    private String sellingFormatTitle;
+    private SellingFormatEnum sellingFormatTitle;
     private int daysDuration;
     private BigDecimal price;
     private int quantity;
@@ -25,11 +26,11 @@ public class SellingFormat extends BaseEntity {
         return this;
     }
 
-    public String getSellingFormatTitle() {
+    public SellingFormatEnum getSellingFormatTitle() {
         return sellingFormatTitle;
     }
 
-    public SellingFormat setSellingFormatTitle(String sellingFormatTitle) {
+    public SellingFormat setSellingFormatTitle(SellingFormatEnum sellingFormatTitle) {
         this.sellingFormatTitle = sellingFormatTitle;
         return this;
     }

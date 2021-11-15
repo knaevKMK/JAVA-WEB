@@ -1,4 +1,4 @@
-package com.project.shop.service;
+package com.project.shop.repository;
 
 import com.project.shop.model.entity.SellingFormat;
 import org.springframework.data.jpa.repository.JpaRepository;

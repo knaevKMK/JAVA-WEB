@@ -74,10 +74,11 @@ public class ListingController {
     public ResponseEntity<Response> createListing(@RequestBody ListingCreateModel listingCreateModel
                                                      //   , Authentication authentication
       ) {
+        ListingViewModel listing = listingService.createListing(modelMapper.map(listingCreateModel, ListingServiceModel.class));
         return ResponseEntity.ok(Response
                 .builder()
                 .timeStamp(LocalDateTime.now())
-                .data(Map.of("listing",listingService.createListing(modelMapper.map(listingCreateModel,ListingServiceModel.class))))
+                .data(Map.of("listing",listing))
                 .message("Listing created")
                 .status(HttpStatus.OK)
                 .statusCode(HttpStatus.OK.value())

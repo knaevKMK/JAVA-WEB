@@ -1,6 +1,10 @@
 package com.project.shop.model.entity;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -10,9 +14,23 @@ public class CategoryItem extends Item{
 
 private CategoryItem parentCategory;
 private List<CategoryItem> subCategories;
+
+private List<Listing> listings;
     public CategoryItem() {
+        this.listings=new ArrayList<>();
     }
-@OneToMany(mappedBy = "parentCategory")
+@OneToMany(mappedBy = "category",targetEntity = Listing.class,orphanRemoval = true,cascade = CascadeType.ALL)
+@NotFound(action= NotFoundAction.IGNORE)
+    public List<Listing> getListings() {
+        return listings;
+    }
+
+    public CategoryItem setListings(List<Listing> listings) {
+        this.listings = listings;
+        return this;
+    }
+
+    @OneToMany(mappedBy = "parentCategory")
     public List<CategoryItem> getSubCategories() {
         return subCategories;
     }

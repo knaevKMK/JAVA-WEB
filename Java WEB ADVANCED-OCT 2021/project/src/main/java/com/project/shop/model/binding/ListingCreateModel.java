@@ -7,12 +7,12 @@ public class ListingCreateModel {
     private String title;
     private String description;
     private String imageUrl;
-    private String itemCategoryItem;
-    private String itemCondition;
+
+    private CategoryBindingModel itemCategoryItem;
+    private ConditionBindingModel itemCondition;
     //  private Account seller;
-//todo make dto and service model next 3 fields
-    private String sellingFormat;
-    private String  deliveryOptions;
+    private SellingFormatBindingModel sellingFormat;
+    private DeliveryBindingModel  deliveryOptions;
 
     private String payment;
 
@@ -55,38 +55,38 @@ public class ListingCreateModel {
         return this;
     }
 
-    public String getItemCategoryItem() {
+    public CategoryBindingModel getItemCategoryItem() {
         return itemCategoryItem;
     }
 
-    public ListingCreateModel setItemCategoryItem(String itemCategoryItem) {
+    public ListingCreateModel setItemCategoryItem(CategoryBindingModel itemCategoryItem) {
         this.itemCategoryItem = itemCategoryItem;
         return this;
     }
 
-    public String getItemCondition() {
+    public ConditionBindingModel getItemCondition() {
         return itemCondition;
     }
 
-    public ListingCreateModel setItemCondition(String itemCondition) {
+    public ListingCreateModel setItemCondition(ConditionBindingModel itemCondition) {
         this.itemCondition = itemCondition;
         return this;
     }
 
-    public String getSellingFormat() {
+    public SellingFormatBindingModel getSellingFormat() {
         return sellingFormat;
     }
 
-    public ListingCreateModel setSellingFormat(String sellingFormat) {
+    public ListingCreateModel setSellingFormat(SellingFormatBindingModel sellingFormat) {
         this.sellingFormat = sellingFormat;
         return this;
     }
 
-    public String getDeliveryOptions() {
+    public DeliveryBindingModel getDeliveryOptions() {
         return deliveryOptions;
     }
 
-    public ListingCreateModel setDeliveryOptions(String deliveryOptions) {
+    public ListingCreateModel setDeliveryOptions(DeliveryBindingModel deliveryOptions) {
         this.deliveryOptions = deliveryOptions;
         return this;
     }

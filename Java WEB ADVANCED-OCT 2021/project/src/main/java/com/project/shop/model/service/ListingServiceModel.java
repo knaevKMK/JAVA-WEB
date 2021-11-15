@@ -1,5 +1,9 @@
 package com.project.shop.model.service;
 
+import com.project.shop.model.binding.CategoryBindingModel;
+import com.project.shop.model.binding.ConditionBindingModel;
+import com.project.shop.model.binding.DeliveryBindingModel;
+import com.project.shop.model.binding.SellingFormatBindingModel;
 import com.project.shop.model.entity.*;
 
 import java.util.UUID;
@@ -9,14 +13,15 @@ public class ListingServiceModel {
     private String title;
     private String description;
     private String imageUrl;
-    private String itemCategoryItem;
-    private String itemCondition;
-  //  private Account seller;
-//todo make dto and service model next 3 fields
-    private String sellingFormat;
-    private String  deliveryOptions;
+
+    private CategoryBindingModel itemCategoryItem;
+    private ConditionBindingModel itemCondition;
+    //  private Account seller;
+    private SellingFormatBindingModel sellingFormat;
+    private DeliveryBindingModel deliveryOptions;
 
     private String payment;
+
     public ListingServiceModel() {
     }
 
@@ -56,38 +61,38 @@ public class ListingServiceModel {
         return this;
     }
 
-    public String getItemCategoryItem() {
+    public CategoryBindingModel getItemCategoryItem() {
         return itemCategoryItem;
     }
 
-    public ListingServiceModel setItemCategoryItem(String itemCategoryItem) {
+    public ListingServiceModel setItemCategoryItem(CategoryBindingModel itemCategoryItem) {
         this.itemCategoryItem = itemCategoryItem;
         return this;
     }
 
-    public String getItemCondition() {
+    public ConditionBindingModel getItemCondition() {
         return itemCondition;
     }
 
-    public ListingServiceModel setItemCondition(String itemCondition) {
+    public ListingServiceModel setItemCondition(ConditionBindingModel itemCondition) {
         this.itemCondition = itemCondition;
         return this;
     }
 
-    public String getSellingFormat() {
+    public SellingFormatBindingModel getSellingFormat() {
         return sellingFormat;
     }
 
-    public ListingServiceModel setSellingFormat(String sellingFormat) {
+    public ListingServiceModel setSellingFormat(SellingFormatBindingModel sellingFormat) {
         this.sellingFormat = sellingFormat;
         return this;
     }
 
-    public String getDeliveryOptions() {
+    public DeliveryBindingModel getDeliveryOptions() {
         return deliveryOptions;
     }
 
-    public ListingServiceModel setDeliveryOptions(String deliveryOptions) {
+    public ListingServiceModel setDeliveryOptions(DeliveryBindingModel deliveryOptions) {
         this.deliveryOptions = deliveryOptions;
         return this;
     }

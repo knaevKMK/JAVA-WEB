@@ -29,7 +29,7 @@ public abstract class BaseEntity {
     @Id
     @GeneratedValue(generator = "uuid-string")
     @GenericGenerator(name="uuid-string", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(name = "id", updatable = false,columnDefinition = "VARBINARY(16)")
     public UUID getId() {
         return id;
     }

@@ -1,11 +1,11 @@
-package com.project.shop.repository.impl;
+package com.project.shop.service.impl;
 
 import com.project.shop.model.entity.BaseEntity;
-import com.project.shop.repository.BaseRepository;
+import com.project.shop.service.BaseService;
 
 import java.time.LocalDateTime;
 
-public class BaseRepositoryImpl<T> implements BaseRepository<T> {
+public class BaseServiceImpl<T> implements BaseService<T> {
 
     @Override
     public <T extends BaseEntity> T onCreate(T entity) {

@@ -11,7 +11,7 @@ public abstract class Item extends  BaseEntity{
 
     public Item() {
     }
-@Column(nullable = false)
+//@Column(nullable = false)
     public String getTitle() {
         return title;
     }
@@ -20,7 +20,7 @@ public abstract class Item extends  BaseEntity{
         this.title = itemTitle;
         return this;
     }
-@Column(columnDefinition = "TEXT",nullable = false)
+@Column(columnDefinition = "TEXT")
 public String getDescription() {
         return description;
     }
