@@ -56,10 +56,11 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
         log.info("Details for listing with id: " + id);
         Optional<Listing> listing = listingRepository
                 .findById(id)
-                .filter(BaseEntity::isActive);
+                //.filter(BaseEntity::isActive)
+                ;
         //  .orElseThrow(() -> new NullPointerException("Listing with this " + id.toString() + " does not exist"));
 
-        return modelMapper.map(listing, ListingViewModel.class);
+        return modelMapper.map(listing.get(), ListingViewModel.class);
     }
 
     @Override

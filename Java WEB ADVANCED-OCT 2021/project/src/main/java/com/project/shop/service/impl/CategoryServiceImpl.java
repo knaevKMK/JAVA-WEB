@@ -68,7 +68,8 @@ public class CategoryServiceImpl extends BaseServiceImpl<CategoryItem> implement
 
     @Override
     public List<CategoryViewModel> getAll() {
-        return this.categoryRepository.findAll().stream()
+        return this.categoryRepository.findByParentCategoryNull()
+                .stream()
                 .map(t -> modelMapper.map(t, CategoryViewModel.class))
                 .collect(Collectors.toList());
     }

@@ -3,20 +3,25 @@ package com.project.shop.service.impl;
 import com.project.shop.model.binding.ConditionBindingModel;
 import com.project.shop.model.entity.ConditionItem;
 import com.project.shop.model.enums.ConditionEnum;
+import com.project.shop.model.view.ConditionViewModel;
 import com.project.shop.repository.ConditionRepository;
 import com.project.shop.service.ConditionService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class ConditionServiceImpl extends BaseServiceImpl<ConditionItem> implements ConditionService {
     private final ConditionRepository conditionRepository;
+    private final ModelMapper modelMapper;
 
-    public ConditionServiceImpl(ConditionRepository conditionRepository) {
+    public ConditionServiceImpl(ConditionRepository conditionRepository, ModelMapper modelMapper) {
         this.conditionRepository = conditionRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -29,8 +34,8 @@ public class ConditionServiceImpl extends BaseServiceImpl<ConditionItem> impleme
                     ConditionItem conditionItem = new ConditionItem();
                     conditionItem
                             .setConditionTitle(cEnum)
-                            .setTitle(cEnum.name())
-                            .setDescription("Description for " + cEnum.name());
+                            .setTitle(cEnum.getTitle())
+                            .setDescription("Description for " + cEnum.getTitle());
                     conditionItem = this.onCreate(conditionItem);
 
                     return conditionItem;
@@ -47,5 +52,14 @@ public class ConditionServiceImpl extends BaseServiceImpl<ConditionItem> impleme
         ConditionItem conditionItem = conditionRepository.findByTitle(itemCondition.getTitle().name())
                 .orElseThrow(() -> new NullPointerException("Condition does not exist"));
         return conditionItem;
+    }
+
+    @Override
+    public Collection<ConditionViewModel> getAll() {
+        return conditionRepository
+                .findAll()
+                .stream()
+                .map(e->modelMapper.map(e,ConditionViewModel.class))
+                .collect(Collectors.toList());
     }
 }

@@ -7,12 +7,12 @@ public class ListingViewModel {
     private String title;
     private String description;
     private String imageUrl;
-    private String itemCategoryItem;
-    private String itemCondition;
+    private CategoryViewModel category;
+    private ConditionViewModel condition;
     //  private Account seller;
 //todo make dto and service model next 3 fields
-    private String sellingFormat;
-    private String  deliveryOptions;
+    private SellingVewModel sellingFormat;
+    private DeliveryViewModel  deliveryOptions;
 
     private String payment;
 
@@ -55,38 +55,38 @@ public class ListingViewModel {
         return this;
     }
 
-    public String getItemCategoryItem() {
-        return itemCategoryItem;
+    public CategoryViewModel getCategory() {
+        return category;
     }
 
-    public ListingViewModel setItemCategoryItem(String itemCategoryItem) {
-        this.itemCategoryItem = itemCategoryItem;
+    public ListingViewModel setCategory(CategoryViewModel category) {
+        this.category = category;
         return this;
     }
 
-    public String getItemCondition() {
-        return itemCondition;
+    public ConditionViewModel getCondition() {
+        return condition;
     }
 
-    public ListingViewModel setItemCondition(String itemCondition) {
-        this.itemCondition = itemCondition;
+    public ListingViewModel setCondition(ConditionViewModel condition) {
+        this.condition = condition;
         return this;
     }
 
-    public String getSellingFormat() {
+    public SellingVewModel getSellingFormat() {
         return sellingFormat;
     }
 
-    public ListingViewModel setSellingFormat(String sellingFormat) {
+    public ListingViewModel setSellingFormat(SellingVewModel sellingFormat) {
         this.sellingFormat = sellingFormat;
         return this;
     }
 
-    public String getDeliveryOptions() {
+    public DeliveryViewModel getDeliveryOptions() {
         return deliveryOptions;
     }
 
-    public ListingViewModel setDeliveryOptions(String deliveryOptions) {
+    public ListingViewModel setDeliveryOptions(DeliveryViewModel deliveryOptions) {
         this.deliveryOptions = deliveryOptions;
         return this;
     }

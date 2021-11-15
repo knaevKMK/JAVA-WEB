@@ -2,12 +2,13 @@ package com.project.shop.model.view;
 
 import com.project.shop.model.entity.CategoryItem;
 
+import java.util.Collection;
 import java.util.UUID;
 
 public class CategoryViewModel {
     private UUID id;
     private String title;
- private String parent;
+ private Collection<CategoryViewModel> subList;
 
     public CategoryViewModel() {
     }
@@ -30,12 +31,12 @@ public class CategoryViewModel {
         return this;
     }
 
-    public String getParent() {
-        return parent;
+    public Collection<CategoryViewModel> getSubList() {
+        return subList;
     }
 
-    public CategoryViewModel setParent(String parent) {
-        this.parent = parent;
+    public CategoryViewModel setSubList(Collection<CategoryViewModel> subList) {
+        this.subList = subList;
         return this;
     }
 }
