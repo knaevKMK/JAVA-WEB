@@ -77,7 +77,7 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
     }
 
     @Override
-    public ListingViewModel createListing(ListingServiceModel listingServiceModel) {
+    public UUID createListing(ListingServiceModel listingServiceModel) {
         Listing listing = modelMapper.map(listingServiceModel, Listing.class);
 
         listing.setCategory(categoryService.find(listingServiceModel.getItemCategoryItem()));
@@ -88,7 +88,7 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
 
            Listing listing1 = listingRepository.saveAndFlush(listing);
         log.info("Create listing id: " + listing.getId().toString());
-        return modelMapper.map(listing, ListingViewModel.class);
+        return listing1.getId();
     }
 
     @Override

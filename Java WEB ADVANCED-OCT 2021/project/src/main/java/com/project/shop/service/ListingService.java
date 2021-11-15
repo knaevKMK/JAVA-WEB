@@ -15,7 +15,7 @@ public interface ListingService {
 
     boolean deleteListing(UUID id);
 
-    ListingViewModel createListing(ListingServiceModel listingServiceModel);
+    UUID createListing(ListingServiceModel listingServiceModel);
 
     ListingViewModel updateListing(ListingServiceModel listingServiceModel);
 }

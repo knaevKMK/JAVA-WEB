@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -79,8 +80,8 @@ public class CategoryServiceImpl extends BaseServiceImpl<CategoryItem> implement
                     .orElseThrow(() -> new EntityNotFoundException("Category does not exist"));
         }
       CategoryItem categoryItem = categoryRepository
-               .findByTitle (itemCategoryItem.getTitle())
-                .orElseThrow(() -> new EntityNotFoundException("Category does not exist"));
+               .findByTitleAndParentCategoryTitle (itemCategoryItem.getTitle(),itemCategoryItem.getParentTitle())
+               .orElseThrow(() -> new EntityNotFoundException("Category does not exist"));
         return categoryItem;
     }
 }

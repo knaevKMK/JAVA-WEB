@@ -74,11 +74,11 @@ public class ListingController {
     public ResponseEntity<Response> createListing(@RequestBody ListingCreateModel listingCreateModel
                                                      //   , Authentication authentication
       ) {
-        ListingViewModel listing = listingService.createListing(modelMapper.map(listingCreateModel, ListingServiceModel.class));
+        var result = listingService.createListing(modelMapper.map(listingCreateModel, ListingServiceModel.class));
         return ResponseEntity.ok(Response
                 .builder()
                 .timeStamp(LocalDateTime.now())
-                .data(Map.of("listing",listing))
+                .data(Map.of("id",result))
                 .message("Listing created")
                 .status(HttpStatus.OK)
                 .statusCode(HttpStatus.OK.value())
@@ -92,7 +92,7 @@ public class ListingController {
         if(listingCreateModel.getId() != id){
             return ResponseEntity.notFound().build();
         }
-        ListingViewModel listing = listingService.createListing(modelMapper.map(listingCreateModel, ListingServiceModel.class));
+        ListingViewModel listing = listingService.updateListing(modelMapper.map(listingCreateModel, ListingServiceModel.class));
 
         return ResponseEntity.ok(Response
                 .builder()
