@@ -10,6 +10,10 @@ import { NavBarComponent } from './fragments/nav-bar/nav-bar/nav-bar.component';
 import { FooterComponent } from './fragments/footer/footer/footer.component';
 import { SearchBarComponent } from './fragments/search-bar/search-bar.component';
 import { HomeComponent } from './home/home.component';
+import { SiginComponent } from './usr/sigin/sigin.component';
+import { RegisterComponent } from './usr/register/register.component';
+import { ProfileComponent } from './usr/profile/profile.component';
+import { SettingsComponent } from './usr/settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +24,11 @@ import { HomeComponent } from './home/home.component';
     NavBarComponent,
     FooterComponent,
     SearchBarComponent,
-    HomeComponent
+    HomeComponent,
+    SiginComponent,
+    RegisterComponent,
+    ProfileComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
