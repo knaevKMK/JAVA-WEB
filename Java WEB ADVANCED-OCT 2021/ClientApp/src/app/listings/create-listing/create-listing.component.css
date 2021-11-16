@@ -1,0 +1,11 @@
+div{
+    margin: auto;
+    padding: 3px;
+}
+.g-3{
+    padding: 3px 3px 3px 0;
+    margin: 3px 3px 3px 0;
+border: 3px solid grey;
+border-radius: 5px;
+background-color:beige;
+}
