@@ -8,6 +8,8 @@ import { CreateListingComponent } from './listings/create-listing/create-listing
 import { DetailsListingComponent } from './listings/details-listing/details-listing.component';
 import { NavBarComponent } from './fragments/nav-bar/nav-bar/nav-bar.component';
 import { FooterComponent } from './fragments/footer/footer/footer.component';
+import { SearchBarComponent } from './fragments/search-bar/search-bar.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { FooterComponent } from './fragments/footer/footer/footer.component';
     CreateListingComponent,
     DetailsListingComponent,
     NavBarComponent,
-    FooterComponent
+    FooterComponent,
+    SearchBarComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
