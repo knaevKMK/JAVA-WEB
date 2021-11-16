@@ -14,6 +14,8 @@ import { SiginComponent } from './usr/sigin/sigin.component';
 import { RegisterComponent } from './usr/register/register.component';
 import { ProfileComponent } from './usr/profile/profile.component';
 import { SettingsComponent } from './usr/settings/settings.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,9 @@ import { SettingsComponent } from './usr/settings/settings.component';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
     AppRoutingModule
   ],
   providers: [],

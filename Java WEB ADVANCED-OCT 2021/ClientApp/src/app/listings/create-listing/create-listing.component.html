@@ -6,26 +6,26 @@
 
 <br>
 <div class="col-lg-10 col-md-8">
-            <form>
+            <form [formGroup]= "createForm" (ngSubmit)="onCreate()">
 
                 <div class="row g-3 align-items-center">
 
                     <div class="row align-items-start">
                         <div class="col-1">
-                            <label for="inputPassword5" class="form-label">Title:</label>
+                            <label for="title" class="form-label">Title:</label>
                         </div>
                         <div class="col">
-                            <input type="text" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock">
+                            <input formControlName="title" type="text" class="form-control" >
                         </div>
                     </div>
 
                     <div class="row align-items-start">
-                        <div class="row">
+                        <div class="row" formGroupName="category">
                             <div class="col-1">
-                                <label for="inputPassword5" class="form-label">Category:</label>
+                                <label for="title" class="form-label">Category:</label>
                             </div>
                             <div class="col-3">
-                                <select formControlName="" class="form-control">
+                                <select formControlName="title" class="form-control">
                                     <option selected> Select...</option>
                                     <option >Fashion</option>
                                     <option >Auto</option>
@@ -37,12 +37,12 @@
                     </div>
 
                     <div class="row align-items-start">
-                        <div class="row">
+                        <div class="row" formGroupName="condition">
                             <div class="col-2">
-                                <label for="inputPassword5" class="form-label">Coondition:</label>
+                                <label for="title" class="form-label">Coondition:</label>
                             </div>
                             <div class="col-3">
-                                <select formControlName="" class="form-control">
+                                <select formControlName="title" class="form-control">
                                     <option selected> Select...</option>
                                     <option >NEW</option>
                                     <option >NEW OTHER</option>
@@ -58,30 +58,30 @@
 
                     <div class="row align-items-start">
                         <div class="col-1">
-                            <label for="inputPassword5" class="form-label">Image Url</label>
+                            <label for="imageUrl" class="form-label">Image Url</label>
                         </div>
                         <div class="col">
-                            <input type="text" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock">
+                            <input type="text" class="form-control" formControlName="imageUrl">
                         </div>
                     </div>
 
                     <div class="row align-items-start">
-                        <label for="inputPassword5" class="form-label">Description</label>
-                        <textarea type="text" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock"></textarea>
+                        <label for="description" class="form-label">Description</label>
+                        <textarea type="text" class="form-control" formControlName="description"></textarea>
                     </div>
 
                 </div>
 
-                <div class="container-fluid g-3">
+                <div class="container-fluid g-3" formGroupName="sellingFormat" >
                     <div class="row">
                         <h5>Selling Format</h5>
                     </div>
-                    <div class="row align-items-start">
+                    <div class="row align-items-start" >
                         <div class="col-1">
-                            <label for="inputPassword5" class="form-label">Format</label>
+                            <label for="title" class="form-label">Format</label>
                         </div>
                     <div class="col-3">
-                        <select formControlName="" class="form-control">
+                        <select formControlName="title" class="form-control">
                             <option selected> Select...</option>
                             <option > Action</option>
                             <option > Fixed</option>
@@ -89,10 +89,10 @@
                      </div>
                      <div class="col"></div>
                    <div class="col-1">
-                        <label for="inputPassword5" class="form-label">Duraton</label>
+                        <label for="daysDuration" class="form-label">Duraton</label>
                     </div>
                     <div class="col-1">
-                        <input type="number" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock">
+                        <input type="number" class="form-control" formControlName="daysDuration">
                     </div>
                     <div class="col"><p>days</p></div>
                     <div class="col"></div>
@@ -100,17 +100,17 @@
 
                 <div class="row align-items-start">
                     <div class="col-1">
-                        <label for="inputPassword5" class="form-label">Price</label>
+                        <label for="price" class="form-label">Price</label>
                     </div>
                     <div class="col-2">
-                        <input type="number" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock">
+                        <input type="number" formControlName="price" class="form-control" >
                     </div>
                     <div class="col"></div>
                <div class="col-1">
-                   <label for="inputPassword5" class="form-label">Quantity</label>
+                   <label for="quantity" class="form-label">Quantity</label>
                </div>
                <div class="col-1">
-                   <input type="number" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock">
+                   <input type="number" formControlName="quantity"  class="form-control" >
                </div>
 <div class="col">pcs</div>
 <div class="col"></div>
@@ -122,12 +122,12 @@
                 <div class="row">
                     <h5>Delivery</h5>
                 </div>
-                <div class="row">
+                <div class="row" formGroupName="deliveryOptions">
                   <div class="col">
-                    <label for="inputPassword5" class="form-label">Delivery Service:</label>
+                    <label for="deliveryService" class="form-label">Delivery Service:</label>
                 </div>
                     <div class="col-5">
-                    <select formControlName="" class="form-control">
+                    <select formControlName="deliveryService" class="form-control">
                         <option selected> Select...</option>
                         <option >Courier</option>
                         <option >Post</option>
@@ -136,10 +136,11 @@
                 </div>
                 <div class="col-1"></div>
                 <div class="col-1">
-                    <label for="inputPassword5" class="form-label">Coast:</label></div>
+                    <label for="price" class="form-label">Coast:</label></div>
                     <div class="col-1">
-                    <input type="number" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock">
+                    <input type="number" formControlName="price" class="form-control" >
                 </div>
+
                 <div class="col-3">               </div>
 
             </div>
@@ -154,7 +155,7 @@
                             <label class="form-label">Payment Method:</label>
                        </div>
                         <div class="col-3">
-                            <input type="text" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock">
+                            <input type="text" formControlName="payment" id class="form-control" >
                         </div>
                         <div class="col"></div>
                     </div>
