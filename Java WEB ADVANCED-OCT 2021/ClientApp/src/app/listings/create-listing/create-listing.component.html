@@ -25,11 +25,11 @@
                                 <label for="title" class="form-label">Category:</label>
                             </div>
                             <div class="col-3">
-                                <select formControlName="title" class="form-control">
-                                    <option selected> Select...</option>
-                                    <option >Fashion</option>
-                                    <option >Auto</option>
-                                    <option >Service</option>
+                                <select formControlName="id" class="form-control">
+                                    <option [ngValue]="null" disabled>Select...</option>
+                                    <optgroup *ngFor="let mainCat of categories" label="{{mainCat.title}}">
+                                    <option *ngFor="let subCat of mainCat.subList" [ngValue]="subCat.id">{{subCat.title}}</option>
+                                    </optgroup>
                                 </select>
                             </div>
                             <div class="col"></div>
@@ -42,14 +42,9 @@
                                 <label for="title" class="form-label">Coondition:</label>
                             </div>
                             <div class="col-3">
-                                <select formControlName="title" class="form-control">
-                                    <option selected> Select...</option>
-                                    <option >NEW</option>
-                                    <option >NEW OTHER</option>
-                                    <option >USED</option>
-                                    <option >REFUBISHED</option>
-                                    <option >DEFECT</option>
-                                    <option >FOR PARTS</option>
+                                <select formControlName="id" class="form-control">
+                                    <option [ngValue]="null" disabled>Select...</option>
+                                    <option *ngFor="let condition of conditions" [ngValue]="condition.id">{{condition.title}}</option>
                                 </select>
                             </div>
                             <div class="col"></div>
@@ -78,13 +73,13 @@
                     </div>
                     <div class="row align-items-start" >
                         <div class="col-1">
-                            <label for="title" class="form-label">Format</label>
+                            <label for="sellingFormatTitle" class="form-label">Format</label>
                         </div>
                     <div class="col-3">
-                        <select formControlName="title" class="form-control">
-                            <option selected> Select...</option>
-                            <option > Action</option>
-                            <option > Fixed</option>
+                        <select formControlName="sellingFormatTitle" class="form-control">
+                            <option [ngValue]="null" disabled>Select...</option>
+                            <option *ngFor="let format of sellingFormats" value="{{format}}">{{format}}</option>
+
                         </select>
                      </div>
                      <div class="col"></div>
@@ -120,18 +115,16 @@
 
             <div class="row g-3 align-items-center">
                 <div class="row">
-                    <h5>Delivery</h5>
+                    <h5>Domestic Delivery</h5>
                 </div>
-                <div class="row" formGroupName="deliveryOptions">
+                <div class="row" formGroupName="deliveryDomestic">
                   <div class="col">
                     <label for="deliveryService" class="form-label">Delivery Service:</label>
                 </div>
                     <div class="col-5">
                     <select formControlName="deliveryService" class="form-control">
-                        <option selected> Select...</option>
-                        <option >Courier</option>
-                        <option >Post</option>
-
+                        <option [ngValue]="null" disabled>Select...</option>
+                        <option *ngFor="let _service of deliveryDomestic" [ngValue]="_service">{{_service}}</option>
                       </select>
                 </div>
                 <div class="col-1"></div>
@@ -144,6 +137,29 @@
                 <div class="col-3">               </div>
 
             </div>
+            <div class="row">
+                <h5>Internatonal Delivery</h5>
+            </div>
+            <div class="row" formGroupName="deliveryInternational">
+              <div class="col">
+                <label for="deliveryService" class="form-label">Delivery Service:</label>
+            </div>
+                <div class="col-5">
+                <select formControlName="deliveryService" class="form-control">
+                    <option [ngValue]="null" disabled>Select...</option>
+                    <option *ngFor="let _service of deliveryInternatonal" [ngValue]="_service">{{_service}}</option>
+                  </select>
+            </div>
+            <div class="col-1"></div>
+            <div class="col-1">
+                <label for="price" class="form-label">Coast:</label></div>
+                <div class="col-1">
+                <input type="number" formControlName="price" class="form-control" >
+            </div>
+
+            <div class="col-3">               </div>
+
+        </div>
             </div>
 
              <div class="row g-3 align-items-center">
@@ -162,7 +178,10 @@
              </div>
 
                 <div class="row">
-                <button type="submit" class="btn btn-primary">Create</button>
+                    <div class="col-1"> <button type="submit" class="btn btn-success">Create</button></div>
+                    <div class="col-1">  <button type="button" (click)="onBack()" class="btn btn-secondary">Back</button></div>
+                    <div class="col-1"> <button type="button" (click)="onClear()" class="btn btn-danger">Clear</button></div>
+                    <div class="col"></div>
                 </div>
             </form>
       </div>

@@ -21,7 +21,8 @@ public class Listing extends Item {
     private Set<Account> watchers;
     private Order order;
     private SellingFormat sellingFormat;
-    private DeliveryOptions deliveryOptions;
+    private DeliveryOptions deliveryDomestic;
+    private DeliveryOptions deliveryInternational;
     private List<Offer> offers;
     private String payment;
 
@@ -115,13 +116,23 @@ public class Listing extends Item {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "delivery_id", referencedColumnName = "id")
-    public DeliveryOptions getDeliveryOptions() {
-        return deliveryOptions;
+    @JoinColumn(name = "delivery_domstic_id", referencedColumnName = "id")
+    public DeliveryOptions getDeliveryDomestic() {
+        return deliveryDomestic;
     }
 
-    public Listing setDeliveryOptions(DeliveryOptions deliveryOptions) {
-        this.deliveryOptions = deliveryOptions;
+    public Listing setDeliveryDomestic(DeliveryOptions deliveryOptions) {
+        this.deliveryDomestic = deliveryOptions;
+        return this;
+    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "delivery_international_id", referencedColumnName = "id")
+    public DeliveryOptions getDeliveryInternational() {
+        return deliveryInternational;
+    }
+
+    public Listing setDeliveryInternational(DeliveryOptions deliveryOptions) {
+        this.deliveryInternational = deliveryOptions;
         return this;
     }
 

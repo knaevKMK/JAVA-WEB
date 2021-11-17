@@ -14,11 +14,12 @@ public class ListingServiceModel {
     private String description;
     private String imageUrl;
 
-    private CategoryBindingModel itemCategoryItem;
-    private ConditionBindingModel itemCondition;
+    private CategoryBindingModel category;
+    private ConditionBindingModel condition;
     //  private Account seller;
     private SellingFormatBindingModel sellingFormat;
-    private DeliveryBindingModel deliveryOptions;
+    private DeliveryBindingModel deliveryDomestic;
+    private DeliveryBindingModel deliveryInternational;
 
     private String payment;
 
@@ -61,23 +62,7 @@ public class ListingServiceModel {
         return this;
     }
 
-    public CategoryBindingModel getItemCategoryItem() {
-        return itemCategoryItem;
-    }
 
-    public ListingServiceModel setItemCategoryItem(CategoryBindingModel itemCategoryItem) {
-        this.itemCategoryItem = itemCategoryItem;
-        return this;
-    }
-
-    public ConditionBindingModel getItemCondition() {
-        return itemCondition;
-    }
-
-    public ListingServiceModel setItemCondition(ConditionBindingModel itemCondition) {
-        this.itemCondition = itemCondition;
-        return this;
-    }
 
     public SellingFormatBindingModel getSellingFormat() {
         return sellingFormat;
@@ -88,21 +73,48 @@ public class ListingServiceModel {
         return this;
     }
 
-    public DeliveryBindingModel getDeliveryOptions() {
-        return deliveryOptions;
-    }
-
-    public ListingServiceModel setDeliveryOptions(DeliveryBindingModel deliveryOptions) {
-        this.deliveryOptions = deliveryOptions;
-        return this;
-    }
-
     public String getPayment() {
         return payment;
     }
 
     public ListingServiceModel setPayment(String payment) {
         this.payment = payment;
+        return this;
+    }
+
+    public CategoryBindingModel getCategory() {
+        return category;
+    }
+
+    public ListingServiceModel setCategory(CategoryBindingModel category) {
+        this.category = category;
+        return this;
+    }
+
+    public ConditionBindingModel getCondition() {
+        return condition;
+    }
+
+    public ListingServiceModel setCondition(ConditionBindingModel condition) {
+        this.condition = condition;
+        return this;
+    }
+
+    public DeliveryBindingModel getDeliveryDomestic() {
+        return deliveryDomestic;
+    }
+
+    public ListingServiceModel setDeliveryDomestic(DeliveryBindingModel deliveryDomestic) {
+        this.deliveryDomestic = deliveryDomestic;
+        return this;
+    }
+
+    public DeliveryBindingModel getDeliveryInternational() {
+        return deliveryInternational;
+    }
+
+    public ListingServiceModel setDeliveryInternational(DeliveryBindingModel deliveryInternational) {
+        this.deliveryInternational = deliveryInternational;
         return this;
     }
 }

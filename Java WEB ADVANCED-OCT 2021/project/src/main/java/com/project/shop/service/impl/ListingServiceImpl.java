@@ -13,9 +13,11 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 @Service
@@ -44,11 +46,17 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
     @Override
     public Collection<ListingViewModel> getAllListings(int page, int limit) {
         log.info("Fetch Listings from page " + page + " with " + limit + "/page");
-        return listingRepository.findAll(PageRequest.of(page, limit))
+        Stream<Listing> listingStream = listingRepository.findAll(PageRequest.of(page, limit))
                 .stream()
-                .filter(BaseEntity::isActive)
-                .map(l -> modelMapper.map(l, ListingViewModel.class))
-                .collect(Collectors.toList());
+                .filter(BaseEntity::isActive);
+        Stream<ListingViewModel> collect = listingStream
+                .map(l -> {
+                    ListingViewModel model = modelMapper.map(l, ListingViewModel.class);
+                    System.out.println();
+                    return  model;
+                });
+
+        return collect.collect(Collectors.toList());
     }
 
     @Override
@@ -81,10 +89,11 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
     public UUID createListing(ListingServiceModel listingServiceModel) {
         Listing listing = modelMapper.map(listingServiceModel, Listing.class);
 
-        listing.setCategory(categoryService.find(listingServiceModel.getItemCategoryItem()));
-        listing.setCondition(conditionService.find(listingServiceModel.getItemCondition()));
+        listing.setCategory(categoryService.find(listingServiceModel.getCategory()));
+        listing.setCondition(conditionService.find(listingServiceModel.getCondition()));
         listing.setSellingFormat(sellingFormatService.create(listingServiceModel.getSellingFormat()));
-        listing.setDeliveryOptions(deliveryService.create(listingServiceModel.getDeliveryOptions()));
+        listing.setDeliveryDomestic(deliveryService.create(listingServiceModel.getDeliveryDomestic()));
+        listing.setDeliveryInternational(deliveryService.create(listingServiceModel.getDeliveryInternational()));
         listing = this.onCreate(listing);
 
            Listing listing1 = listingRepository.saveAndFlush(listing);

@@ -8,11 +8,12 @@ public class ListingCreateModel {
     private String description;
     private String imageUrl;
 
-    private CategoryBindingModel itemCategoryItem;
-    private ConditionBindingModel itemCondition;
+    private CategoryBindingModel category;
+    private ConditionBindingModel condition;
     //  private Account seller;
     private SellingFormatBindingModel sellingFormat;
-    private DeliveryBindingModel  deliveryOptions;
+    private DeliveryBindingModel  deliveryDomestic;
+    private DeliveryBindingModel  deliveryInternational;
 
     private String payment;
 
@@ -55,21 +56,21 @@ public class ListingCreateModel {
         return this;
     }
 
-    public CategoryBindingModel getItemCategoryItem() {
-        return itemCategoryItem;
+    public CategoryBindingModel getCategory() {
+        return category;
     }
 
-    public ListingCreateModel setItemCategoryItem(CategoryBindingModel itemCategoryItem) {
-        this.itemCategoryItem = itemCategoryItem;
+    public ListingCreateModel setCategory(CategoryBindingModel category) {
+        this.category = category;
         return this;
     }
 
-    public ConditionBindingModel getItemCondition() {
-        return itemCondition;
+    public ConditionBindingModel getCondition() {
+        return condition;
     }
 
-    public ListingCreateModel setItemCondition(ConditionBindingModel itemCondition) {
-        this.itemCondition = itemCondition;
+    public ListingCreateModel setCondition(ConditionBindingModel condition) {
+        this.condition = condition;
         return this;
     }
 
@@ -82,12 +83,21 @@ public class ListingCreateModel {
         return this;
     }
 
-    public DeliveryBindingModel getDeliveryOptions() {
-        return deliveryOptions;
+    public DeliveryBindingModel getDeliveryDomestic() {
+        return deliveryDomestic;
     }
 
-    public ListingCreateModel setDeliveryOptions(DeliveryBindingModel deliveryOptions) {
-        this.deliveryOptions = deliveryOptions;
+    public ListingCreateModel setDeliveryDomestic(DeliveryBindingModel deliveryDomestic) {
+        this.deliveryDomestic = deliveryDomestic;
+        return this;
+    }
+
+    public DeliveryBindingModel getDeliveryInternational() {
+        return deliveryInternational;
+    }
+
+    public ListingCreateModel setDeliveryInternational(DeliveryBindingModel deliveryInternational) {
+        this.deliveryInternational = deliveryInternational;
         return this;
     }
 

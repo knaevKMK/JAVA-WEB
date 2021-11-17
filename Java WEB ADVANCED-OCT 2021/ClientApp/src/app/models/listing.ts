@@ -1,4 +1,10 @@
 import { FormBuilder, Validators } from "@angular/forms";
+import { CategoryCreateForm, CategoryView } from "./category";
+import { ConditionCreateForm, ConditionView } from "./condition";
+import { DeliveryCreateForm, DeliveryView } from "./delivery";
+import { SellingCreateForm, SellingFormatView } from "./sellingFormat";
+
+
 export function ListingCreateForm(fb: FormBuilder) {
     return {
         id: [null, Validators.required],
@@ -8,34 +14,36 @@ export function ListingCreateForm(fb: FormBuilder) {
         condition: fb.group(ConditionCreateForm()),
         category: fb.group(CategoryCreateForm()),
         sellingFormat: fb.group(SellingCreateForm()),
-        deliveryOptions: fb.group(DeliveryCreateForm()),
+        deliveryDomestic: fb.group(DeliveryCreateForm()),
+        deliveryInternational: fb.group(DeliveryCreateForm()),
         payment: [null, Validators.required],
     }
 }
-function ConditionCreateForm() {
-    return {
-        title: [null, Validators.required],
-        id: [null, Validators.required],
-    };
-}
-function CategoryCreateForm() {
-    return {
-        title: [null, Validators.required],
-        parentTitle: [null, Validators.required],
-        id: [null, Validators.required],
+
+export class ListingView {
+    title: string;
+    description: string;
+    imageUrl: string;
+    condition: ConditionView;
+    category: CategoryView;
+    sellingFormat: SellingFormatView;
+    deliveryDomestic: DeliveryView;
+    deliveryInternational: DeliveryView;
+    payment: string
+
+    constructor() {
+        this.title = "";
+        this.description = "";
+        this.imageUrl = ""
+        this.condition = { title: "", id: '' }
+        this.category = { id: '', title: '', subList: [] }
+        this.sellingFormat = { id: '', title: '', duration: 1, price: 0, quantity: 0 }
+        this.deliveryDomestic = { deliveryArea: '', deliveryService: [], price: 0 }
+        this.deliveryInternational = { deliveryArea: '', deliveryService: [], price: 0 }
+        this.payment = ''
+
     }
 }
-function DeliveryCreateForm() {
-    return {
-        deliveryService: [null, Validators.required],
-        price: [null, Validators.required],
-    }
-}
-function SellingCreateForm() {
-    return {
-        title: [null, Validators.required],
-        daysDuration: [null, Validators.required],
-        price: [null, Validators.required],
-        quantity: [null, Validators.required],
-    }
-}
+
+
+

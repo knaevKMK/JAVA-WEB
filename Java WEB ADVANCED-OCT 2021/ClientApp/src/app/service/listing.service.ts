@@ -1,15 +1,21 @@
 import { Inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ListingService {
-  private url: string;
-  constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    this.url = baseUrl + "api/listings";
+  private url = "http://localhost:8080/api/listings";
+  constructor(private http: HttpClient) {
   }
-
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST'
+      // 'Authorization': ''
+    })
+  };
   getAll() {
     return this.http.get(this.url + "/all")
   }

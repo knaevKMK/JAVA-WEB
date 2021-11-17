@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.UUID;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/listings")
 public class ListingController {
@@ -69,7 +70,6 @@ public class ListingController {
                 .build()
         );
     }
-
     @PostMapping("add")
     public ResponseEntity<Response> createListing(@RequestBody ListingCreateModel listingCreateModel
                                                      //   , Authentication authentication

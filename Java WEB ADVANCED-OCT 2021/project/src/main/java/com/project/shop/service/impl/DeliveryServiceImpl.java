@@ -25,6 +25,7 @@ public class DeliveryServiceImpl extends BaseServiceImpl<DeliveryOptions> implem
 
     @Override
     public DeliveryOptions create(DeliveryBindingModel deliveryOptionsModel) {
+        if (deliveryOptionsModel==null){return null;}
         DeliveryOptions deliveryOptions = modelMapper.map(deliveryOptionsModel, DeliveryOptions.class);
         return deliveryRepository.saveAndFlush(deliveryOptions);
     }
