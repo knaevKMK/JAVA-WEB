@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ListingService } from 'src/app/service/listing.service';
 
 @Component({
   selector: 'app-all-listings',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AllListingsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private listingService: ListingService) { }
 
   ngOnInit(): void {
+    this.listingService.getAll()
+      .subscribe(result => {
+        console.log(result)
+      })
   }
 
 }
