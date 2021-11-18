@@ -1,15 +1,15 @@
-<!-- <app-search-bar></app-search-bar>
+ <app-search-bar></app-search-bar>
 
 <div class="container-fluid">
     <div class="row g-3 align-items-start">
 <div class="row">
-    <h2>Create Lsting</h2>
+
 </div>
 
 <br>
 <div class="col-lg-10 col-md-8">
             <form  >
-
+                    <!-- condition -->
                 <div class="row g-3 align-items-center">
 
                     <div class="row align-items-start">
@@ -17,28 +17,36 @@
                             <label  class="form-label">Title:</label>
                         </div>
                         <div class="col">
-                            <input value="" type="text" class="form-control" >
+                            <input disabled value="{{listing.title}}" type="text" class="form-control" >
                         </div>
                     </div>
 
 
 
+<div class="row">
+    <div class="col-5"><img src="{{listing.imageUrl}}" alt=""></div>
+    <div class="col">
 
-                    <div class="row align-items-start">
-                        <div class="col-1">
-                           <img src="" alt="">
-                        </div>
+        <h2>{{listing.title}}</h2>
+        <h4>Condition: {{listing.condition.title}}</h4>
 
-                    </div>
 
-                    <div class="row align-items-start">
-                        <label  class="form-label">Description</label>
-                        <textarea type="text" class="form-control" ></textarea>
-                    </div>
+    <form>
+        <div>
+       <h5>Price:</h5>  <input type="number" value="{{listing.sellingFormat.price | number :'.2-2'}}"> BGN
+        </div>
 
-                </div>
 
-                <div class="container-fluid g-3"  >
+    </form>
+
+
+
+    </div>
+
+</div>
+
+
+                <div class="container-fluid g-3" *ngIf="listing.sellingFormat" >
                     <div class="row">
                         <h5>Selling Format</h5>
                     </div>
@@ -48,7 +56,7 @@
                         </div>
                     <div class="col-3">
                         <select  class="form-control">
-                            <option [ngValue]="null" disabled></option>
+                            <option [ngValue]="" disabled></option>
 
                         </select>
                      </div>
@@ -82,54 +90,77 @@
             </div>
             </div>
 
+            <!-- description -->
 
-            <div class="row g-3 align-items-center">
+            <div class="row align-items-start">
+                <div class="col-1">
+                   <img src="" alt="">
+                </div>
+
+            </div>
+
+            <div class="row align-items-start">
+                <label  class="form-label">Description</label>
+                <textarea disabled type="text" class="form-control" >{{listing.description}}</textarea>
+            </div>
+
+             </div>
+
+
+            <div class="row g-3 align-items-center" *ngIf="listing.deliveryDomestic">
                 <div class="row">
                     <h5>Domestic Delivery</h5>
                 </div>
+
                 <div class="row" >
-                  <div class="col">
-                    <label  class="form-label">Delivery Service:</label>
-                </div>
+                    <div class="col">
+                        <label  class="form-label">Delivery Service:</label>
+                    </div>
                     <div class="col-5">
-                    <select class="form-control">
-                        <option [ngValue]="null" disabled>Select...</option>
+                        <select class="form-control">
+                            <option >Select...</option>
 
-                      </select>
-                </div>
-                <div class="col-1"></div>
-                <div class="col-1">
-                    <label for="price" class="form-label">Coast:</label></div>
+                        </select>
+                     </div>
+                    <div class="col-1"></div>
                     <div class="col-1">
-                    <input type="number"  class="form-control" >
+                        <label for="price" class="form-label">Coast:</label>
+                    </div>
+                    <div class="col-1">
+                          <input type="number"  class="form-control" >
+                    </div>
+                   <div class="col">               </div>
+
                 </div>
-
-                <div class="col-3">               </div>
-
-            </div>
-            <div class="row">
-                <h5>Internatonal Delivery</h5>
-            </div>
-            <div class="row" >
-              <div class="col">
-                <labelclass="form-label">Delivery Service:</label>
-            </div>
-                <div class="col-5">
-                <selectclass="form-control">
-                    <option [ngValue]="null" disabled>Select...</option>
-                      </select>
-            </div>
-            <div class="col-1"></div>
-            <div class="col-1">
-                <label  class="form-label">Coast:</label></div>
-                <div class="col-1">
-                <input type="number"  class="form-control" >
             </div>
 
-            <div class="col-3">               </div>
 
-        </div>
-            </div>
+                <div class="row g-3 align-items-center" *ngIf="listing.deliveryInternational">
+                    <div class="row">
+                        <h5>International Delivery</h5>
+                    </div>
+
+                    <div class="row" >
+                        <div class="col">
+                            <label  class="form-label">Delivery Service:</label>
+                        </div>
+                        <div class="col-5">
+                            <select class="form-control">
+                                <option >Select...</option>
+
+                            </select>
+                         </div>
+                        <div class="col-1"></div>
+                        <div class="col-1">
+                            <label for="price" class="form-label">Coast:</label>
+                        </div>
+                        <div class="col-1">
+                              <input type="number"  class="form-control" >
+                        </div>
+                       <div class="col">               </div>
+
+                    </div>
+                </div>
 
              <div class="row g-3 align-items-center">
                 <div class="row">
@@ -155,4 +186,4 @@
             </form>
       </div>
   </div>
-</div> -->
+</div>

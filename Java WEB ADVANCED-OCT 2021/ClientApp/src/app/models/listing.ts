@@ -47,3 +47,15 @@ export class ListingView {
 
 
 
+export interface ListingInListView {
+    id: string;
+    imageUrl: string;
+    price: number
+    title: string;
+    // constructor() {
+    //     this.id = ''
+    //     this.imageUrl = ''
+    //     this.price = 0
+    //     this.title = ''
+    // }
+}

@@ -1,57 +1,20 @@
 
-<div class="hl-module hl-standard-carousel off-card hl-atf-module-js" id="container_item_cards1">
 
-    <div class="row">
-        <div class="hl-card-header__title">
-            <h2 class="hl-card-header__headline">
-                <a href="/"><!--F#f_8--><!--F#f_@button-->
-                    <svg class="hl-card-header__headline__icon icon icon--search" focusable="false" style="fill:#767676;" aria-hidden="true">
-                    <use xlink:href="#icon-search"></use>
-                    </svg><!--F#f_11-->Lenovo T14<!--F/--><!--F/--><!--F/-->
-                </a>
-            </h2>
-        </div>
-
-                <div class="row">
-    <!--F#f_8--><!--F#f_@button--><!--F#f_11-->New in your Saved Search<!--F/--><!--F/--><!--F/-->
-                </div>
-    </div>
-
-
-
-
-    <div class="hl-standard-carousel__container">
-        <div>
-            <div class="carousel hl-carousel carousel--slides carousel--peek" aria-labelledby="carousel-status-s0-0-32-3-0-0[2]-4-match-media-0-ebay-carousel" role="group" aria-roledescription="carousel">
+        <div class="row">
                 <div class="carousel__container" id="s0-0-32-3-0-0[2]-4-match-media-0-ebay-carousel-container">
                     <div class="row">
-                     <ul class="carousel__list" id="s0-0-32-3-0-0[2]-4-match-media-0-ebay-carousel-list">
-
-        <li   class="nav-item" style="width:calc(18.181818181818183% - 13.090909090909092px);margin-right:16px;">
-            <a href="/details/id" class="hl-item__link">
-                            <div class="hl-image hl-image-js js-only hl-item__bg-image">
-                                <img src="https://i.ebayimg.com/thumbs/images/g/ltIAAOSwUrlhib46/s-l225.webp" crossorigin="anonymous" alt="LENOVO THINKPAD T14s 14&quot; 1920X1080 TOUCH | i7 1.8GHz | 16GB RAM | 512GB NVMe SSD" data-size="225" data-load-time="1636574198007" style="opacity: 1;">
-                            </div>
-                    <div>
-                        <span class="hl-item__displayPrice"><!--F#f_8--><!--F#f_@button--><!--F#f_11-->$800.00<!--F/--><!--F/--><!--F/--> </span>
+                        <div class="col-1"></div>
+                        <div *ngFor="let list of listings"  class="col-2" style="width:calc(18.181818181818183% - 13.090909090909092px);margin-right:16px;">
+                            <a href="/item/{{list.id}}" class="hl-item__link">
+                                <div class="hl-image hl-image-js js-only hl-item__bg-image">
+                                    <img src="{{list.imageUrl}}" crossorigin="anonymous" alt="{{list.title}}" data-size="225" data-load-time="1636574198007" style="opacity: 1;">
+                                </div>
+                                <div>
+                                    <span  class="hl-item__displayPrice" ><!--F#f_8--><!--F#f_@button--><!--F#f_11-->${{list.price | number:'.2-2'}}<!--F/--><!--F/--><!--F/--> </span>
+                                </div>
+                            </a>
+                            <div class="hl-item__footer">   </div>
                         </div>
-                    </a>
-                    <div class="hl-item__footer">
-
                     </div>
-                </li>
-
-</ul>
-
                 </div>
-
-                    <button class="carousel__control carousel__control--next" type="button" aria-describedby="carousel-status-s0-0-32-3-0-0[2]-4-match-media-0-ebay-carousel" aria-label="Go to next slide - Lenovo T14" id="s0-0-32-3-0-0[2]-4-match-media-0-ebay-carousel-next">
-                        <svg class="icon icon--carousel-next" focusable="false" aria-hidden="true">
-                            <use xlink:href="#icon-carousel-next"></use>
-                        </svg>
-                    </button>
-                  </div>
-             </div>
         </div>
-    </div>
-</div>

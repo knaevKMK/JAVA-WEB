@@ -3,6 +3,7 @@ package com.project.shop.web;
 import com.project.shop.model.Response;
 import com.project.shop.model.binding.ListingCreateModel;
 import com.project.shop.model.service.ListingServiceModel;
+import com.project.shop.model.view.ListingInListViewModel;
 import com.project.shop.model.view.ListingViewModel;
 import com.project.shop.service.ListingService;
 import org.modelmapper.ModelMapper;
@@ -33,7 +34,7 @@ public class ListingController {
 
     @GetMapping("all")
     public ResponseEntity<Response> getAllListings() {
-        Collection<ListingViewModel> allListings = listingService.getAllListings(0, 30);
+        Collection<ListingInListViewModel> allListings = listingService.getAllListings(0, 30);
         return ResponseEntity.ok(Response
                     .builder()
                     .timeStamp(LocalDateTime.now())

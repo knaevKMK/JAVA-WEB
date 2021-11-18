@@ -12,7 +12,8 @@ public class ListingViewModel {
     //  private Account seller;
 //todo make dto and service model next 3 fields
     private SellingVewModel sellingFormat;
-    private DeliveryViewModel  deliveryOptions;
+    private DeliveryViewModel deliveryDomestic;
+    private DeliveryViewModel  deliveryInternational;
 
     private String payment;
 
@@ -82,12 +83,12 @@ public class ListingViewModel {
         return this;
     }
 
-    public DeliveryViewModel getDeliveryOptions() {
-        return deliveryOptions;
+    public DeliveryViewModel getDeliveryDomestic() {
+        return deliveryDomestic;
     }
 
-    public ListingViewModel setDeliveryOptions(DeliveryViewModel deliveryOptions) {
-        this.deliveryOptions = deliveryOptions;
+    public ListingViewModel setDeliveryDomestic(DeliveryViewModel deliveryDomestic) {
+        this.deliveryDomestic = deliveryDomestic;
         return this;
     }
 
@@ -97,6 +98,15 @@ public class ListingViewModel {
 
     public ListingViewModel setPayment(String payment) {
         this.payment = payment;
+        return this;
+    }
+
+    public DeliveryViewModel getDeliveryInternational() {
+        return deliveryInternational;
+    }
+
+    public ListingViewModel setDeliveryInternational(DeliveryViewModel deliveryInternational) {
+        this.deliveryInternational = deliveryInternational;
         return this;
     }
 }

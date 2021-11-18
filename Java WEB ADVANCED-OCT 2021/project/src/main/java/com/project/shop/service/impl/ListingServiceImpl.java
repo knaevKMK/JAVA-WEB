@@ -3,6 +3,7 @@ package com.project.shop.service.impl;
 import com.project.shop.model.entity.BaseEntity;
 import com.project.shop.model.entity.Listing;
 import com.project.shop.model.service.ListingServiceModel;
+import com.project.shop.model.view.ListingInListViewModel;
 import com.project.shop.model.view.ListingViewModel;
 import com.project.shop.repository.ListingRepository;
 import com.project.shop.service.*;
@@ -44,14 +45,14 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
 
 
     @Override
-    public Collection<ListingViewModel> getAllListings(int page, int limit) {
+    public Collection<ListingInListViewModel> getAllListings(int page, int limit) {
         log.info("Fetch Listings from page " + page + " with " + limit + "/page");
         Stream<Listing> listingStream = listingRepository.findAll(PageRequest.of(page, limit))
                 .stream()
                 .filter(BaseEntity::isActive);
-        Stream<ListingViewModel> collect = listingStream
+        Stream<ListingInListViewModel> collect = listingStream
                 .map(l -> {
-                    ListingViewModel model = modelMapper.map(l, ListingViewModel.class);
+                    ListingInListViewModel model = modelMapper.map(l, ListingInListViewModel.class);
                     System.out.println();
                     return  model;
                 });
