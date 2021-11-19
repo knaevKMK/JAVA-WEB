@@ -46,12 +46,14 @@ public class ConditionServiceImpl extends BaseServiceImpl<ConditionItem> impleme
     @Override
     public ConditionItem find(ConditionBindingModel itemCondition) {
         if (itemCondition.getTitle() == null) {
-        return this.conditionRepository.findById(itemCondition.getId())
-                .orElseThrow(() -> new NullPointerException("Condition does not exist"));
+            return this.conditionRepository.findById(itemCondition.getId())
+                    // .orElseThrow(() -> new NullPointerException("Condition does not exist"));
+                    .orElse(null);
         }
-        ConditionItem conditionItem = conditionRepository.findByTitle(itemCondition.getTitle().name())
-                .orElseThrow(() -> new NullPointerException("Condition does not exist"));
-        return conditionItem;
+        return conditionRepository.findByTitle(itemCondition.getTitle().name())
+                .orElse(null);
+        //   .orElseThrow(() -> new NullPointerException("Condition does not exist"));
+
     }
 
     @Override
@@ -59,7 +61,7 @@ public class ConditionServiceImpl extends BaseServiceImpl<ConditionItem> impleme
         return conditionRepository
                 .findAll()
                 .stream()
-                .map(e->modelMapper.map(e,ConditionViewModel.class))
+                .map(e -> modelMapper.map(e, ConditionViewModel.class))
                 .collect(Collectors.toList());
     }
 }

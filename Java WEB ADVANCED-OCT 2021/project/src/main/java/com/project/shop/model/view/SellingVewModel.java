@@ -5,29 +5,30 @@ import com.project.shop.model.enums.SellingFormatEnum;
 import java.math.BigDecimal;
 
 public class SellingVewModel {
-    private SellingFormatEnum sellingFormatTitle;
-    private int daysDuration;
+    private SellingFormatEnum title;
+    private int duration;
+
     private BigDecimal price;
     private int quantity;
 
     public SellingVewModel() {
     }
 
-    public SellingFormatEnum getSellingFormatTitle() {
-        return sellingFormatTitle;
+    public SellingFormatEnum getTitle() {
+        return title;
     }
 
-    public SellingVewModel setSellingFormatTitle(SellingFormatEnum sellingFormatTitle) {
-        this.sellingFormatTitle = sellingFormatTitle;
+    public SellingVewModel setTitle(SellingFormatEnum title) {
+        this.title = title;
         return this;
     }
 
-    public int getDaysDuration() {
-        return daysDuration;
+    public int getDuration() {
+        return duration;
     }
 
-    public SellingVewModel setDaysDuration(int daysDuration) {
-        this.daysDuration = daysDuration;
+    public SellingVewModel setDuration(int duration) {
+        this.duration = duration;
         return this;
     }
 

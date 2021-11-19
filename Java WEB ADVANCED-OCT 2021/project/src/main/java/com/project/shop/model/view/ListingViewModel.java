@@ -1,5 +1,6 @@
 package com.project.shop.model.view;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class ListingViewModel {
@@ -7,6 +8,7 @@ public class ListingViewModel {
     private String title;
     private String description;
     private String imageUrl;
+    private LocalDateTime createOn;
     private CategoryViewModel category;
     private ConditionViewModel condition;
     //  private Account seller;
@@ -18,6 +20,15 @@ public class ListingViewModel {
     private String payment;
 
     public ListingViewModel() {
+    }
+
+    public LocalDateTime getCreateOn() {
+        return createOn;
+    }
+
+    public ListingViewModel setCreateOn(LocalDateTime createOn) {
+        this.createOn = createOn;
+        return this;
     }
 
     public UUID getId() {
