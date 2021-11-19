@@ -7,7 +7,7 @@
                         <div *ngFor="let list of listings"  class="col-2" style="width:calc(18.181818181818183% - 13.090909090909092px);margin-right:16px;">
                             <a href="/item/{{list.id}}" class="hl-item__link">
                                 <div class="hl-image hl-image-js js-only hl-item__bg-image">
-                                    <img src="{{list.imageUrl}}" crossorigin="anonymous" alt="{{list.title}}" data-size="225" data-load-time="1636574198007" style="opacity: 1;">
+                                    <img src="{{list.imageUrl}}"  alt="{{list.title}}" data-size="225" data-load-time="1636574198007" style="opacity: 1;">
                                 </div>
                                 <div>
                                     <span  class="hl-item__displayPrice" ><!--F#f_8--><!--F#f_@button--><!--F#f_11-->${{list.price | number:'.2-2'}}<!--F/--><!--F/--><!--F/--> </span>

@@ -1,105 +1,75 @@
  <app-search-bar></app-search-bar>
 
 <div class="container-fluid">
-    <div class="row g-3 align-items-start">
-<div class="row">
+    <div class="row ">
+        <!-- todo if isCretor -->
+        <div class="row">
+                <div class="col-3">  <button (click)="onEnd(listing.id)"  class="nav-link">End list</button></div>
+                <div class="col-3"><a href="/edit/{{listing.id}}"><button class="nav-link">Revise</button></a></div>
+                <div class="col"></div>
 
-</div>
-
-<br>
-<div class="col-lg-10 col-md-8">
-            <form  >
-                    <!-- condition -->
-                <div class="row g-3 align-items-center">
-
-                    <div class="row align-items-start">
-                        <div class="col-1">
-                            <label  class="form-label">Title:</label>
-                        </div>
-                        <div class="col">
-                            <input disabled value="{{listing.title}}" type="text" class="form-control" >
-                        </div>
-                    </div>
-
-
-
-<div class="row">
-    <div class="col-5"><img src="{{listing.imageUrl}}" alt=""></div>
-    <div class="col">
-
-        <h2>{{listing.title}}</h2>
-        <h4>Condition: {{listing.condition.title}}</h4>
-
-
-    <form>
-        <div>
-       <h5>Price:</h5>  <input type="number" value="{{listing.sellingFormat.price | number :'.2-2'}}"> BGN
         </div>
 
+        <br>
+        <div class="col-lg-10 col-md-8">
+                    <!-- condition -->
+               <div class="row">
+                  <div class="row">
+                    <div class="col-5"><img src="{{listing.imageUrl}}" alt=""></div>
+                    <div class="col">
 
-    </form>
+                    <h2>{{listing.title}}</h2>
+                    <h4>Condition: {{listing.condition.title}}</h4>
 
 
 
-    </div>
-
-</div>
-
-
-                <div class="container-fluid g-3" *ngIf="listing.sellingFormat" >
-                    <div class="row">
-                        <h5>Selling Format</h5>
-                    </div>
-                    <div class="row align-items-start" >
-                        <div class="col-1">
-                            <label  class="form-label">Format</label>
+             <div class="row" *ngIf="listing.sellingFormat.title==='FIXED'">
+                <h5>Price: BGN {{listing.sellingFormat.price | number :'.2-2'}}</h5>
+                <form >
+                <div class="row">
+                    <div class="col-1"><label for="" >qty:</label></div>
+                    <div class="col-1">  <input type="number" value="{{listing.sellingFormat.quantity}}"></div>
+                    <div class="col"></div>
                         </div>
-                    <div class="col-3">
-                        <select  class="form-control">
-                            <option [ngValue]="" disabled></option>
+                        <div class="row"> <div class="col-7">  <button>Buy it now</button></div></div>
+                            <div class="row"> <div class="col-7"> <button>Add to Basket</button></div></div>
+                </form>
+             </div>
 
-                        </select>
-                     </div>
-                     <div class="col"></div>
-                   <div class="col-1">
-                        <label class="form-label">Duraton</label>
-                    </div>
-                    <div class="col-1">
-                        <input type="number" class="form-control">
-                    </div>
-                    <div class="col"><p>days</p></div>
-                    <div class="col"></div>
+            <div  *ngIf="listing.sellingFormat.title==='ACTION'">
+            <form>
+                <h5>Price: BGN</h5>   <input  type="number"  value="{{listing.sellingFormat.price | number :'.2-2'}}">
+                <h5>List starts at:  {{listing.createOn | date:'dd/MM/yyyy HH:mm' }} </h5>
+                <h5>Time duartion: {{listing.sellingFormat.duration }} days</h5>
+
+                <input type="submit"value="Place a Bid"/>
+
+            </form>
+            </div>
+
+            <div class="row"><div class="col-5"> <button>Add to Watch List</button></div></div>
+
+            <div class="row" *ngIf="listing.deliveryDomestic">
+                <div class="row">
+                    <h5>Domestic Delivery BGN {{listing.deliveryDomestic.price | number:'.2-2'}}</h5>
                 </div>
 
-                <div class="row align-items-start">
-                    <div class="col-1">
-                        <label  class="form-label">Price</label>
+                <div class="row" *ngIf="listing.deliveryInternational">
+                    <div class="row">
+                        <h5>International Delivery BGN {{listing.deliveryInternational.price}}</h5>
                     </div>
-                    <div class="col-2">
-                        <input type="number" class="form-control" >
-                    </div>
-                    <div class="col"></div>
-               <div class="col-1">
-                   <label  class="form-label">Quantity</label>
-               </div>
-               <div class="col-1">
-                   <input type="number" class="form-control" >
-               </div>
-<div class="col">pcs</div>
-<div class="col"></div>
-            </div>
-            </div>
-
-            <!-- description -->
-
-            <div class="row align-items-start">
-                <div class="col-1">
-                   <img src="" alt="">
                 </div>
+                <div class="row ">
+                    <div class="row">
+                        <h5>Accept Payment: {{listing.payment}}</h5>
+                    </div>
 
+                 </div>
             </div>
-
-            <div class="row align-items-start">
+        </div>
+    </div>
+<!-- Description -->
+            <div class="row ">
                 <label  class="form-label">Description</label>
                 <textarea disabled type="text" class="form-control" >{{listing.description}}</textarea>
             </div>
@@ -107,83 +77,14 @@
              </div>
 
 
-            <div class="row g-3 align-items-center" *ngIf="listing.deliveryDomestic">
-                <div class="row">
-                    <h5>Domestic Delivery</h5>
-                </div>
-
-                <div class="row" >
-                    <div class="col">
-                        <label  class="form-label">Delivery Service:</label>
-                    </div>
-                    <div class="col-5">
-                        <select class="form-control">
-                            <option >Select...</option>
-
-                        </select>
-                     </div>
-                    <div class="col-1"></div>
-                    <div class="col-1">
-                        <label for="price" class="form-label">Coast:</label>
-                    </div>
-                    <div class="col-1">
-                          <input type="number"  class="form-control" >
-                    </div>
-                   <div class="col">               </div>
-
-                </div>
-            </div>
 
 
-                <div class="row g-3 align-items-center" *ngIf="listing.deliveryInternational">
-                    <div class="row">
-                        <h5>International Delivery</h5>
-                    </div>
 
-                    <div class="row" >
-                        <div class="col">
-                            <label  class="form-label">Delivery Service:</label>
-                        </div>
-                        <div class="col-5">
-                            <select class="form-control">
-                                <option >Select...</option>
 
-                            </select>
-                         </div>
-                        <div class="col-1"></div>
-                        <div class="col-1">
-                            <label for="price" class="form-label">Coast:</label>
-                        </div>
-                        <div class="col-1">
-                              <input type="number"  class="form-control" >
-                        </div>
-                       <div class="col">               </div>
 
-                    </div>
-                </div>
 
-             <div class="row g-3 align-items-center">
-                <div class="row">
-                    <h5>Payment</h5>
-                </div>
-                    <div class="row align-items-start">
-                        <div class="col-2">
-                            <label class="form-label">Payment Method:</label>
-                       </div>
-                        <div class="col-3">
-                            <input type="text"  class="form-control" >
-                        </div>
-                        <div class="col"></div>
-                    </div>
-             </div>
 
-                <div class="row">
-                    <div class="col-1"> <button type="submit" class="btn btn-success">Delete</button></div>
-                    <div class="col-1">  <button type="button"  class="btn btn-secondary">Back</button></div>
-                    <div class="col-1"> <button type="button"  class="btn btn-danger">Edit</button></div>
-                    <div class="col"></div>
-                </div>
-            </form>
+
       </div>
   </div>
 </div>

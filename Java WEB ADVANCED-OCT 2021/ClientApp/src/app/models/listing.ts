@@ -21,6 +21,8 @@ export function ListingCreateForm(fb: FormBuilder) {
 }
 
 export class ListingView {
+    id: string;
+    createOn: any;
     title: string;
     description: string;
     imageUrl: string;
@@ -32,6 +34,8 @@ export class ListingView {
     payment: string
 
     constructor() {
+        this.id = "";
+        this.createOn = Date.now();
         this.title = "";
         this.description = "";
         this.imageUrl = ""

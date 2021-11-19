@@ -21,6 +21,7 @@ const routes: Routes = [
   { path: 'listings', component: AllListingsComponent },
   { path: 'item/:id', component: DetailsListingComponent },
   { path: 'sell', component: CreateListingComponent },
+  { path: 'edit/:id', component: CreateListingComponent },
   { path: 'mySellAccount', component: AllListingsComponent },
   { path: 'shoppings', component: AllListingsComponent },
 

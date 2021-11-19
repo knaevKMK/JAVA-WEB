@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ListingView } from 'src/app/models/listing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ListingService } from 'src/app/service/listing.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-details-listing',
@@ -26,5 +27,7 @@ export class DetailsListingComponent implements OnInit {
         this.listing = (Object(result)['data']['listing']);
       })
   }
-
+  onEnd(id: string) {
+    console.log(id)
+  }
 }
