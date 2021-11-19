@@ -5,17 +5,17 @@ import com.project.shop.model.enums.ConditionEnum;
 import java.util.UUID;
 
 public class ConditionBindingModel {
-    private ConditionEnum title;
+    private String title;
     private UUID id;
 
     public ConditionBindingModel() {
     }
 
-    public ConditionEnum getTitle() {
+    public String getTitle() {
         return title;
     }
 
-    public ConditionBindingModel setTitle(ConditionEnum title) {
+    public ConditionBindingModel setTitle(String title) {
         this.title = title;
         return this;
     }

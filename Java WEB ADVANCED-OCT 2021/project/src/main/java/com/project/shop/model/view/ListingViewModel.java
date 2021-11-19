@@ -12,10 +12,10 @@ public class ListingViewModel {
     private CategoryViewModel category;
     private ConditionViewModel condition;
     //  private Account seller;
-//todo make dto and service model next 3 fields
+
     private SellingVewModel sellingFormat;
-    private DeliveryViewModel deliveryDomestic;
-    private DeliveryViewModel  deliveryInternational;
+    private DeliveryInListingVewModel deliveryDomestic;
+    private DeliveryInListingVewModel  deliveryInternational;
 
     private String payment;
 
@@ -94,11 +94,11 @@ public class ListingViewModel {
         return this;
     }
 
-    public DeliveryViewModel getDeliveryDomestic() {
+    public DeliveryInListingVewModel getDeliveryDomestic() {
         return deliveryDomestic;
     }
 
-    public ListingViewModel setDeliveryDomestic(DeliveryViewModel deliveryDomestic) {
+    public ListingViewModel setDeliveryDomestic(DeliveryInListingVewModel deliveryDomestic) {
         this.deliveryDomestic = deliveryDomestic;
         return this;
     }
@@ -112,11 +112,11 @@ public class ListingViewModel {
         return this;
     }
 
-    public DeliveryViewModel getDeliveryInternational() {
+    public DeliveryInListingVewModel getDeliveryInternational() {
         return deliveryInternational;
     }
 
-    public ListingViewModel setDeliveryInternational(DeliveryViewModel deliveryInternational) {
+    public ListingViewModel setDeliveryInternational(DeliveryInListingVewModel deliveryInternational) {
         this.deliveryInternational = deliveryInternational;
         return this;
     }

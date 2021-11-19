@@ -8,9 +8,19 @@ import java.util.UUID;
 public class CategoryViewModel {
     private UUID id;
     private String title;
+    private String parentTitle;
  private Collection<CategoryViewModel> subList;
 
     public CategoryViewModel() {
+    }
+
+    public String getParentTitle() {
+        return parentTitle;
+    }
+
+    public CategoryViewModel setParentTitle(String parentTitle) {
+        this.parentTitle = parentTitle;
+        return this;
     }
 
     public UUID getId() {

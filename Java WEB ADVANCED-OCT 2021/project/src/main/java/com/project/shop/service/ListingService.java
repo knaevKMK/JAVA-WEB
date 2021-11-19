@@ -18,5 +18,5 @@ public interface ListingService {
 
     UUID createListing(ListingServiceModel listingServiceModel);
 
-    ListingViewModel updateListing(ListingServiceModel listingServiceModel);
+    UUID updateListing(ListingServiceModel listingServiceModel);
 }

@@ -50,7 +50,7 @@ public class ConditionServiceImpl extends BaseServiceImpl<ConditionItem> impleme
                     // .orElseThrow(() -> new NullPointerException("Condition does not exist"));
                     .orElse(null);
         }
-        return conditionRepository.findByTitle(itemCondition.getTitle().name())
+        return conditionRepository.findByTitle(itemCondition.getTitle())
                 .orElse(null);
         //   .orElseThrow(() -> new NullPointerException("Condition does not exist"));
 

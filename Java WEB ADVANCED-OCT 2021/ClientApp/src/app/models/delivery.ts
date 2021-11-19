@@ -9,7 +9,7 @@ export function DeliveryCreateForm() {
 }
 
 export interface DeliveryView {
-    deliveryArea: string,
+
     deliveryService: string[],
     price: number
 }

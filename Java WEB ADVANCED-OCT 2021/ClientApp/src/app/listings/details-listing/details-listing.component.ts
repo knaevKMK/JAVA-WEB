@@ -29,5 +29,9 @@ export class DetailsListingComponent implements OnInit {
   }
   onEnd(id: string) {
     console.log(id)
+    this.listingService.delete(id)
+      .subscribe(result => {
+        console.log(result)
+      });
   }
 }

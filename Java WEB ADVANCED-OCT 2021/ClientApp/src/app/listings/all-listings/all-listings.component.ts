@@ -12,7 +12,7 @@ export class AllListingsComponent implements OnInit {
   constructor(private listingService: ListingService) {
     this.listingService.getAll()
       .subscribe(result => {
-        console.log(Object(result)['data']['listings'])
+        console.log(Object(result))
         this.listings = Object(result)['data']['listings']
       })
 

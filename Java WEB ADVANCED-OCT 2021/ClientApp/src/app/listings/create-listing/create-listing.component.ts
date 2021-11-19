@@ -23,7 +23,8 @@ export class CreateListingComponent implements OnInit {
   sellingFormats: string[] = [];
   deliveryDomestic: DeliveryView[] = [];
   deliveryInternatonal: DeliveryView[] = [];
-
+  id: string;
+  isEditMode: boolean = false;
   constructor(private fb: FormBuilder,
     private router: Router,
     private activateRoute: ActivatedRoute,
@@ -33,6 +34,8 @@ export class CreateListingComponent implements OnInit {
     private sellingFormatService: SellingFormatService,
     private deliveryService: DeliveryService
   ) {
+    this.createForm = this.fb.group(ListingCreateForm(fb));
+    this.id = this.activateRoute.snapshot.params['id'];
     this.categoryService.getAll()
       .subscribe(result => {
         console.log(Object(result)['data']['categories'])
@@ -58,18 +61,36 @@ export class CreateListingComponent implements OnInit {
         // .filter(o => o.deliveryArea === "INTERNATIONAL");
       });
 
-    this.createForm = this.fb.group(ListingCreateForm(fb));
+    this.isEditMode = this.id != undefined && this.id.length > 0;
+    this.isEditMode
+      ? this.listingService.getById(this.id)
+        .subscribe(result => {
+          console.log(Object(result)['data']['listing'])
+          this.createForm.setValue(Object(result)['data']['listing']);
+          console.log(this.createForm.value)
+        })
+      : this.createForm = this.fb.group(ListingCreateForm(fb));
   }
 
   ngOnInit(): void {
+    this.id = this.activateRoute.snapshot.params['id'];
+
   }
   onCreate() {
-    this.listingService.create(this.createForm.value)
-      .subscribe(result => {
-        console.log(result)
-
-      });
+    console.log(this.createForm.value)
+    !this.isEditMode
+      ? this.listingService.create(this.createForm.value)
+        .subscribe(result => {
+          console.log(result)
+          this.router.navigate(['/item/' + Object(result)['data']['id']]);
+        })
+      : this.listingService.update(this.id, this.createForm.value)
+        .subscribe(result => {
+          console.log(result)
+          this.router.navigate(['/item/' + Object(result)['data']['id']]);
+        });
   }
+
   onBack() {
     this.router.navigate([".."]);
   }

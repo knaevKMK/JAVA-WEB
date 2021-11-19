@@ -27,7 +27,7 @@ public class DeliveryController {
         Collection<DeliveryViewModel> all = Arrays.stream(DeliveryTypeEnum.values())
                 .map(e -> {
                     DeliveryViewModel deliveryModel = new DeliveryViewModel();
-                    deliveryModel.setDeliveryArea(e.name())
+                    deliveryModel
                             .setDeliveryService(e.getServices());
                     return deliveryModel;
                 })

@@ -8,6 +8,7 @@ import { SellingCreateForm, SellingFormatView } from "./sellingFormat";
 export function ListingCreateForm(fb: FormBuilder) {
     return {
         id: [null, Validators.required],
+        createOn: [null, Validators.required],
         title: [null, Validators.required],
         description: [null, Validators.required],
         imageUrl: [null, Validators.required],
@@ -40,10 +41,10 @@ export class ListingView {
         this.description = "";
         this.imageUrl = ""
         this.condition = { title: "", id: '' }
-        this.category = { id: '', title: '', subList: [] }
+        this.category = { id: '', title: '', parentTitle: '', subList: [] }
         this.sellingFormat = { id: '', title: '', duration: 1, price: 0, quantity: 0 }
-        this.deliveryDomestic = { deliveryArea: '', deliveryService: [], price: 0 }
-        this.deliveryInternational = { deliveryArea: '', deliveryService: [], price: 0 }
+        this.deliveryDomestic = { deliveryService: [], price: 0 }
+        this.deliveryInternational = { deliveryService: [], price: 0 }
         this.payment = ''
 
     }

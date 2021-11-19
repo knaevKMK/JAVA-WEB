@@ -3,8 +3,8 @@ import { Validators } from "@angular/forms";
 
 export function SellingCreateForm() {
     return {
-        sellingFormatTitle: [null, Validators.required],
-        daysDuration: [null, Validators.required],
+        title: [null, Validators.required],
+        duration: [null, Validators.required],
         price: [null, Validators.required],
         quantity: [null, Validators.required],
     }

@@ -5,29 +5,29 @@ import com.project.shop.model.enums.SellingFormatEnum;
 import java.math.BigDecimal;
 
 public class SellingFormatBindingModel {
-    private SellingFormatEnum sellingFormatTitle;
-    private int daysDuration;
+    private SellingFormatEnum title;
+    private int duration;
     private BigDecimal price;
     private int quantity;
 
     public SellingFormatBindingModel() {
     }
 
-    public SellingFormatEnum getSellingFormatTitle() {
-        return sellingFormatTitle;
+    public SellingFormatEnum getTitle() {
+        return title;
     }
 
-    public SellingFormatBindingModel setSellingFormatTitle(SellingFormatEnum sellingFormatTitle) {
-        this.sellingFormatTitle = sellingFormatTitle;
+    public SellingFormatBindingModel setTitle(SellingFormatEnum title) {
+        this.title = title;
         return this;
     }
 
-    public int getDaysDuration() {
-        return daysDuration;
+    public int getDuration() {
+        return duration;
     }
 
-    public SellingFormatBindingModel setDaysDuration(int daysDuration) {
-        this.daysDuration = daysDuration;
+    public SellingFormatBindingModel setDuration(int duration) {
+        this.duration = duration;
         return this;
     }
 

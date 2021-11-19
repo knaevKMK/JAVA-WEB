@@ -104,16 +104,25 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
 
     @Override
 
-    public ListingViewModel updateListing(ListingServiceModel listingServiceModel) {
+    public UUID updateListing(ListingServiceModel listingServiceModel) {
         Listing listing = listingRepository.findById(listingServiceModel.getId())
                 .orElseThrow(() -> new NullPointerException("Listing with this "
                         + listingServiceModel.getId().toString() + " does not exist"));
 
         Listing listingMapped = modelMapper.map(listingServiceModel, Listing.class);
+      listingMapped.setId(listing.getId());
+        listingMapped.setCategory(categoryService.find(listingServiceModel.getCategory()));
+        listingMapped.setCondition(conditionService.find(listingServiceModel.getCondition()));
+        listingMapped.setSellingFormat(sellingFormatService.create(listingServiceModel.getSellingFormat()));
+        listingMapped.setDeliveryDomestic(deliveryService.create(listingServiceModel.getDeliveryDomestic()));
+        listingMapped.setDeliveryInternational(deliveryService.create(listingServiceModel.getDeliveryInternational()));
+        listingMapped.setCreateOn(listing.getCreateOn());
+        listingMapped.setCreateFrom(listing.getCreateFrom());
+        listingMapped.setActive(true);
         listingMapped = this.onModify(listingMapped);
         Listing listing1 = listingRepository.saveAndFlush((listingMapped));
         log.info("Updated listing id: " + listing1.getId().toString());
-        return modelMapper.map(listing1, ListingViewModel.class);
+        return listing1.getId();
     }
 
 }

@@ -9,29 +9,29 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "selling_formats")
 public class SellingFormat extends BaseEntity {
-    private SellingFormatEnum sellingFormatTitle;
-    private int daysDuration;
+    private SellingFormatEnum title;
+    private int duration;
     private BigDecimal price;
     private int quantity;
 
     public SellingFormat() {
     }
 
-    public int getDaysDuration() {
-        return daysDuration;
+    public int getDuration() {
+        return duration;
     }
 
-    public SellingFormat setDaysDuration(int daysDuration) {
-        this.daysDuration = daysDuration;
+    public SellingFormat setDuration(int daysDuration) {
+        this.duration = daysDuration;
         return this;
     }
 
-    public SellingFormatEnum getSellingFormatTitle() {
-        return sellingFormatTitle;
+    public SellingFormatEnum getTitle() {
+        return title;
     }
 
-    public SellingFormat setSellingFormatTitle(SellingFormatEnum sellingFormatTitle) {
-        this.sellingFormatTitle = sellingFormatTitle;
+    public SellingFormat setTitle(SellingFormatEnum sellingFormatTitle) {
+        this.title = sellingFormatTitle;
         return this;
     }
 

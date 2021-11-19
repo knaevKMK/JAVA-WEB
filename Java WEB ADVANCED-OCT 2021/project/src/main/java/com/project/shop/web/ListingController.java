@@ -89,16 +89,18 @@ public class ListingController {
 
     @PutMapping("update/{id}")
     public ResponseEntity<Response> updateListing(@PathVariable("id") UUID id,
-                                                          @RequestBody ListingCreateModel listingCreateModel,UriComponentsBuilder builder) {
-        if(listingCreateModel.getId() != id){
+                                                          @RequestBody ListingCreateModel listingCreateModel
+                                                  //   , Authentication authentication
+                                                  ) {
+        if( id==null || !listingCreateModel.getId().toString().equals(id.toString())){
             return ResponseEntity.notFound().build();
         }
-        ListingViewModel listing = listingService.updateListing(modelMapper.map(listingCreateModel, ListingServiceModel.class));
+        UUID result= listingService.updateListing(modelMapper.map(listingCreateModel, ListingServiceModel.class));
 
         return ResponseEntity.ok(Response
                 .builder()
                 .timeStamp(LocalDateTime.now())
-                .data(Map.of("listing",listing))
+                .data(Map.of("id",result))
                 .message("Listing updated")
                 .status(HttpStatus.OK)
                 .statusCode(HttpStatus.OK.value())
