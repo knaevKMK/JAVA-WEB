@@ -90,11 +90,7 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
     public UUID createListing(ListingServiceModel listingServiceModel) {
         Listing listing = modelMapper.map(listingServiceModel, Listing.class);
 
-        listing.setCategory(categoryService.find(listingServiceModel.getCategory()));
-        listing.setCondition(conditionService.find(listingServiceModel.getCondition()));
-        listing.setSellingFormat(sellingFormatService.create(listingServiceModel.getSellingFormat()));
-        listing.setDeliveryDomestic(deliveryService.create(listingServiceModel.getDeliveryDomestic()));
-        listing.setDeliveryInternational(deliveryService.create(listingServiceModel.getDeliveryInternational()));
+        setNestedEntoties(listing, listingServiceModel);
         listing = this.onCreate(listing);
 
            Listing listing1 = listingRepository.saveAndFlush(listing);
@@ -111,18 +107,24 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
 
         Listing listingMapped = modelMapper.map(listingServiceModel, Listing.class);
       listingMapped.setId(listing.getId());
+        setNestedEntoties(listingMapped, listingServiceModel);
+
+        listingMapped.setCreateOn(listing.getCreateOn())
+                .setCreateFrom(listing.getCreateFrom())
+                .setActive(true);
+        listingMapped = this.onModify(listingMapped);
+        Listing listing1 = listingRepository.saveAndFlush((listingMapped));
+        log.info("Updated listing id: " + listing1.getId().toString());
+        return listing1.getId();
+    }
+
+    private Listing setNestedEntoties(Listing listingMapped, ListingServiceModel listingServiceModel) {
         listingMapped.setCategory(categoryService.find(listingServiceModel.getCategory()));
         listingMapped.setCondition(conditionService.find(listingServiceModel.getCondition()));
         listingMapped.setSellingFormat(sellingFormatService.create(listingServiceModel.getSellingFormat()));
         listingMapped.setDeliveryDomestic(deliveryService.create(listingServiceModel.getDeliveryDomestic()));
         listingMapped.setDeliveryInternational(deliveryService.create(listingServiceModel.getDeliveryInternational()));
-        listingMapped.setCreateOn(listing.getCreateOn());
-        listingMapped.setCreateFrom(listing.getCreateFrom());
-        listingMapped.setActive(true);
-        listingMapped = this.onModify(listingMapped);
-        Listing listing1 = listingRepository.saveAndFlush((listingMapped));
-        log.info("Updated listing id: " + listing1.getId().toString());
-        return listing1.getId();
+        return listingMapped;
     }
 
 }

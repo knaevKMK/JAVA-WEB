@@ -1,5 +1,7 @@
 package com.project.shop.model.entity;
 
+import com.project.shop.infrastructure.identity.models.Account;
+
 import javax.persistence.*;
 import java.util.List;
 

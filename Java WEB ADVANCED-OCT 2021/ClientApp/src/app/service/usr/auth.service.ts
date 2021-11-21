@@ -6,10 +6,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  url: string;
-  constructor(@Inject('BASE_URL') baseUrl: string,
-    private http: HttpClient) {
-    this.url = baseUrl + "api/identity"
+  url: string = "http://localhost:8080/api/identity";
+  constructor(private http: HttpClient) {
+
   }
   onLogin(data: any): Observable<any> {
     return this.http.post(this.url + "/login", data);
@@ -21,10 +20,10 @@ export class AuthService {
     this.http.get(this.url + "/logout", { headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.getUser) })
   }
 
-  private saveUser(user: any) {
-    localStorage.setItem('user', user);
+  saveUser(token: any) {
+    localStorage.setItem('token', token);
   }
   getUser() {
-    return localStorage.getItem('user')
+    return localStorage.getItem('token')
   }
 }

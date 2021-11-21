@@ -64,3 +64,10 @@ ul {
     position: relative;
     margin: 0;
     padding:35px 0 10px 0;}
+
+div.border{
+border-style: groove;
+border-radius: 3px;
+background-color:whitesmoke;
+
+    }
