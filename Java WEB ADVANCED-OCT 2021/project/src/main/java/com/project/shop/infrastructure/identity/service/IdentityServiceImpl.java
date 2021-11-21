@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -67,14 +68,23 @@ public class IdentityServiceImpl  implements IdentityService {
     @Override
     public JwtResponse login(String username, String password) throws NotFoundException {
 
-        Account account =this.findByUsername(username);
-        return new JwtResponse(jwtTokenUtil.generateToken(account));
+        Optional<Account> account =this.findByUsername(username);
+        if (account.isEmpty()){
+            throw new NotFoundException("Username does not exist");
+        }
+        //todo match password
+        return new JwtResponse(jwtTokenUtil.generateToken(account.get()));
     }
 
     @Override
-    public Account findByUsername(String username) {
-        return appUserRepository.findAppUserByUsername(username)
-                .orElse(null);
+    public Optional<Account> findByUsername(String username) {
+        return appUserRepository.findAppUserByUsername(username);
+
+    }
+
+    @Override
+    public Optional<Account> findByEmail(String email) {
+        return appUserRepository.findAppUserByEmail(email);
     }
 
     @Override
@@ -126,6 +136,7 @@ public class IdentityServiceImpl  implements IdentityService {
             Account admin = new Account();
             admin
                     .setUsername("admin")
+                    .setEmail("admin@buysell0.com")
                     .setPassword(bCryptPasswordEncoder.encode("owner"))
                     .setFirstName("Admin")
                     .setLastName("Owner")

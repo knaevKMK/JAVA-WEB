@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/service/usr/auth.service';
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
-  errors = new RegErrors();
+  errors: any = new Errors();
   constructor(private router: Router, private fb: FormBuilder, private authService: AuthService) {
     this.registerForm = this.fb.group({
 
@@ -27,18 +27,26 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
   }
   onRegister() {
+    this.errors = new Errors();
     console.log(this.registerForm.value);
     this.authService.onRegister(this.registerForm.value).subscribe(
       data => {
         console.log(data)
-        this.router.navigate(['/usr/signin'])
+        switch (data.statusCode) {
+          case 200: this.router.navigate(['/usr/signin']); break;
+          default:
+            console.log(Object(data)['errors']['errors'])
+            this.errors.fatalError.push(Object(data)['errors']['errors']); break;
+        }
       }
       , err => {
-        if (err.status = 400) {
-          console.log(err);
-
-          //   this.errors = err.error.errors;
-        }
+        console.log(Object(err)['error']['errors'])
+        let responce: [] = (Object(err)['error']['errors']);
+        (responce.forEach(e => {
+          let field = e['field'];
+          let error_ = e['defaultMessage']
+          this.errors[field].push(error_);
+        }));
       });
   }
 
@@ -49,17 +57,22 @@ export class RegisterComponent implements OnInit {
   get password() { return this.registerForm.get('password') }
   get confirmPassword() { return this.registerForm.get('confirmPassword') }
 }
-class RegErrors {
 
-  Username: string[];
-  Email: string[];
-  Password: string[];
-  ConfirmPassword: string[];
-
+export class Errors {
+  fatalError: string[];
+  firstName: string[];
+  lastName: string[];
+  username: string[];
+  email: string[];
+  password: string[];
+  confirmPassword: string[];
   constructor() {
-    this.Username = [];
-    this.Email = [];
-    this.Password = [];
-    this.ConfirmPassword = [];
+    this.fatalError = [];
+    this.firstName = [];
+    this.lastName = [];
+    this.username = [];
+    this.email = [];
+    this.password = [];
+    this.confirmPassword = []
   }
 }

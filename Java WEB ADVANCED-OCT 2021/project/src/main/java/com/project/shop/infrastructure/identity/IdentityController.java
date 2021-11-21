@@ -7,12 +7,10 @@ import com.project.shop.infrastructure.identity.models.LoginRequest;
 import com.project.shop.infrastructure.identity.models.RegisterRequest;
 import com.project.shop.model.Response;
 import javassist.NotFoundException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.util.Map;
+import javax.validation.Valid;
 
 @CrossOrigin
 @RestController
@@ -28,33 +26,42 @@ public class IdentityController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<Response> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<Response> register(@Valid @RequestBody RegisterRequest request) {
+        Response response=new  Response();
+
+        try{
         String register = registerHandler.register(request);
-        return ResponseEntity.ok(Response
-                .builder()
-                .timeStamp(LocalDateTime.now())
-                .data(Map.of("register", register))
-                .message("Successful registration ")
-                .status(HttpStatus.OK)
-                .statusCode(HttpStatus.OK.value())
-                .build()
-        );
+            return ResponseEntity.ok(response
+                    .setOkRequestResponse("register",register,"Successful registration "));
+        }catch (Exception e) {
+            request.setPassword(null)
+            .setConfirmPassword(null);
+            return ResponseEntity.ok(response
+                    .setBadRequestResponse("register", request, e, "un-success registration"));
+        }
     }
     @PostMapping("/login")
-    public ResponseEntity<Response> login(@RequestBody LoginRequest request) throws NotFoundException {
-        JwtResponse login = loginHandler.login(request);
-        return ResponseEntity.ok(Response
-                .builder()
-                .timeStamp(LocalDateTime.now())
-                .data(Map.of("login", login))
-                .message("Successful Sing-in ")
-                .status(HttpStatus.OK)
-                .statusCode(HttpStatus.OK.value())
-                .build()
-        );
+    public ResponseEntity<Response> login(@Valid @RequestBody LoginRequest request)  {
+        Response response=new  Response();
+        try{
+            JwtResponse login = loginHandler.login(request);
+            return ResponseEntity.ok(response
+                    .setOkRequestResponse("login",login,"Successful Sing-in "));
+        }catch (Exception e){
+            request.setPassword(null);
+            return ResponseEntity.ok(response
+                    .setBadRequestResponse("login",  request,e,"un-success login"));
+        }
     }
+
     @GetMapping("/confirm")
     public String confirm(@RequestParam("token") String token) {
         return registerHandler.confirmToken(token);
+    }
+    @GetMapping("/logout")
+    public ResponseEntity<Response> logout(){
+      Response response  =new  Response();
+      response=response.setOkRequestResponse("login","Success","Successful Log Out ");
+        return ResponseEntity.ok(response);
     }
 }

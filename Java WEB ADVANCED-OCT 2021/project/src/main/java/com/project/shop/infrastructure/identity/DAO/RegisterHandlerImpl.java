@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -28,14 +29,14 @@ public class RegisterHandlerImpl implements RegisterHandler {
     }
 
     @Override
-    public String register(RegisterRequest registrationRequest) {
-        boolean isValidEmail = true;
-        //emailValidator.test(registrationRequest.getEmail());
-    //  validate username, email,confirm password
-        if (!isValidEmail) {
-            throw new IllegalArgumentException("Invalid email");
+    public String register(RegisterRequest model) {
+        if (!model.getPassword().equals(model.getConfirmPassword())){
+            throw new IllegalArgumentException("Passwords not matched");
         }
-        AccountServiceModel account = modelMapper.map(registrationRequest, AccountServiceModel.class);
+        if (appUserService.findByUsername(model.getUsername()).isPresent()){throw new IllegalStateException("Username exist");}
+        if (appUserService.findByEmail(model.getEmail()).isPresent()){throw new IllegalStateException("Username exist");}
+
+        AccountServiceModel account = modelMapper.map(model, AccountServiceModel.class);
         account.setRole(Set.of(appUserRoleService.getUserRole(AppUserRoleEnum.USER)));
         return appUserService.signUpUser(modelMapper.map(account,Account.class));
     }

@@ -11,7 +11,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "accounts")
-public class Account  {
+public class Account {
 
     private UUID id;
     private String firstName;
@@ -20,14 +20,15 @@ public class Account  {
     private String email;
     private String password;
     private Set<AppUserRoleEntity> role;
-    private boolean isLocked=false;
-    private boolean isActive =false;
-    private List<Listing> watchList=new ArrayList<>();
-    private List<Listing> sellingList=new ArrayList<>();
+    private boolean isLocked = false;
+    private boolean isActive = false;
+    private List<Listing> watchList = new ArrayList<>();
+    private List<Listing> sellingList = new ArrayList<>();
     private List<Order> purchaseList = new ArrayList<>();
 
     public Account() {
     }
+
     public Account(String firstName,
                    String lastName,
                    String username,
@@ -44,8 +45,8 @@ public class Account  {
 
     @Id
     @GeneratedValue(generator = "uuid-string")
-    @GenericGenerator(name="uuid-string", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "id", updatable = false,columnDefinition = "VARBINARY(16)")
+    @GenericGenerator(name = "uuid-string", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "id", updatable = false, columnDefinition = "VARBINARY(16)")
     public UUID getId() {
         return id;
     }
@@ -70,6 +71,7 @@ public class Account  {
         this.watchList = watchList;
         return this;
     }
+
     @OneToMany(mappedBy = "seller")
     public List<Listing> getSellingList() {
         return sellingList;
@@ -79,6 +81,7 @@ public class Account  {
         this.sellingList = sellingList;
         return this;
     }
+
     @OneToMany(mappedBy = "buyer")
     public List<Order> getPurchaseList() {
         return purchaseList;
@@ -89,21 +92,27 @@ public class Account  {
         return this;
     }
 
+    @Column(nullable = false,length = 25)
     public String getFirstName() {
         return firstName;
     }
 
+    @Column(nullable = false,length = 25)
     public String getLastName() {
         return lastName;
     }
-//    @Override
+
+    @Column(nullable = false, unique = true,length = 30)
     public String getUsername() {
         return this.username;
     }
+
+    @Column(nullable = false, unique = true,length = 30)
     public String getEmail() {
         return email;
     }
-//    @Override
+
+    @Column(nullable = false)
     public String getPassword() {
         return this.password;
     }
@@ -118,29 +127,7 @@ public class Account  {
         return isLocked;
     }
 
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//      return null;
-//    }
-
-
-
-// //   @Override
-//    public boolean isAccountNonExpired() {
-//        return true;
-//    }
-//
-//  //  @Override
-//    public boolean isAccountNonLocked() {
-//        return !this.isLocked;
-//    }
-//
-// //   @Override
-//    public boolean isCredentialsNonExpired() {
-//        return true;
-//    }
-
-    @Column(name="active")
+    @Column(name = "active")
     public boolean isActive() {
         return this.isActive;
     }
@@ -185,7 +172,7 @@ public class Account  {
     public Account setActive(boolean active) {
         isActive = active;
         return this;
-            }
+    }
 
 
 }
