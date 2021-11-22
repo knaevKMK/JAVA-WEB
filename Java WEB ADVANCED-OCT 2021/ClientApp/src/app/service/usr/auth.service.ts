@@ -20,7 +20,7 @@ export class AuthService {
     this.http.get(this.url + "/logout", { headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.getUser) })
   }
 
-  saveUser(token: any) {
+  saveToken(token: any) {
     localStorage.setItem('token', token);
   }
   getUser() {

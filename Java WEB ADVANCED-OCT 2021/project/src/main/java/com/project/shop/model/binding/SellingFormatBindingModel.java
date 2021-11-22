@@ -2,6 +2,10 @@ package com.project.shop.model.binding;
 
 import com.project.shop.model.enums.SellingFormatEnum;
 
+import javax.persistence.Enumerated;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 
 public class SellingFormatBindingModel {
@@ -12,8 +16,9 @@ public class SellingFormatBindingModel {
 
     public SellingFormatBindingModel() {
     }
-
-    public SellingFormatEnum getTitle() {
+@NotNull
+@Enumerated
+public SellingFormatEnum getTitle() {
         return title;
     }
 
@@ -21,7 +26,9 @@ public class SellingFormatBindingModel {
         this.title = title;
         return this;
     }
-
+@NotNull
+@NotBlank
+@Positive
     public int getDuration() {
         return duration;
     }
@@ -30,7 +37,9 @@ public class SellingFormatBindingModel {
         this.duration = duration;
         return this;
     }
-
+    @NotNull
+    @NotBlank
+    @Positive
     public BigDecimal getPrice() {
         return price;
     }
@@ -39,7 +48,9 @@ public class SellingFormatBindingModel {
         this.price = price;
         return this;
     }
-
+    @NotNull
+    @NotBlank
+    @Positive
     public int getQuantity() {
         return quantity;
     }

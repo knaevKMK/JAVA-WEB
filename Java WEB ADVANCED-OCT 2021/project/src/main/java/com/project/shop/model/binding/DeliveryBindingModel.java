@@ -11,6 +11,7 @@ public class DeliveryBindingModel {
     public DeliveryBindingModel() {
     }
 
+
     public DeliveryServiceEnum getDeliveryService() {
         return deliveryService;
     }

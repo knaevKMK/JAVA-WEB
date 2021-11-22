@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ListingInListView } from 'src/app/models/listing';
+import { responceListings } from 'src/app/models/response';
 import { ListingService } from 'src/app/service/listing.service';
 
 @Component({
@@ -9,17 +10,15 @@ import { ListingService } from 'src/app/service/listing.service';
 })
 export class AllListingsComponent implements OnInit {
   listings: ListingInListView[] = [];
+
   constructor(private listingService: ListingService) {
     this.listingService.getAll()
       .subscribe(result => {
         console.log(Object(result))
-        this.listings = Object(result)['data']['listings']
+        this.listings = responceListings(result)
       })
-
   }
-
   ngOnInit(): void {
-
   }
 
 }

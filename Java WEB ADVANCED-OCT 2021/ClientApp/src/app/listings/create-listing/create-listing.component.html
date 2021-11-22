@@ -8,7 +8,9 @@
 <br>
 <div class="col-lg-10 col-md-8">
             <form [formGroup]= "createForm" (ngSubmit)="onCreate()">
-
+                <div *ngIf="errors.fatalError && errors.fatalError.length>0" class="alert alert-danger">
+                    <ul><li *ngFor="let err of errors.fatalError">{{err}}</li></ul>
+                </div>
                 <div class="row g-3 align-items-center">
 
                     <div class="row align-items-start">
@@ -17,6 +19,9 @@
                         </div>
                         <div class="col">
                             <input formControlName="title" type="text" class="form-control" >
+                        </div>
+                        <div *ngIf="errors.title && errors.title.length>0" class="alert alert-danger">
+                            <ul><li *ngFor="let err of errors.title">Title {{err}}</li></ul>
                         </div>
                     </div>
 
@@ -34,6 +39,9 @@
                                 </select>
                             </div>
                             <div class="col"></div>
+                        </div>
+                        <div *ngIf="errors.categories && errors.categories.length>0" class="alert alert-danger">
+                            <ul><li *ngFor="let err of errors.categories">Category {{err}}</li></ul>
                         </div>
                     </div>
 
@@ -59,11 +67,17 @@
                         <div class="col">
                             <input type="text" class="form-control" formControlName="imageUrl">
                         </div>
+                        <div *ngIf="errors.imageUrl && errors.imageUrl.length>0" class="alert alert-danger">
+                            <ul><li *ngFor="let err of errors.imageUrl">Image Url {{err}}</li></ul>
+                        </div>
                     </div>
 
                     <div class="row align-items-start">
                         <label for="description" class="form-label">Description</label>
                         <textarea type="text" class="form-control" formControlName="description"></textarea>
+                        <div *ngIf="errors.description && errors.description.length>0" class="alert alert-danger">
+                            <ul><li *ngFor="let err of errors.description">Description {{err}}</li></ul>
+                        </div>
                     </div>
 
                 </div>
@@ -93,7 +107,7 @@
                     <div class="col"><p>days</p></div>
                     <div class="col"></div>
                 </div>
-<h5>{{createForm}}</h5>
+
                 <div class="row align-items-start">
                     <div class="col-1">
                         <label for="price" class="form-label">Price</label>
@@ -108,8 +122,8 @@
                <div class="col-1">
                    <input type="number" formControlName="quantity"  class="form-control" >
                </div>
-<div class="col">pcs</div>
-<div class="col"></div>
+            <div class="col">pcs</div>
+            <div class="col"></div>
             </div>
             </div>
 
@@ -175,6 +189,9 @@
                             <input type="text" formControlName="payment" id class="form-control" >
                         </div>
                         <div class="col"></div>
+                    </div>
+                    <div *ngIf="errors.payment && errors.payment.length>0" class="alert alert-danger">
+                        <ul><li *ngFor="let err of errors.payment">Payment {{err}}</li></ul>
                     </div>
              </div>
 

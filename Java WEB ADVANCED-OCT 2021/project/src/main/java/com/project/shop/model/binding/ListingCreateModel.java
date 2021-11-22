@@ -1,5 +1,9 @@
 package com.project.shop.model.binding;
 
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 public class ListingCreateModel {
@@ -28,7 +32,9 @@ public class ListingCreateModel {
         this.id = id;
         return this;
     }
-
+@NotNull
+@NotEmpty
+@Length(min = 7,max = 70)
     public String getTitle() {
         return title;
     }
@@ -37,7 +43,9 @@ public class ListingCreateModel {
         this.title = title;
         return this;
     }
-
+    @NotNull
+    @NotEmpty
+    @Length(min = 20,max = 1000)
     public String getDescription() {
         return description;
     }
@@ -46,7 +54,8 @@ public class ListingCreateModel {
         this.description = description;
         return this;
     }
-
+    @NotNull
+    @NotEmpty
     public String getImageUrl() {
         return imageUrl;
     }
@@ -55,7 +64,7 @@ public class ListingCreateModel {
         this.imageUrl = imageUrl;
         return this;
     }
-
+@NotNull
     public CategoryBindingModel getCategory() {
         return category;
     }
@@ -64,7 +73,7 @@ public class ListingCreateModel {
         this.category = category;
         return this;
     }
-
+@NotNull
     public ConditionBindingModel getCondition() {
         return condition;
     }
@@ -73,7 +82,7 @@ public class ListingCreateModel {
         this.condition = condition;
         return this;
     }
-
+@NotNull
     public SellingFormatBindingModel getSellingFormat() {
         return sellingFormat;
     }
@@ -82,7 +91,7 @@ public class ListingCreateModel {
         this.sellingFormat = sellingFormat;
         return this;
     }
-
+@NotNull
     public DeliveryBindingModel getDeliveryDomestic() {
         return deliveryDomestic;
     }
@@ -100,7 +109,7 @@ public class ListingCreateModel {
         this.deliveryInternational = deliveryInternational;
         return this;
     }
-
+@NotNull
     public String getPayment() {
         return payment;
     }

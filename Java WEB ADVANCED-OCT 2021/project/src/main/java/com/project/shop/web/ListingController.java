@@ -7,15 +7,11 @@ import com.project.shop.model.view.ListingInListViewModel;
 import com.project.shop.model.view.ListingViewModel;
 import com.project.shop.service.ListingService;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URI;
-import java.time.LocalDateTime;
+import javax.validation.Valid;
 import java.util.Collection;
-import java.util.Map;
 import java.util.UUID;
 
 @CrossOrigin
@@ -35,76 +31,74 @@ public class ListingController {
     @GetMapping("all")
     public ResponseEntity<Response> getAllListings() {
         Collection<ListingInListViewModel> allListings = listingService.getAllListings(0, 30);
-        return ResponseEntity.ok(Response
-                    .builder()
-                    .timeStamp(LocalDateTime.now())
-                    .data(Map.of("listings",allListings))
-                    .message("Listings retrieved")
-                    .status(HttpStatus.OK)
-                    .statusCode(HttpStatus.OK.value())
-                    .build()
-        );
+        Response response=new  Response();
+        return ResponseEntity.ok(response
+                .setOkRequestResponse("listings",allListings,"Listings retrieved"));
     }
 
     @GetMapping("listing/{id}")
-    public ResponseEntity<Response> getListingById(@PathVariable UUID id) {
-        ListingViewModel listing = listingService.getListingById(id);
-        return ResponseEntity.ok(Response
-                .builder()
-                .timeStamp(LocalDateTime.now())
-                .data(Map.of("listing" , listing))
-                .message("Listing with id: "+ id.toString()+"  retrieved")
-                .status(HttpStatus.OK)
-                .statusCode(HttpStatus.OK.value())
-                .build()
-        );
+    public ResponseEntity<Response> getListingById(@PathVariable UUID id
+                                                   //   , Authentication authentication
+    ) {
+        Response response=new  Response();
+        try{
+            ListingViewModel listing = listingService.getListingById(id);
+            return ResponseEntity.ok(response
+                    .setOkRequestResponse("listing",listing,"Listing with id: "+ id.toString()+"  retrieved"));
+        }catch (Exception e) {
+
+            return ResponseEntity.ok(response
+                    .setBadRequestResponse("id", id, e, "Listing with id:" +id.toString()+"does not exist"));
+        }
     }
     @DeleteMapping("delete/{id}")
-    public ResponseEntity<Response> deleteListingById(@PathVariable UUID id) {
-        return ResponseEntity.ok(Response
-                .builder()
-                .timeStamp(LocalDateTime.now())
-                .data(Map.of("deleted",listingService.deleteListing(id)))
-                .message("Listing with id: "+ id.toString()+"  deleted")
-                .status(HttpStatus.OK)
-                .statusCode(HttpStatus.OK.value())
-                .build()
-        );
+    public ResponseEntity<Response> deleteListingById(@PathVariable UUID id
+                                                      //   , Authentication authentication
+                                                      ) {
+        Response response=new  Response();
+        try{
+            boolean isDeleted = listingService.deleteListing(id);
+            return ResponseEntity.ok(response
+                    .setOkRequestResponse("deleted",isDeleted,"Listing with id: "+ id.toString()+"  deleted"));
+        }catch (Exception e) {
+
+            return ResponseEntity.ok(response
+                    .setBadRequestResponse("deleted", false, e, "Listing with id:" +id.toString()+"does not exist"));
+        }
     }
     @PostMapping("add")
-    public ResponseEntity<Response> createListing(@RequestBody ListingCreateModel listingCreateModel
+    public ResponseEntity<Response> createListing(@Valid @RequestBody ListingCreateModel listingCreateModel
                                                      //   , Authentication authentication
       ) {
-        var result = listingService.createListing(modelMapper.map(listingCreateModel, ListingServiceModel.class));
-        return ResponseEntity.ok(Response
-                .builder()
-                .timeStamp(LocalDateTime.now())
-                .data(Map.of("id",result))
-                .message("Listing created")
-                .status(HttpStatus.OK)
-                .statusCode(HttpStatus.OK.value())
-                .build()
-        );
+        Response response=new  Response();
+        try{
+            var result = listingService.createListing(modelMapper.map(listingCreateModel, ListingServiceModel.class));
+            return ResponseEntity.ok(response
+                    .setOkRequestResponse("id",result,"Listing created"));
+        }catch (Exception e) {
+
+            return ResponseEntity.ok(response
+                    .setBadRequestResponse("listing", listingCreateModel, e, "Listing has errors"));
+      }
     }
 
     @PutMapping("update/{id}")
-    public ResponseEntity<Response> updateListing(@PathVariable("id") UUID id,
-                                                          @RequestBody ListingCreateModel listingCreateModel
+    public ResponseEntity<Response> updateListing ( @PathVariable("id") UUID id,
+                                                   @Valid     @RequestBody ListingCreateModel listingCreateModel
                                                   //   , Authentication authentication
                                                   ) {
-        if( id==null || !listingCreateModel.getId().toString().equals(id.toString())){
-            return ResponseEntity.notFound().build();
-        }
-        UUID result= listingService.updateListing(modelMapper.map(listingCreateModel, ListingServiceModel.class));
+        Response response=new  Response();
+        try{
+            if( id==null || !listingCreateModel.getId().toString().equals(id.toString())){
+                return ResponseEntity.notFound().build();
+            }
 
-        return ResponseEntity.ok(Response
-                .builder()
-                .timeStamp(LocalDateTime.now())
-                .data(Map.of("id",result))
-                .message("Listing updated")
-                .status(HttpStatus.OK)
-                .statusCode(HttpStatus.OK.value())
-                .build()
-        );
+            UUID result= listingService.updateListing(modelMapper.map(listingCreateModel, ListingServiceModel.class));  return ResponseEntity.ok(response
+                    .setOkRequestResponse("id",result,"Listing updated"));
+        }catch (Exception e) {
+
+            return ResponseEntity.ok(response
+                    .setBadRequestResponse("listing", listingCreateModel, e, "Listing has errors"));
+        }
     }
 }
