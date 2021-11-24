@@ -1,7 +1,7 @@
 package com.project.shop.infrastructure.identity.service;
 
-import com.project.shop.infrastructure.identity.models.AppUserRoleEntity;
-import com.project.shop.infrastructure.identity.models.AppUserRoleEnum;
+import com.project.shop.infrastructure.identity.models.entity.AppUserRoleEntity;
+import com.project.shop.infrastructure.identity.models.enums.AppUserRoleEnum;
 
 public interface AppUserRoleService {
     void initializeRoles();

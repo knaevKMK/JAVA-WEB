@@ -1,19 +1,19 @@
 package com.project.shop.infrastructure.identity.service;
 
-import com.project.shop.infrastructure.identity.models.Account;
-import com.project.shop.infrastructure.identity.models.JwtResponse;
+import com.project.shop.infrastructure.identity.models.entity.UserEntity;
+import com.project.shop.infrastructure.identity.models.view.JwtResponse;
 import javassist.NotFoundException;
 
 import java.util.Optional;
 
-public interface IdentityService {
-    String confirmToken(String token);
+public interface IdentityService  {
+    String enableAccount(String token);
 
-    String signUpUser(Account account);
+    String registerUser(UserEntity userEntity);
 
     void initializeUsersAndRoles();
     JwtResponse login(String username, String password) throws NotFoundException;
-    Optional<Account> findByUsername(String username);
+    Optional<UserEntity> findByUsername(String username);
 
-    Optional<Account> findByEmail(String email);
+    Optional<UserEntity> findByEmail(String email);
 }

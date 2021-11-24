@@ -1,7 +1,7 @@
 package com.project.shop.infrastructure.identity.DAO;
 
-import com.project.shop.infrastructure.identity.models.JwtResponse;
-import com.project.shop.infrastructure.identity.models.LoginRequest;
+import com.project.shop.infrastructure.identity.models.view.JwtResponse;
+import com.project.shop.infrastructure.identity.models.binding.LoginRequest;
 import javassist.NotFoundException;
 
 public interface LoginHandler {

@@ -15,11 +15,50 @@ public class ListingViewModel {
 
     private SellingVewModel sellingFormat;
     private DeliveryInListingVewModel deliveryDomestic;
-    private DeliveryInListingVewModel  deliveryInternational;
+    private DeliveryInListingVewModel deliveryInternational;
 
     private String payment;
-
+    private boolean isOwner;
+    private String createFrom;
+    private boolean isActive;
+    private int watchCount;
     public ListingViewModel() {
+    }
+
+    public int getWatchCount() {
+        return watchCount;
+    }
+
+    public ListingViewModel setWatchCount(int watchCount) {
+        this.watchCount = watchCount;
+        return this;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public ListingViewModel setActive(boolean active) {
+        isActive = active;
+        return this;
+    }
+
+    public String getCreateFrom() {
+        return createFrom;
+    }
+
+    public ListingViewModel setCreateFrom(String createFrom) {
+        this.createFrom = createFrom;
+        return this;
+    }
+
+    public boolean isOwner() {
+        return isOwner;
+    }
+
+    public ListingViewModel setOwner(boolean owner) {
+        isOwner = owner;
+        return this;
     }
 
     public LocalDateTime getCreateOn() {

@@ -5,12 +5,17 @@ export function _allData(data: any) {
 export function responceId(data: any) {
     return _allData(data)['id']
 }
-
+export function responceConfirm(data: any) {
+    return _allData(data)['confirm']
+}
 export function responceListing(data: any) {
     return _allData(data)['listing']
 }
 export function responceListings(data: any) {
     return _allData(data)['listings']
+}
+export function responseOrder(data: any) {
+    return _allData(data)['order']
 }
 export function responceDeliveryByArea(data: any, index: number) {
     return _allData(data)['delivery'][index]['deliveryService']
@@ -18,6 +23,9 @@ export function responceDeliveryByArea(data: any, index: number) {
 
 export function responceSellingFormat(data: any) {
     return _allData(data)['selling-formats']
+}
+export function responeseUser(data: any) {
+    return _allData(data)['user']
 }
 
 export function responceCategory(data: any) {
@@ -29,3 +37,4 @@ export function responceCondition(data: any) {
 export function responceToken(data: any) {
     return _allData(data)['login']['token'];
 }
+

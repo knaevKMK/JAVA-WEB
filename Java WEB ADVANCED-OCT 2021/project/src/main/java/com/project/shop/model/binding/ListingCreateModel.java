@@ -14,7 +14,7 @@ public class ListingCreateModel {
 
     private CategoryBindingModel category;
     private ConditionBindingModel condition;
-    //  private Account seller;
+    private String sellerUsername;
     private SellingFormatBindingModel sellingFormat;
     private DeliveryBindingModel  deliveryDomestic;
     private DeliveryBindingModel  deliveryInternational;
@@ -116,6 +116,15 @@ public class ListingCreateModel {
 
     public ListingCreateModel setPayment(String payment) {
         this.payment = payment;
+        return this;
+    }
+
+    public String getSellerUsername() {
+        return sellerUsername;
+    }
+
+    public ListingCreateModel setSellerUsername(String sellerUsername) {
+        this.sellerUsername = sellerUsername;
         return this;
     }
 }

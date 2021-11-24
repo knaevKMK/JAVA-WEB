@@ -1,10 +1,9 @@
 package com.project.shop.infrastructure.config.security;
 
-import com.project.shop.infrastructure.identity.models.Account;
+import com.project.shop.infrastructure.identity.models.entity.UserEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import lombok.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
@@ -47,7 +46,7 @@ public class JwtTokenUtil implements Serializable {
     }
 
     //generate token for user
-    public String generateToken(Account userDetails) {
+    public String generateToken(UserEntity userDetails) {
         Map<String, Object> claims = new HashMap<>();
         return doGenerateToken(claims, userDetails.getUsername());
     }
@@ -62,7 +61,7 @@ public class JwtTokenUtil implements Serializable {
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
     }
     //validate token
-    public Boolean validateToken(String token, Account userDetails) {
+    public Boolean validateToken(String token, UserEntity userDetails) {
         final String username = getUsernameFromToken(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }

@@ -1,6 +1,6 @@
 package com.project.shop.infrastructure.identity.repository;
 
-import com.project.shop.infrastructure.identity.models.Account;
+import com.project.shop.infrastructure.identity.models.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,14 +12,14 @@ import java.util.UUID;
 
 @Repository
 @Transactional(readOnly = true)
-public interface AppUserRepository extends JpaRepository<Account, UUID> {
-    Optional<Account> findAppUserByEmail(String email);
+public interface UserRepository extends JpaRepository<UserEntity, UUID> {
+    Optional<UserEntity> findAppUserByEmail(String email);
 
     @Transactional
     @Modifying
-    @Query("UPDATE Account a " +
-            "SET a.active = TRUE WHERE a.email = ?1")
+    @Query("UPDATE UserEntity a " +
+            "SET a.active = TRUE WHERE a.username = ?1")
     int enableAppUser(String email);
 
-    Optional<Account> findAppUserByUsername(String username);
+    Optional<UserEntity> findAppUserByUsername(String username);
 }

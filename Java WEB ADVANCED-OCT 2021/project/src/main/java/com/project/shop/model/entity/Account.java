@@ -1,30 +1,33 @@
 package com.project.shop.model.entity;
 
-import com.project.shop.infrastructure.identity.models.Account;
+import com.project.shop.infrastructure.identity.models.entity.UserEntity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "app_users")
-public class AppUserEntity extends BaseEntity {
-    private Account account;
+@Table(name = "accounts")
+public class Account extends BaseEntity {
+    private String username;
     private List<Listing> watchList = new ArrayList<>();
     private List<Listing> sellingList = new ArrayList<>();
     private List<Order> purchaseList = new ArrayList<>();
 
-    public AppUserEntity() {
+    public Account() {
     }
 
-    @OneToOne(optional = false)
-    @JoinColumn(name = "account_id", referencedColumnName = "id")
-    public Account getAccount() {
-        return account;
+    public Account(String username) {
+        this.username = username;
     }
 
-    public AppUserEntity setAccount(Account account) {
-        this.account = account;
+    @Column(nullable = false, unique = true)
+    public String getUsername() {
+        return username;
+    }
+
+    public Account setUsername(String username) {
+        this.username = username;
         return this;
     }
 
@@ -37,7 +40,7 @@ public class AppUserEntity extends BaseEntity {
         return watchList;
     }
 
-    public AppUserEntity setWatchList(List<Listing> watchList) {
+    public Account setWatchList(List<Listing> watchList) {
         this.watchList = watchList;
         return this;
     }
@@ -47,7 +50,7 @@ public class AppUserEntity extends BaseEntity {
         return sellingList;
     }
 
-    public AppUserEntity setSellingList(List<Listing> sellingList) {
+    public Account setSellingList(List<Listing> sellingList) {
         this.sellingList = sellingList;
         return this;
     }
@@ -57,7 +60,7 @@ public class AppUserEntity extends BaseEntity {
         return purchaseList;
     }
 
-    public AppUserEntity setPurchaseList(List<Order> purchaseList) {
+    public Account setPurchaseList(List<Order> purchaseList) {
         this.purchaseList = purchaseList;
         return this;
     }

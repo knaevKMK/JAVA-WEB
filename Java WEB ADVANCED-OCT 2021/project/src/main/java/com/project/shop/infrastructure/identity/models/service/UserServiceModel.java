@@ -1,8 +1,10 @@
-package com.project.shop.infrastructure.identity.models;
+package com.project.shop.infrastructure.identity.models.service;
+
+import com.project.shop.infrastructure.identity.models.entity.AppUserRoleEntity;
 
 import java.util.Set;
 
-public class AccountServiceModel {
+public class UserServiceModel {
     private String firstName;
     private String lastName;
     private String username;
@@ -10,14 +12,14 @@ public class AccountServiceModel {
     private String password;
     private Set<AppUserRoleEntity> role;
 
-    public AccountServiceModel() {
+    public UserServiceModel() {
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public AccountServiceModel setFirstName(String firstName) {
+    public UserServiceModel setFirstName(String firstName) {
         this.firstName = firstName;
         return this;
     }
@@ -26,7 +28,7 @@ public class AccountServiceModel {
         return lastName;
     }
 
-    public AccountServiceModel setLastName(String lastName) {
+    public UserServiceModel setLastName(String lastName) {
         this.lastName = lastName;
         return this;
     }
@@ -35,7 +37,7 @@ public class AccountServiceModel {
         return username;
     }
 
-    public AccountServiceModel setUsername(String username) {
+    public UserServiceModel setUsername(String username) {
         this.username = username;
         return this;
     }
@@ -44,7 +46,7 @@ public class AccountServiceModel {
         return email;
     }
 
-    public AccountServiceModel setEmail(String email) {
+    public UserServiceModel setEmail(String email) {
         this.email = email;
         return this;
     }
@@ -53,7 +55,7 @@ public class AccountServiceModel {
         return password;
     }
 
-    public AccountServiceModel setPassword(String password) {
+    public UserServiceModel setPassword(String password) {
         this.password = password;
         return this;
     }
@@ -62,7 +64,7 @@ public class AccountServiceModel {
         return role;
     }
 
-    public AccountServiceModel setRole(Set<AppUserRoleEntity> role) {
+    public UserServiceModel setRole(Set<AppUserRoleEntity> role) {
         this.role = role;
         return this;
     }

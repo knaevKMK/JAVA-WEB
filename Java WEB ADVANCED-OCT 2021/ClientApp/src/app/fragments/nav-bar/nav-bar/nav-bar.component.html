@@ -10,12 +10,12 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav">
       <li *ngIf="!loggedUser" class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <p class="nav-link dropdown-toggle"  id="navbarDropdown"  >
           Hi
           <span  class="sr-only">
-            <a   class="nav-item" href="/usr/sigin">Sign in</a> or <a  class="nav-item" href="/usr/register">register</a>
+            <a   class="nav-item" href="/usr/signin">Sign in</a> or <a  class="nav-item" href="/usr/register">register</a>
           </span>
-        </a>
+        </p>
       </li>
 
       <li *ngIf="loggedUser" class="nav-item dropdown">

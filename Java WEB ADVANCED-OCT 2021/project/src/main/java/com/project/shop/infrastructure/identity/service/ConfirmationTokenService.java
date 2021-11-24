@@ -1,6 +1,6 @@
 package com.project.shop.infrastructure.identity.service;
 
-import com.project.shop.infrastructure.identity.models.ConfirmationToken;
+import com.project.shop.infrastructure.identity.models.entity.ConfirmationToken;
 
 import java.util.Optional;
 

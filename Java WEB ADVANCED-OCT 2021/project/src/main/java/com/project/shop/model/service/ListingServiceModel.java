@@ -16,7 +16,7 @@ public class ListingServiceModel {
 
     private CategoryBindingModel category;
     private ConditionBindingModel condition;
-    //  private Account seller;
+    private String usernameCreator;
     private SellingFormatBindingModel sellingFormat;
     private DeliveryBindingModel deliveryDomestic;
     private DeliveryBindingModel deliveryInternational;
@@ -32,6 +32,15 @@ public class ListingServiceModel {
 
     public ListingServiceModel setId(UUID id) {
         this.id = id;
+        return this;
+    }
+
+    public String getUsernameCreator() {
+        return usernameCreator;
+    }
+
+    public ListingServiceModel setUsernameCreator(String usernameCreator) {
+        this.usernameCreator = usernameCreator;
         return this;
     }
 

@@ -1,5 +1,6 @@
-package com.project.shop.infrastructure.identity.models;
+package com.project.shop.infrastructure.identity.models.entity;
 
+import com.project.shop.infrastructure.identity.models.enums.AppUserRoleEnum;
 import com.project.shop.model.entity.BaseEntity;
 
 import javax.persistence.*;

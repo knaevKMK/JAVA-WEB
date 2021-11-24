@@ -1,11 +1,13 @@
-package com.project.shop.infrastructure.identity.service;
+package com.project.shop.infrastructure.identity.service.impl;
 
-import com.project.shop.infrastructure.identity.models.AppUserRoleEntity;
-import com.project.shop.infrastructure.identity.models.AppUserRoleEnum;
+import com.project.shop.infrastructure.identity.models.entity.AppUserRoleEntity;
+import com.project.shop.infrastructure.identity.models.enums.AppUserRoleEnum;
 import com.project.shop.infrastructure.identity.repository.AppUserRoleRepository;
+import com.project.shop.infrastructure.identity.service.AppUserRoleService;
 import com.project.shop.service.impl.BaseServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -21,14 +23,12 @@ public class AppUserRoleServiceImpl extends BaseServiceImpl<AppUserRoleEntity> i
     public void initializeRoles() {
 
         if (appUserRoleRepository.count() == 0) {
-            AppUserRoleEntity adminRole = new AppUserRoleEntity();
-            adminRole.setRole(AppUserRoleEnum.ADMIN);
-            adminRole=this.onCreate(adminRole);
-
-            AppUserRoleEntity userRole = new AppUserRoleEntity();
-            userRole.setRole(AppUserRoleEnum.USER);
-
-            appUserRoleRepository.saveAll(List.of(adminRole, userRole));
+            Arrays.stream(AppUserRoleEnum.values())
+                    .forEach(enumRole->{
+                        AppUserRoleEntity userRole = new AppUserRoleEntity();
+                        userRole=this.onCreate(userRole.setRole(enumRole));
+                        appUserRoleRepository.saveAndFlush(userRole);
+                    });
         }
     }
     @Override

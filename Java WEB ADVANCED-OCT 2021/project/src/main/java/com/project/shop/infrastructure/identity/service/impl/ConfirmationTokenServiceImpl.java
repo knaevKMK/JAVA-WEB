@@ -1,7 +1,8 @@
-package com.project.shop.infrastructure.identity.service;
+package com.project.shop.infrastructure.identity.service.impl;
 
-import com.project.shop.infrastructure.identity.models.ConfirmationToken;
+import com.project.shop.infrastructure.identity.models.entity.ConfirmationToken;
 import com.project.shop.infrastructure.identity.repository.ConfirmationTokenRepository;
+import com.project.shop.infrastructure.identity.service.ConfirmationTokenService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

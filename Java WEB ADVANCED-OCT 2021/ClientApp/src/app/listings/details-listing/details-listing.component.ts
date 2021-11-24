@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ListingView } from 'src/app/models/listing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ListingService } from 'src/app/service/listing.service';
-import { Observable } from 'rxjs';
+import { responceListing, responseOrder } from 'src/app/models/response';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { BuyForm } from 'src/app/models/buy';
 
 @Component({
   selector: 'app-details-listing',
@@ -13,9 +15,14 @@ import { Observable } from 'rxjs';
 export class DetailsListingComponent implements OnInit {
   id: string = "";
   listing = new ListingView();
-  constructor(private activateRouter: ActivatedRoute,
-    private router: Router, private listingService: ListingService,) {
 
+  buyForm: FormGroup;
+
+
+  constructor(private activateRouter: ActivatedRoute,
+    private fb: FormBuilder,
+    private router: Router, private listingService: ListingService,) {
+    this.buyForm = this.fb.group(BuyForm(fb));
   }
 
   ngOnInit(): void {
@@ -23,8 +30,8 @@ export class DetailsListingComponent implements OnInit {
 
     this.listingService.getById(this.id)
       .subscribe(result => {
-        console.log(Object(result)['data']['listing'])
-        this.listing = (Object(result)['data']['listing']);
+        console.log(responceListing(result));
+        this.listing = (responceListing(result));
       })
   }
   onEnd(id: string) {
@@ -33,5 +40,16 @@ export class DetailsListingComponent implements OnInit {
       .subscribe(result => {
         console.log(result)
       });
+  }
+  onBuy() {
+    this.buyForm.value['id'] = this.id;
+    this.buyForm.value['price'] = this.listing.sellingFormat.price;
+    this.buyForm.value['quantity'] = this.buyForm.value['quantity'] ?? 1
+    console.log(this.buyForm.value)
+    this.listingService.buy(this.buyForm.value)
+      .subscribe(result => {
+        console.log(result)
+        this.router.navigate(['/order/' + responseOrder(result)]);
+      }, err => { console.log(err) })
   }
 }

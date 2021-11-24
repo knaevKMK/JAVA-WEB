@@ -1,7 +1,7 @@
 package com.project.shop.infrastructure.config.filter;
 
 import com.project.shop.infrastructure.config.security.JwtTokenUtil;
-import com.project.shop.infrastructure.identity.models.Account;
+import com.project.shop.infrastructure.identity.models.entity.UserEntity;
 import com.project.shop.infrastructure.identity.service.IdentityService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,7 +15,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 import static org.apache.logging.log4j.util.Strings.isEmpty;
 
@@ -45,7 +44,7 @@ public class JwtTokenFilter  extends OncePerRequestFilter {
 //        // Get jwt token and validate
        final String token = header.split(" ")[1].trim();
         // Get user identity and set it on the spring security context
-        Account userDetails = identityService
+        UserEntity userDetails = identityService
                 .findByUsername(jwtTokenUtil.getUsernameFromToken(token)).get();
 //                .orElse(null);
         if (!jwtTokenUtil.validateToken(token,userDetails)) {

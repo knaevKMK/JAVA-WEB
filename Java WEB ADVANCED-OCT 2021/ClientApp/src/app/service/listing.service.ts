@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { httpConfigHeader, httpIfHeader } from '../models/http';
 
 @Injectable({
   providedIn: 'root'
@@ -20,16 +21,18 @@ export class ListingService {
     return this.http.get(this.url + "/all")
   }
   getById(id: string) {
-    return this.http.get(this.url + "/listing/" + id)
+    return this.http.get(this.url + "/listing/" + id, httpIfHeader())
   }
   delete(id: string) {
-    return this.http.delete(this.url + "/delete/" + id)
+    return this.http.delete(this.url + "/delete/" + id, httpIfHeader())
   }
   create(data: any) {
-    return this.http.post(this.url + "/add", data)
+    return this.http.post(this.url + "/add", data, httpIfHeader())
   }
   update(id: string, data: any) {
-    return this.http.put(this.url + "/update/" + id, data)
+    return this.http.put(this.url + "/update/" + id, data, httpIfHeader())
   }
-
+  buy(data: any) {
+    return this.http.post(this.url + "/buy", data, httpIfHeader())
+  }
 }

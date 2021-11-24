@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthenticationGuard } from './authentication.guard';
 import { HomeComponent } from './home/home.component';
 import { AllListingsComponent } from './listings/all-listings/all-listings.component';
 import { CreateListingComponent } from './listings/create-listing/create-listing.component';
@@ -13,17 +14,17 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'usr/signin', component: SiginComponent },
   { path: 'usr/register', component: RegisterComponent },
-  { path: 'usr/profile/:user', component: ProfileComponent },
-  { path: 'usr/accountsettings', component: SettingsComponent },
+  { path: 'usr/profile/:user', component: ProfileComponent, canActivate: [AuthenticationGuard] },
+  { path: 'usr/accountsettings', component: SettingsComponent, canActivate: [AuthenticationGuard] },
 
   { path: 'help', component: AllListingsComponent },
 
   { path: 'listings', component: AllListingsComponent },
   { path: 'item/:id', component: DetailsListingComponent },
-  { path: 'sell', component: CreateListingComponent },
-  { path: 'edit/:id', component: CreateListingComponent },
-  { path: 'mySellAccount', component: AllListingsComponent },
-  { path: 'shoppings', component: AllListingsComponent },
+  { path: 'sell', component: CreateListingComponent, canActivate: [AuthenticationGuard] },
+  { path: 'edit/:id', component: CreateListingComponent, canActivate: [AuthenticationGuard] },
+  { path: 'mySellAccount', component: AllListingsComponent, canActivate: [AuthenticationGuard] },
+  { path: 'shoppings', component: AllListingsComponent, canActivate: [AuthenticationGuard] },
 
 
 ];

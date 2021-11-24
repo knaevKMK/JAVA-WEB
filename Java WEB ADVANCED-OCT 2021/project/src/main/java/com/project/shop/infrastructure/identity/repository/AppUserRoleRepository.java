@@ -1,7 +1,7 @@
 package com.project.shop.infrastructure.identity.repository;
 
-import com.project.shop.infrastructure.identity.models.AppUserRoleEntity;
-import com.project.shop.infrastructure.identity.models.AppUserRoleEnum;
+import com.project.shop.infrastructure.identity.models.entity.AppUserRoleEntity;
+import com.project.shop.infrastructure.identity.models.enums.AppUserRoleEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/service/usr/auth.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -7,17 +9,25 @@ import { Component, OnInit } from '@angular/core';
   ]
 })
 export class NavBarComponent implements OnInit {
-  loggedUser = { username: "knev_ka", email: "knev@mail.bg", fullName: "Krasen Kanev", score: 1 }
+
+  isloggedUser: Observable<boolean>;
+  loggedUser: any;
   watchlist = [];
   alert = [];
-  constructor() {
-    // this.loggedUser = sessionStorage.getItem("user")
-
+  constructor(private authService: AuthService) {
+    this.isloggedUser = this.authService.isLoggedIn;
+    this.loggedUser = this.authService.loggedUser;
+    console.log(this.authService.getUser())
   }
 
   ngOnInit(): void {
+    this.isloggedUser = this.authService.isLoggedIn;
+    this.loggedUser = (JSON.parse(this.authService.getUser()));
   }
   onLogout() {
-    console.log("logout")
+    console.log("logout");
+    console.log(this.authService.getUser())
+    this.authService.onLogout();
+    window.location.reload();
   }
 }

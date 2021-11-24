@@ -1,4 +1,4 @@
-package com.project.shop.infrastructure.identity.models;
+package com.project.shop.infrastructure.identity.models.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -14,17 +14,17 @@ private UUID id;
     private LocalDateTime createAt;
     private LocalDateTime expiredAt;
     private LocalDateTime confirmAt;
-    private UserEntity appUser;
+    private UserEntity user;
 
     public ConfirmationToken(String token,
                              LocalDateTime createAt,
                              LocalDateTime expiredAt,
-                             UserEntity appUser) {
+                             UserEntity user) {
         super();
         this.token = token;
         this.createAt=createAt;
         this.expiredAt = expiredAt;
-        this.appUser = appUser;
+        this.user = user;
 
     }
 
@@ -66,8 +66,8 @@ private UUID id;
 
     @ManyToOne()
     @JoinColumn(nullable = false, name = "user_id")
-    public UserEntity getAppUser() {
-        return appUser;
+    public UserEntity getUser() {
+        return user;
     }
 
     public ConfirmationToken setToken(String token) {
@@ -85,8 +85,8 @@ private UUID id;
         return this;
     }
 
-    public ConfirmationToken setAppUser(UserEntity appUser) {
-        this.appUser = appUser;
+    public ConfirmationToken setUser(UserEntity appUser) {
+        this.user = appUser;
         return this;
     }
 }

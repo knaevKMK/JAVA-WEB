@@ -18,6 +18,9 @@ export function ListingCreateForm(fb: FormBuilder) {
         deliveryDomestic: fb.group(DeliveryCreateForm()),
         deliveryInternational: fb.group(DeliveryCreateForm()),
         payment: [null, Validators.required],
+        createFrom: [null],
+        owner: [null],
+        active: [null]
     }
 }
 
@@ -33,7 +36,10 @@ export class ListingView {
     deliveryDomestic: DeliveryView;
     deliveryInternational: DeliveryView;
     payment: string
-
+    owner: boolean;
+    active: boolean;
+    createFrom: string;
+    watchCount: number;
     constructor() {
         this.id = "";
         this.createOn = Date.now();
@@ -46,7 +52,10 @@ export class ListingView {
         this.deliveryDomestic = { deliveryService: [], price: 0 }
         this.deliveryInternational = { deliveryService: [], price: 0 }
         this.payment = ''
-
+        this.owner = false;
+        this.active = false;
+        this.createFrom = "";
+        this.watchCount = 0;
     }
 }
 

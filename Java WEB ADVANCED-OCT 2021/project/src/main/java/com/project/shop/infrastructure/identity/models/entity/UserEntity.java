@@ -1,4 +1,4 @@
-package com.project.shop.infrastructure.identity.models;
+package com.project.shop.infrastructure.identity.models.entity;
 
 import com.project.shop.model.entity.Account;
 import org.hibernate.annotations.GenericGenerator;
@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
-@Table(name = "accounts")
+@Table(name = "users")
 public class UserEntity {
 
     private UUID id;
@@ -19,7 +19,7 @@ public class UserEntity {
     private Set<AppUserRoleEntity> role;
     private boolean isLocked = false;
     private boolean isActive = false;
-    private Account appUser;
+    private Account account;
 
     public UserEntity() {
     }
@@ -134,13 +134,14 @@ public class UserEntity {
         return this;
     }
 
-    @OneToOne(mappedBy = "account", targetEntity = Account.class)
-    public Account getAppUser() {
-        return appUser;
+    @OneToOne(optional = false)
+    @JoinColumn(name ="account_id" ,referencedColumnName = "id")
+    public Account getAccount() {
+        return account;
     }
 
-    public UserEntity setAppUser(Account appUser) {
-        this.appUser = appUser;
+    public UserEntity setAccount(Account appUser) {
+        this.account = appUser;
         return this;
     }
 }

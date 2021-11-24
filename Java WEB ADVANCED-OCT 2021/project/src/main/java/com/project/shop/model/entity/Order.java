@@ -1,20 +1,41 @@
 package com.project.shop.model.entity;
 
-import com.project.shop.infrastructure.identity.models.Account;
-
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
 @Table(name = "orders")
 public class Order extends  Item{
+    private int quantity;
     private List<Listing> listings;
     private Account buyer;
     private Feedback feedback;
+    private BigDecimal price;
+
 
     public Order() {
     }
-@OneToMany(mappedBy = "order")
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public Order setPrice(BigDecimal price) {
+        this.price = price;
+        return this;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public Order setQuantity(int quantity) {
+        this.quantity = quantity;
+        return this;
+    }
+
+    @OneToMany(mappedBy = "order")
     public List<Listing> getListings() {
         return listings;
     }

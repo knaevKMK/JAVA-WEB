@@ -1,6 +1,6 @@
 package com.project.shop.infrastructure.identity.repository;
 
-import com.project.shop.infrastructure.identity.models.ConfirmationToken;
+import com.project.shop.infrastructure.identity.models.entity.ConfirmationToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

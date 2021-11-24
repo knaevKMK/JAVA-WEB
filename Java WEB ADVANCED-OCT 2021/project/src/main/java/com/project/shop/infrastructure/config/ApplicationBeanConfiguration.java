@@ -4,6 +4,7 @@ import com.project.shop.model.binding.ConditionBindingModel;
 import com.project.shop.model.entity.ConditionItem;
 import com.project.shop.model.entity.Listing;
 import com.project.shop.model.entity.SellingFormat;
+import com.project.shop.model.service.ListingServiceModel;
 import com.project.shop.model.view.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
@@ -24,6 +25,7 @@ public class ApplicationBeanConfiguration {
                 .addMappings(mapper -> {
                     mapper.map(src -> src.getSellingFormat().getPrice(), ListingInListViewModel::setPrice);
                 });
+
 
         modelMapper.createTypeMap(Listing.class, ListingViewModel.class);
 

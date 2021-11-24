@@ -71,7 +71,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 //    @Override
 //    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 //        auth.
-//                userDetailsService((UserDetailsService) userDetailsService).
+//                userDetailsService(userDetailsService).
 //                passwordEncoder(bCryptPasswordEncoder);
 //    }
 //    @Override @Bean

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { responseError, setErrors, UserRegisterErrors } from 'src/app/models/errors';
-import { responceToken } from 'src/app/models/response';
+import { responceToken, responeseUser } from 'src/app/models/response';
 import { AuthService } from 'src/app/service/usr/auth.service';
 
 @Component({
@@ -33,9 +33,13 @@ export class SiginComponent implements OnInit {
         console.log(Object(data));
         switch (data.statusCode) {
           case 200:
-            console.log(Object(data)['data']['login']['token'])
             this.authService.saveToken(responceToken(data));
-            this.router.navigate(['/']);
+            console.log(this.authService.getToken())
+            this.authService.getLoggedUser().subscribe(result => {
+              console.log(responeseUser(result))
+              this.authService.saveUser(responeseUser(result));
+              this.router.navigate(['/']);
+            })
             break;
           default:
             console.log(Object(data)['errors']['errors'])

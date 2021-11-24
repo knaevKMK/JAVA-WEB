@@ -1,4 +1,4 @@
-package com.project.shop.infrastructure.identity.models;
+package com.project.shop.infrastructure.identity.models.binding;
 
 import org.hibernate.validator.constraints.Length;
 

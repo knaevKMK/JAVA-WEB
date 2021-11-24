@@ -1,9 +1,18 @@
-package com.project.shop.infrastructure.identity.service;
+package com.project.shop.infrastructure.identity.service.impl;
 
 import com.project.shop.infrastructure.config.security.JwtTokenUtil;
 import com.project.shop.infrastructure.identity.DAO.EmailSender;
-import com.project.shop.infrastructure.identity.models.*;
+import com.project.shop.infrastructure.identity.models.entity.AppUserRoleEntity;
+import com.project.shop.infrastructure.identity.models.entity.ConfirmationToken;
+import com.project.shop.infrastructure.identity.models.entity.UserEntity;
+import com.project.shop.infrastructure.identity.models.enums.AppUserRoleEnum;
+import com.project.shop.infrastructure.identity.models.view.JwtResponse;
 import com.project.shop.infrastructure.identity.repository.UserRepository;
+import com.project.shop.infrastructure.identity.service.AppUserRoleService;
+import com.project.shop.infrastructure.identity.service.ConfirmationTokenService;
+import com.project.shop.infrastructure.identity.service.IdentityService;
+import com.project.shop.model.entity.Account;
+import com.project.shop.service.AccountService;
 import javassist.NotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,19 +24,21 @@ import java.util.Set;
 import java.util.UUID;
 
 @Service
-public class IdentityServiceImpl  implements IdentityService {
+public class IdentityServiceImpl implements IdentityService {
     private static final String ERR_MSG_USER_NOT_FOUND = "User with email: %s does not exist!";
 
     private final UserRepository userRepository;
     private final AppUserRoleService appUserRoleService;
+    private final AccountService accountService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
     private final JwtTokenUtil jwtTokenUtil;
     private final EmailSender emailSender;
 
-    public IdentityServiceImpl(UserRepository userRepository, AppUserRoleService appUserRoleService, BCryptPasswordEncoder bCryptPasswordEncoder, ConfirmationTokenService confirmationTokenService, JwtTokenUtil jwtTokenUtil, EmailSender emailSender) {
+    public IdentityServiceImpl(UserRepository userRepository, AppUserRoleService appUserRoleService, AccountService accountService, BCryptPasswordEncoder bCryptPasswordEncoder, ConfirmationTokenService confirmationTokenService, JwtTokenUtil jwtTokenUtil, EmailSender emailSender) {
         this.userRepository = userRepository;
         this.appUserRoleService = appUserRoleService;
+        this.accountService = accountService;
 
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.confirmationTokenService = confirmationTokenService;
@@ -35,16 +46,17 @@ public class IdentityServiceImpl  implements IdentityService {
         this.emailSender = emailSender;
     }
 
-//    @Override
+    //    @Override
 //    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 //        return appUserRepository.findAppUserByEmail(email)
 //                .orElseThrow(() -> new UsernameNotFoundException(String.format(ERR_MSG_USER_NOT_FOUND, email)));
 //    }
-@Override
-    public String signUpUser(UserEntity userEntity) {
+    @Override
+    public String registerUser(UserEntity userEntity) {
 
         userEntity.setPassword(bCryptPasswordEncoder.encode(userEntity.getPassword()));
-
+        //todo set creator
+        userEntity.setAccount(accountService.createAccount(new Account(userEntity.getUsername())));
         this.userRepository.save(userEntity);
 
         String token = String.valueOf(UUID.randomUUID());
@@ -54,24 +66,24 @@ public class IdentityServiceImpl  implements IdentityService {
                 LocalDateTime.now().plusMinutes(15),
                 userEntity);
 
-    this.confirmationTokenService
-            .saveConfirmationToken(confirmationToken);
+        this.confirmationTokenService
+                .saveConfirmationToken(confirmationToken);
 
-    String link = "http://localhost:8080/api/identity/confirm?token=" + token;
+        String link = "http://localhost:8080/api/identity/confirm?token=" + token;
 
-    //todo config email send ->throw
-    this.enableAccount(userEntity.getEmail());
+        //todo config email send ->throw
+       // this.enableAccount(userEntity.getEmail());
 //    emailSender.send(
 //            account.getEmail(),
 //            buildEmail(account.getFirstName(), link));
-        return token;
+        return link;
     }
 
     @Override
     public JwtResponse login(String username, String password) throws NotFoundException {
 
-        Optional<UserEntity> account =this.findByUsername(username);
-        if (account.isEmpty()){
+        Optional<UserEntity> account = this.findByUsername(username);
+        if (account.isEmpty()) {
             throw new NotFoundException("Username does not exist");
         }
         //todo match password
@@ -91,39 +103,17 @@ public class IdentityServiceImpl  implements IdentityService {
 
     @Override
     @Transactional
-    public String confirmToken(String token) {
-        ConfirmationToken confirmationToken = confirmationTokenService
-                .getToken(token)
-                .orElseThrow(() ->
-                        new IllegalStateException("token not found"));
+    public String enableAccount(String username) {
 
-        if (confirmationToken.getConfirmAt() != null) {
-            throw new IllegalStateException("email already confirmed");
-        }
-
-        LocalDateTime expiredAt = confirmationToken.getExpiredAt();
-
-        if (expiredAt.isBefore(LocalDateTime.now())) {
-            throw new IllegalStateException("token expired");
-        }
-
-        confirmationTokenService.setConfirmedAt(token);
-        this.enableAccount(
-                confirmationToken.getAppUser().getEmail());
+         userRepository.enableAppUser(username);
         return "confirmed";
     }
 
 
     @Override
     public void initializeUsersAndRoles() {
-       appUserRoleService.initializeRoles();
+        appUserRoleService.initializeRoles();
         initializeUsers();
-    }
-
-
-
-    private int enableAccount(String email) {
-        return userRepository.enableAppUser(email);
     }
 
 
@@ -139,13 +129,14 @@ public class IdentityServiceImpl  implements IdentityService {
             admin
                     .setUsername("admin")
                     .setEmail("admin@buysell0.com")
+                    .setAccount(accountService.createAccount(new Account("admin")))
                     .setPassword(bCryptPasswordEncoder.encode("owner"))
                     .setFirstName("Admin")
                     .setLastName("Owner")
                     .setActive(true);
 
 
-            admin.setRole(  Set.of(adminRole, userRole));
+            admin.setRole(Set.of(adminRole, userRole));
             userRepository.save(admin);
 
 

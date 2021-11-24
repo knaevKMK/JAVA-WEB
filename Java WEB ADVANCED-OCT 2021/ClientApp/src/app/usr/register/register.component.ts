@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { responseError, setErrors, UserRegisterErrors } from 'src/app/models/errors';
+import { responceConfirm } from 'src/app/models/response';
 import { AuthService } from 'src/app/service/usr/auth.service';
 
 @Component({
@@ -34,7 +35,11 @@ export class RegisterComponent implements OnInit {
       data => {
         console.log(data)
         switch (data.statusCode) {
-          case 200: this.router.navigate(['/usr/signin']); break;
+          case 200:
+            console.log(data)
+            this.onLoadRegistration(responceConfirm(data));
+
+            ; break;
           default:
             //    console.log(Object(data)['errors']['errors'])
             this.errors.fatalError.push(responseError(data)); break;
@@ -45,7 +50,14 @@ export class RegisterComponent implements OnInit {
         this.errors = setErrors(err, this.errors)
       });
   }
-
+  onLoadRegistration(url: string) {
+    var enable = confirm("Please Confirm your registration")
+    if (enable) {
+      console.log(url)
+      this.authService.onConfirmRegistration(url).subscribe(result => console.log(result));
+    }
+    this.router.navigate(['/usr/signin'])
+  }
   get firstName() { return this.registerForm.get('firstName') }
   get lastName() { return this.registerForm.get('lastName') }
   get username() { return this.registerForm.get('username') }

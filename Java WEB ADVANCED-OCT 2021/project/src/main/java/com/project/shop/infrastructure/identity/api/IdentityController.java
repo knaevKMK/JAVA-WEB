@@ -1,16 +1,19 @@
-package com.project.shop.infrastructure.identity;
+package com.project.shop.infrastructure.identity.api;
 
 import com.project.shop.infrastructure.identity.DAO.LoginHandler;
 import com.project.shop.infrastructure.identity.DAO.RegisterHandler;
-import com.project.shop.infrastructure.identity.models.JwtResponse;
-import com.project.shop.infrastructure.identity.models.LoginRequest;
-import com.project.shop.infrastructure.identity.models.RegisterRequest;
+import com.project.shop.infrastructure.identity.models.entity.UserEntity;
+import com.project.shop.infrastructure.identity.models.view.JwtResponse;
+import com.project.shop.infrastructure.identity.models.binding.LoginRequest;
+import com.project.shop.infrastructure.identity.models.binding.RegisterRequest;
+import com.project.shop.infrastructure.identity.models.view.UserDetailsView;
 import com.project.shop.model.Response;
-import javassist.NotFoundException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -32,7 +35,7 @@ public class IdentityController {
         try{
         String register = registerHandler.register(request);
             return ResponseEntity.ok(response
-                    .setOkRequestResponse("register",register,"Successful registration "));
+                    .setOkRequestResponse("confirm",register,"Successful registration "));
         }catch (Exception e) {
             request.setPassword(null)
             .setConfirmPassword(null);
@@ -53,15 +56,28 @@ public class IdentityController {
                     .setBadRequestResponse("login",  request,e,"un-success login"));
         }
     }
+    @GetMapping("/user")
+    public ResponseEntity<Response> getUserData(Authentication authentication) {
+       UserDetailsView user= null;
+       if (authentication!=null){
+           UserEntity _user=(UserEntity) authentication.getPrincipal();
+           user=new UserDetailsView(_user.getUsername(),_user.getFirstName()+" "+_user.getLastName());
+       }
 
+        Response response  =new  Response();
+        response=response.setOkRequestResponse("user",user ,"UserData");
+        return ResponseEntity.ok(response);
+    }
     @GetMapping("/confirm")
-    public String confirm(@RequestParam("token") String token) {
-        return registerHandler.confirmToken(token);
+    public ResponseEntity<Response> confirm(@RequestParam("token") String token) {
+        Response response  =new  Response();
+        response=response.setOkRequestResponse("confirmed", registerHandler.confirmToken(token),"Successful confirmed");
+        return ResponseEntity.ok(response);
     }
     @GetMapping("/logout")
     public ResponseEntity<Response> logout(){
       Response response  =new  Response();
-      response=response.setOkRequestResponse("login","Success","Successful Log Out ");
+      response=response.setOkRequestResponse("logout",true,"Successful Log Out ");
         return ResponseEntity.ok(response);
     }
 }

@@ -2,7 +2,6 @@ package com.project.shop.model.entity;
 
 
 
-import com.project.shop.infrastructure.identity.models.Account;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
