@@ -1,6 +1,5 @@
 package com.project.shop.infrastructure.identity.models;
 
-import com.project.shop.model.entity.BaseEntity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -15,12 +14,12 @@ private UUID id;
     private LocalDateTime createAt;
     private LocalDateTime expiredAt;
     private LocalDateTime confirmAt;
-    private Account appUser;
+    private UserEntity appUser;
 
     public ConfirmationToken(String token,
                              LocalDateTime createAt,
                              LocalDateTime expiredAt,
-                             Account appUser) {
+                             UserEntity appUser) {
         super();
         this.token = token;
         this.createAt=createAt;
@@ -67,7 +66,7 @@ private UUID id;
 
     @ManyToOne()
     @JoinColumn(nullable = false, name = "user_id")
-    public Account getAppUser() {
+    public UserEntity getAppUser() {
         return appUser;
     }
 
@@ -86,7 +85,7 @@ private UUID id;
         return this;
     }
 
-    public ConfirmationToken setAppUser(Account appUser) {
+    public ConfirmationToken setAppUser(UserEntity appUser) {
         this.appUser = appUser;
         return this;
     }
