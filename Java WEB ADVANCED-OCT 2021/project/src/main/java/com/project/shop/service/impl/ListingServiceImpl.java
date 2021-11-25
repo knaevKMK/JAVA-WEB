@@ -1,21 +1,20 @@
 package com.project.shop.service.impl;
 
-import com.project.shop.model.binding.BuyBindingModel;
 import com.project.shop.model.entity.Account;
 import com.project.shop.model.entity.Listing;
-import com.project.shop.model.entity.Order;
 import com.project.shop.model.service.ListingServiceModel;
 import com.project.shop.model.view.ListingInListViewModel;
-import com.project.shop.model.view.ListingViewModel;
 import com.project.shop.repository.ListingRepository;
 import com.project.shop.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -34,10 +33,11 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
     private final SellingFormatService sellingFormatService;
     private final DeliveryService deliveryService;
     private final AccountService accountService;
-    private final OrderService orderService;
 
     public ListingServiceImpl(ListingRepository listingRepository,
-                              ModelMapper modelMapper, CategoryService categoryService, ConditionService conditionService, SellingFormatService sellingFormatService, DeliveryService deliveryService, AccountService accountService, OrderService orderService) {
+                              ModelMapper modelMapper, CategoryService categoryService,
+                              ConditionService conditionService, SellingFormatService sellingFormatService,
+                              DeliveryService deliveryService, AccountService accountService) {
         this.listingRepository = listingRepository;
         this.modelMapper = modelMapper;
         this.categoryService = categoryService;
@@ -45,12 +45,11 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
         this.sellingFormatService = sellingFormatService;
         this.deliveryService = deliveryService;
         this.accountService = accountService;
-        this.orderService = orderService;
     }
 
 
     @Override
-    public Collection<ListingInListViewModel> getAllListings(int page, int limit) {
+    public Collection<ListingInListViewModel> getAllListings(Authentication authentication, String query, int page, int limit) {
         log.info("Fetch Listings from page " + page + " with " + limit + "/page");
         Stream<Listing> listingStream = listingRepository.findAll(PageRequest.of(page, limit))
                 .stream()
@@ -67,13 +66,9 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
     }
 
     @Override
-    public ListingViewModel getListingById(UUID id) {
+    public Optional<Listing> getListingById(UUID id) {
         log.info("Details for listing with id: " + id);
-        Listing listing = listingRepository
-                .findById(id)
-                //.filter(BaseEntity::isActive)
-                .orElseThrow(() -> new NullPointerException("Listing with this " + id.toString() + " does not exist"));
-        return modelMapper.map(listing, ListingViewModel.class);
+        return listingRepository.findById(id);
     }
 
     @Override
@@ -130,20 +125,36 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
     }
 
     @Override
-    public UUID buy(BuyBindingModel buyBindingModel, String username) {
-        Listing listing = listingRepository.findById(buyBindingModel.getId())
-                .orElseThrow(() -> new NullPointerException("Listing with this "
-                        + buyBindingModel.getId() + " not available"));
-        Account account = this.accountService.findByUsername(username).orElseThrow(() ->
-                new NullPointerException("You are not make registration yet"));
+    public void updateListing(Listing listing) {
+        listing = this.onModify(listing, "system-order");
+        listingRepository.saveAndFlush((listing));
+        log.info("Decrease listing quantity");
 
-        listing.getSellingFormat().setQuantity(listing.getSellingFormat().getQuantity()-buyBindingModel.getQuantity());
-        listingRepository.saveAndFlush(listing);
-
-        Order order = orderService.placeOrder(buyBindingModel,listing, account);
-
-        return order.getId();
     }
+
+    @Override
+    public Collection<ListingInListViewModel> getWatchListings(String username, int page, int limit) {
+        log.info("Fetch Listings from page " + page + " with " + limit + "/page");
+        Stream<Listing> listingStream = listingRepository.findAll(PageRequest.of(page, limit))
+                .stream()
+//                   .filter(BaseEntity::isActive)
+                //todo replace from my to watch
+                .filter(e -> e.getSeller().getUsername().equals(username));
+        Stream<ListingInListViewModel> collect = listingStream
+                .map(l -> {
+                    ListingInListViewModel model = modelMapper.map(l, ListingInListViewModel.class);
+                    System.out.println();
+                    return model;
+                });
+
+        return collect.collect(Collectors.toList());
+    }
+    @Override
+    public List<Listing> getAllById(List<UUID> ids){
+        return listingRepository.findAllById(ids);
+    }
+
+
 
     private Listing setNestedEntities(Listing listingMapped, ListingServiceModel listingServiceModel) {
         listingMapped.setCategory(categoryService.find(listingServiceModel.getCategory()));

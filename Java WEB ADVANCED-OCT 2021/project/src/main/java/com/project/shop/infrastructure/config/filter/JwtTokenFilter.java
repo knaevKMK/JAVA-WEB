@@ -8,6 +8,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -19,7 +20,7 @@ import java.io.IOException;
 import static org.apache.logging.log4j.util.Strings.isEmpty;
 
 @Component
-public class JwtTokenFilter  extends OncePerRequestFilter {
+public class JwtTokenFilter extends OncePerRequestFilter {
 
     private final JwtTokenUtil jwtTokenUtil;
     private final IdentityService identityService;
@@ -33,36 +34,41 @@ public class JwtTokenFilter  extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain chain) throws ServletException, IOException {
-
+//todo expired token should ask login again
+        try {
 //        // Get authorization header and validate
-        final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (isEmpty(header) || !header.startsWith("Bearer ")) {
-            chain.doFilter(request, response);
-            return;
-        }
+            final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
+            if (isEmpty(header) || !header.startsWith("Bearer ")) {
+                chain.doFilter(request, response);
+                return;
+            }
 
 //        // Get jwt token and validate
-       final String token = header.split(" ")[1].trim();
-        // Get user identity and set it on the spring security context
-        UserEntity userDetails = identityService
-                .findByUsername(jwtTokenUtil.getUsernameFromToken(token)).get();
+            final String token = header.split(" ")[1].trim();
+            // Get user identity and set it on the spring security context
+            UserEntity userDetails = identityService
+                    .findByUsername(jwtTokenUtil.getUsernameFromToken(token)).get();
 //                .orElse(null);
-        if (!jwtTokenUtil.validateToken(token,userDetails)) {
-            chain.doFilter(request, response);
-            return;
+            if (!jwtTokenUtil.validateToken(token, userDetails)) {
+                chain.doFilter(request, response);
+                return;
+            }
+
+            UsernamePasswordAuthenticationToken
+                    authentication = new UsernamePasswordAuthenticationToken(
+                    userDetails, null);
+
+            authentication.setDetails(
+                    new WebAuthenticationDetailsSource().buildDetails(request)
+            );
+
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        } catch (Exception e) {
+            request.setAttribute("exception", e);
         }
 
-
-        UsernamePasswordAuthenticationToken
-                authentication = new UsernamePasswordAuthenticationToken(
-                userDetails, null);
-
-        authentication.setDetails(
-                new WebAuthenticationDetailsSource().buildDetails(request)
-        );
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
         chain.doFilter(request, response);
 
     }
+
 }

@@ -11,7 +11,6 @@ public class ListingViewModel {
     private LocalDateTime createOn;
     private CategoryViewModel category;
     private ConditionViewModel condition;
-    //  private Account seller;
 
     private SellingVewModel sellingFormat;
     private DeliveryInListingVewModel deliveryDomestic;
@@ -56,9 +55,8 @@ public class ListingViewModel {
         return isOwner;
     }
 
-    public ListingViewModel setOwner(boolean owner) {
+    public void setOwner(boolean owner) {
         isOwner = owner;
-        return this;
     }
 
     public LocalDateTime getCreateOn() {

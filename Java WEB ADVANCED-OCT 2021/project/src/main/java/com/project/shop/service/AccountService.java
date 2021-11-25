@@ -10,4 +10,7 @@ public interface AccountService {
     Account createAccount(Account account);
 
     Optional<Account> findByUsername(String username);
+
+    Optional<Account> getAccountByUserName(String username);
+
 }

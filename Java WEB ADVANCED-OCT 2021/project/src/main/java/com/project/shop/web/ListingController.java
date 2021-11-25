@@ -4,6 +4,7 @@ import com.project.shop.infrastructure.identity.models.entity.UserEntity;
 import com.project.shop.model.Response;
 import com.project.shop.model.binding.BuyBindingModel;
 import com.project.shop.model.binding.ListingCreateModel;
+import com.project.shop.model.entity.Listing;
 import com.project.shop.model.service.ListingServiceModel;
 import com.project.shop.model.view.ListingInListViewModel;
 import com.project.shop.model.view.ListingViewModel;
@@ -34,9 +35,11 @@ public class ListingController {
         this.modelMapper = modelMapper;
     }
 
+
     @GetMapping("all")
-    public ResponseEntity<Response> getAllListings() {
-        Collection<ListingInListViewModel> allListings = listingService.getAllListings(0, 30);
+    public ResponseEntity<Response> getAllListings(@RequestParam("filter") String query,
+            Authentication authentication) {
+        Collection<ListingInListViewModel> allListings = listingService.getAllListings(authentication,query,0, 30);
         Response response = new Response();
         return ResponseEntity.ok(response
                 .setOkRequestResponse("listings", allListings, "Listings retrieved"));
@@ -48,13 +51,15 @@ public class ListingController {
     ) {
         Response response = new Response();
         try {
-            ListingViewModel listing  = listingService.getListingById(id);
+            Listing listing = listingService.getListingById(id)
+                    .orElseThrow(() -> new NullPointerException("Listing does not exist"));
+            ListingViewModel listingModel  =modelMapper.map( listing,ListingViewModel.class);
             if (authentication != null) {
                 UserEntity principal = (UserEntity) authentication.getPrincipal();
-                listing.setOwner(listing.getCreateFrom().equals(principal.getUsername()));
+                listingModel.setOwner(listing.getCreateFrom().equals(principal.getUsername()));
             }
             return ResponseEntity.ok(response
-                    .setOkRequestResponse("listing", listing, "Listing with id: " + id.toString() + "  retrieved"));
+                    .setOkRequestResponse("listing", listingModel, "Listing with id: " + id.toString() + "  retrieved"));
         } catch (Exception e) {
 
             return ResponseEntity.ok(response
@@ -130,27 +135,5 @@ public class ListingController {
                     .setBadRequestResponse("listing", listingCreateModel, e, "Listing has errors"));
         }
     }
-    @PostMapping("buy")
-    public ResponseEntity<Response> buyListing(  @RequestBody BuyBindingModel buyBindingModel
-                                                     , Authentication authentication
-    ) {
-        Response response = new Response();
-        try {
-            if (authentication == null) {
-                throw new IllegalStateException("Please Sign-in before continue");
-            }
-            if (buyBindingModel.getId() == null) {
-                return ResponseEntity.notFound().build();
-            }
 
-            UserEntity principal = (UserEntity) authentication.getPrincipal();
-            UUID order = listingService.buy(buyBindingModel,principal.getUsername());
-            return ResponseEntity.ok(response
-                    .setOkRequestResponse("order", order, "Listing buy it now"));
-        } catch (Exception e) {
-
-            return ResponseEntity.ok(response
-                    .setBadRequestResponse("buy", buyBindingModel, e, "Buy it now has errors"));
-        }
-    }
 }

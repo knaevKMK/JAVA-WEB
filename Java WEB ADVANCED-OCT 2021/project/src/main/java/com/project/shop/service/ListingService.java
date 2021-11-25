@@ -1,19 +1,21 @@
 package com.project.shop.service;
 
-import com.project.shop.model.binding.BuyBindingModel;
+import com.project.shop.model.entity.Listing;
 import com.project.shop.model.service.ListingServiceModel;
 import com.project.shop.model.view.ListingInListViewModel;
-import com.project.shop.model.view.ListingViewModel;
+import org.springframework.security.core.Authentication;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface ListingService {
 
 
-    Collection<ListingInListViewModel> getAllListings(int page, int limit);
+    Collection<ListingInListViewModel> getAllListings(Authentication authentication, String query, int page, int limit);
 
-    ListingViewModel getListingById(UUID id);
+    Optional<Listing> getListingById(UUID id);
 
     boolean deleteListing(UUID id, String username) throws IllegalAccessException;
 
@@ -21,5 +23,9 @@ public interface ListingService {
 
     UUID updateListing(ListingServiceModel listingServiceModel);
 
-    UUID buy(BuyBindingModel buyBindingModel, String username);
+
+    Collection<ListingInListViewModel> getWatchListings(String username, int page, int limit);
+    List<Listing> getAllById(List<UUID> ids);
+
+    void updateListing(Listing listing);
 }

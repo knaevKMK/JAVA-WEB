@@ -12,7 +12,7 @@ export class AllListingsComponent implements OnInit {
   listings: ListingInListView[] = [];
 
   constructor(private listingService: ListingService) {
-    this.listingService.getAll()
+    this.listingService.getAll('')
       .subscribe(result => {
         console.log(Object(result))
         this.listings = responceListings(result)

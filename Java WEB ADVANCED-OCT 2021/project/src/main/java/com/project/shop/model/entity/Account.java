@@ -55,7 +55,7 @@ public class Account extends BaseEntity {
         return this;
     }
 
-    @OneToMany(mappedBy = "buyer")
+    @OneToMany(mappedBy = "buyer",cascade={CascadeType.REMOVE})
     public List<Order> getPurchaseList() {
         return purchaseList;
     }

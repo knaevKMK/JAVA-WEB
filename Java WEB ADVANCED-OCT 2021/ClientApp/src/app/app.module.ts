@@ -16,6 +16,8 @@ import { ProfileComponent } from './usr/profile/profile.component';
 import { SettingsComponent } from './usr/settings/settings.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { OrderConfirmComponent } from './order/order-confirm/order-confirm.component';
+import { OrderDetailsComponent } from './order/order-details/order-details.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SiginComponent,
     RegisterComponent,
     ProfileComponent,
-    SettingsComponent
+    SettingsComponent,
+    OrderConfirmComponent,
+    OrderDetailsComponent
   ],
   imports: [
     BrowserModule,

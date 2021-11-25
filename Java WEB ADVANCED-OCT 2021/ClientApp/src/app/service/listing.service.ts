@@ -17,8 +17,8 @@ export class ListingService {
       // 'Authorization': ''
     })
   };
-  getAll() {
-    return this.http.get(this.url + "/all")
+  getAll(query: string) {
+    return this.http.get(this.url + "/all?filter=" + query, httpIfHeader())
   }
   getById(id: string) {
     return this.http.get(this.url + "/listing/" + id, httpIfHeader())
@@ -32,7 +32,8 @@ export class ListingService {
   update(id: string, data: any) {
     return this.http.put(this.url + "/update/" + id, data, httpIfHeader())
   }
-  buy(data: any) {
-    return this.http.post(this.url + "/buy", data, httpIfHeader())
+
+  getWatchList() {
+    return this.http.get(this.url + "/watch-list", httpIfHeader());
   }
 }

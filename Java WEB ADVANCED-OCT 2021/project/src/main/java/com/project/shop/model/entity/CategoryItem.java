@@ -9,18 +9,23 @@ import java.util.List;
 
 @Entity
 @Table(name = "categories")
-public class CategoryItem extends Item{
+public class CategoryItem extends Item {
 
 
-private CategoryItem parentCategory;
-private List<CategoryItem> subCategories;
+    private CategoryItem parentCategory;
+    private List<CategoryItem> subCategories;
 
-private List<Listing> listings;
+    private List<Listing> listings;
+
     public CategoryItem() {
-        this.listings=new ArrayList<>();
+        this.listings = new ArrayList<>();
     }
-@OneToMany(mappedBy = "category",targetEntity = Listing.class,orphanRemoval = true,cascade = CascadeType.ALL)
-@NotFound(action= NotFoundAction.IGNORE)
+
+    @OneToMany(mappedBy = "category",
+            targetEntity = Listing.class,
+            orphanRemoval = true,
+            cascade = CascadeType.ALL)
+    @NotFound(action = NotFoundAction.IGNORE)
     public List<Listing> getListings() {
         return listings;
     }
@@ -30,7 +35,8 @@ private List<Listing> listings;
         return this;
     }
 
-    @OneToMany(mappedBy = "parentCategory")
+    @OneToMany(mappedBy = "parentCategory"
+    ,fetch = FetchType.EAGER)
     public List<CategoryItem> getSubCategories() {
         return subCategories;
     }
@@ -40,7 +46,7 @@ private List<Listing> listings;
         return this;
     }
 
-    @ManyToOne(cascade={CascadeType.ALL})
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "parent_category_id")
     public CategoryItem getParentCategory() {
         return parentCategory;

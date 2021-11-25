@@ -8,7 +8,7 @@ import java.util.List;
 @Table(name = "orders")
 public class Order extends  Item{
     private int quantity;
-    private List<Listing> listings;
+    private Listing listing;
     private Account buyer;
     private Feedback feedback;
     private BigDecimal price;
@@ -35,13 +35,13 @@ public class Order extends  Item{
         return this;
     }
 
-    @OneToMany(mappedBy = "order")
-    public List<Listing> getListings() {
-        return listings;
+    @ManyToOne
+    public Listing getListing() {
+        return listing;
     }
 
-    public Order setListings(List<Listing> listings) {
-        this.listings = listings;
+    public Order setListing(Listing listing) {
+        this.listing = listing;
         return this;
     }
 @ManyToOne(cascade={CascadeType.ALL})

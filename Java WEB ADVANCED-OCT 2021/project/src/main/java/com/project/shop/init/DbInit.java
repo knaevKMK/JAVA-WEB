@@ -12,14 +12,13 @@ public class DbInit implements CommandLineRunner {
 private final ConditionService conditionService;
 private final CategoryService categoryService;
 private  final IdentityService identityService;
-private final OrderService orderService;
 
 
-    public DbInit(ConditionService conditionService, CategoryService categoryService, IdentityService identityService, OrderService orderService) {
+    public DbInit(ConditionService conditionService, CategoryService categoryService, IdentityService identityService) {
         this.conditionService = conditionService;
         this.categoryService = categoryService;
         this.identityService = identityService;
-        this.orderService = orderService;
+
     }
 
     @Override
@@ -27,6 +26,5 @@ private final OrderService orderService;
         conditionService.seedData();
         categoryService.seedData();
         identityService.initializeUsersAndRoles();
-      //  orderService.seedColumns();
     }
 }

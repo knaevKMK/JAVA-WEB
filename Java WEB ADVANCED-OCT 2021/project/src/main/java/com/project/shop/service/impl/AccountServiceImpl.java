@@ -32,4 +32,9 @@ public class AccountServiceImpl extends BaseServiceImpl<Account> implements Acco
     public Optional<Account> findByUsername(String username) {
         return accountRepository.findByUsername(username);
     }
+
+    @Override
+    public Optional<Account> getAccountByUserName(String username) {
+        return accountRepository.findByUsername(username);
+    }
 }

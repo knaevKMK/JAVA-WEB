@@ -66,7 +66,7 @@ export class CreateListingComponent implements OnInit {
     this.isEditMode
       ? this.listingService.getById(this.id)
         .subscribe(result => {
-          //    console.log(responceListing(result))
+          console.log(responceListing(result))
           this.createForm.setValue(responceListing(result));
           //      console.log(this.createForm.value)
         })

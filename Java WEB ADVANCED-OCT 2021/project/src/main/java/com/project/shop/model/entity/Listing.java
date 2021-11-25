@@ -19,7 +19,7 @@ public class Listing extends Item {
     private Account seller;
 
     private Set<Account> watchers;
-    private Order order;
+    private List<Order> orders;
     private SellingFormat sellingFormat;
     private DeliveryOptions deliveryDomestic;
     private DeliveryOptions deliveryInternational;
@@ -39,14 +39,13 @@ public class Listing extends Item {
         return this;
     }
 
-    @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "order_id")
-    public Order getOrder() {
-        return order;
+    @OneToMany(mappedBy = "listing")
+    public List<Order> getOrders() {
+        return orders;
     }
 
-    public Listing setOrder(Order order) {
-        this.order = order;
+    public Listing setOrders(List<Order> orders) {
+        this.orders = orders;
         return this;
     }
 
@@ -104,8 +103,8 @@ public class Listing extends Item {
         return this;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "selling_format_id", referencedColumnName = "id")
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "selling_format_id")
     public SellingFormat getSellingFormat() {
         return sellingFormat;
     }
@@ -115,8 +114,8 @@ public class Listing extends Item {
         return this;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "delivery_domstic_id", referencedColumnName = "id")
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "delivery_domstic_id")
     public DeliveryOptions getDeliveryDomestic() {
         return deliveryDomestic;
     }
@@ -125,8 +124,8 @@ public class Listing extends Item {
         this.deliveryDomestic = deliveryOptions;
         return this;
     }
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "delivery_international_id", referencedColumnName = "id")
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "delivery_international_id")
     public DeliveryOptions getDeliveryInternational() {
         return deliveryInternational;
     }

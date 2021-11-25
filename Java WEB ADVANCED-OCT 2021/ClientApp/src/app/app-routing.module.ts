@@ -26,6 +26,9 @@ const routes: Routes = [
   { path: 'mySellAccount', component: AllListingsComponent, canActivate: [AuthenticationGuard] },
   { path: 'shoppings', component: AllListingsComponent, canActivate: [AuthenticationGuard] },
 
+  { path: 'order/:id', component: AllListingsComponent, canActivate: [AuthenticationGuard] },
+  { path: 'order/confirm/:id', component: AllListingsComponent, canActivate: [AuthenticationGuard] },
+
 
 ];
 

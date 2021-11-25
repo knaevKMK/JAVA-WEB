@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { responceListings } from 'src/app/models/response';
+import { ListingService } from 'src/app/service/listing.service';
 import { AuthService } from 'src/app/service/usr/auth.service';
 
 @Component({
@@ -14,7 +16,13 @@ export class NavBarComponent implements OnInit {
   loggedUser: any;
   watchlist = [];
   alert = [];
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService,
+    private listingService: ListingService) {
+    // this.listingService.getWatchList()
+    //   .subscribe(result => {
+    //     console.log(responceListings(result));
+    //     this.watchlist = responceListings(result)
+    //   });
     this.isloggedUser = this.authService.isLoggedIn;
     this.loggedUser = this.authService.loggedUser;
     console.log(this.authService.getUser())
