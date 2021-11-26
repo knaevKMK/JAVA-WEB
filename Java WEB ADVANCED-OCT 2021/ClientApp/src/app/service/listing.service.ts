@@ -18,7 +18,7 @@ export class ListingService {
     })
   };
   getAll(query: string) {
-    return this.http.get(this.url + "/all?filter=" + query, httpIfHeader())
+    return this.http.get(this.url + "/all?" + query, httpIfHeader())
   }
   getById(id: string) {
     return this.http.get(this.url + "/listing/" + id, httpIfHeader())

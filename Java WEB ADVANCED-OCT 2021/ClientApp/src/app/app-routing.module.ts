@@ -13,22 +13,35 @@ import { SiginComponent } from './usr/sigin/sigin.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'usr/signin', component: SiginComponent },
-  { path: 'usr/register', component: RegisterComponent },
-  { path: 'usr/profile/:user', component: ProfileComponent, canActivate: [AuthenticationGuard] },
-  { path: 'usr/accountsettings', component: SettingsComponent, canActivate: [AuthenticationGuard] },
 
+  {
+    path: 'usr', children: [
+      { path: 'signin', component: SiginComponent },
+      { path: 'register', component: RegisterComponent },
+
+      { path: 'profile/:username', component: ProfileComponent, canActivate: [AuthenticationGuard] },
+      { path: 'accountsettings', component: SettingsComponent, canActivate: [AuthenticationGuard] },
+      { path: 'mySellAccount', component: AllListingsComponent, canActivate: [AuthenticationGuard] },
+    ]
+  },
   { path: 'help', component: AllListingsComponent },
 
-  { path: 'listings', component: AllListingsComponent },
-  { path: 'item/:id', component: DetailsListingComponent },
-  { path: 'sell', component: CreateListingComponent, canActivate: [AuthenticationGuard] },
-  { path: 'edit/:id', component: CreateListingComponent, canActivate: [AuthenticationGuard] },
-  { path: 'mySellAccount', component: AllListingsComponent, canActivate: [AuthenticationGuard] },
+
+  {
+    path: 'listing', children: [
+      { path: 'all', component: AllListingsComponent },
+      { path: 'sell', component: CreateListingComponent, canActivate: [AuthenticationGuard] },
+      { path: 'item/:id', component: DetailsListingComponent },
+      { path: 'edit/:id', component: CreateListingComponent, canActivate: [AuthenticationGuard] },
+    ]
+  },
+
   { path: 'shoppings', component: AllListingsComponent, canActivate: [AuthenticationGuard] },
-
-  { path: 'order/:id', component: OrderConfirmComponent, canActivate: [AuthenticationGuard] },
-
+  {
+    path: 'orders', children: [
+      { path: 'order/:id', component: OrderConfirmComponent, canActivate: [AuthenticationGuard] },
+    ]
+  }
 
 ];
 

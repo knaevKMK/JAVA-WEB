@@ -17,7 +17,9 @@ export function responceListings(data: any) {
 export function responseOrder(data: any) {
     return _allData(data)['order']
 }
-
+export function responseWatch(data: any) {
+    return _allData(data)['watch']
+}
 export function responceDeliveryByArea(data: any, index: number) {
     return _allData(data)['delivery'][index]['deliveryService']
 }

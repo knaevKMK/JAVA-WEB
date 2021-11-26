@@ -13,7 +13,7 @@ import java.util.UUID;
 public interface ListingService {
 
 
-    Collection<ListingInListViewModel> getAllListings(Authentication authentication, String query, int page, int limit);
+    List<ListingInListViewModel> getAllListings(Authentication authentication, int page, int limit, String s, String sort, String filter, String query);
 
     Optional<Listing> getListingById(UUID id);
 

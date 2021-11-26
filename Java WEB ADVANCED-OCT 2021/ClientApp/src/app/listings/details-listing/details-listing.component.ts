@@ -50,7 +50,7 @@ export class DetailsListingComponent implements OnInit {
     this.orderService.buy(this.buyForm.value)
       .subscribe(result => {
         console.log(result)
-        this.router.navigate(['/order/' + responseOrder(result)]);
+        this.router.navigate(['/orders/order/' + responseOrder(result)]);
       }, err => { console.log(err) })
   }
 

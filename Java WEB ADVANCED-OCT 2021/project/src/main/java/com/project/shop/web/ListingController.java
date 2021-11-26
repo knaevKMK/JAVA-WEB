@@ -13,8 +13,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 
@@ -33,10 +36,16 @@ public class ListingController {
     }
 
 
-    @GetMapping("all")
-    public ResponseEntity<Response> getAllListings(@RequestParam("filter") String query,
+    @GetMapping("/all")
+    public ResponseEntity<Response> getAllListings( @RequestParam(required = false) String sortBy,
+                                                    @RequestParam (required = false)String sort,
+                                                    @RequestParam(required = false) String filter,
+                                                    @RequestParam (required = false)String search,
+                                                    @RequestParam(required = false, defaultValue = "0") int page,
+                                                    @RequestParam(required = false, defaultValue = "30") int limit,
                                                    Authentication authentication) {
-        Collection<ListingInListViewModel> allListings = listingService.getAllListings(authentication, query, 0, 30);
+
+        List<ListingInListViewModel> allListings = listingService.getAllListings(authentication, page,limit,sortBy,sort,filter,search);
         Response response = new Response();
         return ResponseEntity.ok(response
                 .setOkRequestResponse("listings", allListings, "Listings retrieved"));
@@ -56,7 +65,7 @@ public class ListingController {
                 listingModel.setOwner(listing.getCreateFrom().equals(principal.getUsername()));
                 listingModel.setWatched(listing.getWatchers()
                         .stream().
-                        anyMatch(l->l.getUsername().equals(principal.getUsername())));
+                        anyMatch(l -> l.getUsername().equals(principal.getUsername())));
             }
             return ResponseEntity.ok(response
                     .setOkRequestResponse("listing", listingModel, "Listing with id: " + id.toString() + "  retrieved"));
@@ -146,8 +155,8 @@ public class ListingController {
                 UserEntity principal = (UserEntity) authentication.getPrincipal();
                 boolean watch = listingService.watchListing(id, principal.getUsername());
 
-            return ResponseEntity.ok(response
-                    .setOkRequestResponse("watch", watch, "Listing with id: " + id.toString() + "  watched"));
+                return ResponseEntity.ok(response
+                        .setOkRequestResponse("watch", watch, "Listing with id: " + id.toString() + "  watched"));
             }
             throw new NullPointerException("Please Sign - in first");
         } catch (Exception e) {

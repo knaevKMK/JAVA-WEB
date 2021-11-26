@@ -1,5 +1,6 @@
 package com.project.shop.service.impl;
 
+import com.project.shop.infrastructure.identity.models.entity.UserEntity;
 import com.project.shop.model.entity.Account;
 import com.project.shop.model.entity.Listing;
 import com.project.shop.model.service.ListingServiceModel;
@@ -9,10 +10,14 @@ import com.project.shop.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -49,20 +54,66 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
 
 
     @Override
-    public Collection<ListingInListViewModel> getAllListings(Authentication authentication, String query, int page, int limit) {
-        log.info("Fetch Listings from page " + page + " with " + limit + "/page");
-        Stream<Listing> listingStream = listingRepository.findAll(PageRequest.of(page, limit))
-                .stream()
-                //   .filter(BaseEntity::isActive)
-                ;
-        Stream<ListingInListViewModel> collect = listingStream
+    public List<ListingInListViewModel> getAllListings(Authentication authentication,
+                                                             int page, int limit, String sortBy, String sort, String filter, String search) {
+        log.info("Fetch Listings from page " + " with " + "/page");
+
+        Pageable pageListing = getPageable(page, limit, sort, sortBy);
+
+        List<Listing> listings = filterQuery(pageListing, filter.trim().toLowerCase(), authentication).getContent();
+
+        return listings.stream()
                 .map(l -> {
                     ListingInListViewModel model = modelMapper.map(l, ListingInListViewModel.class);
                     System.out.println();
                     return model;
-                });
+                }).collect(Collectors.toList());
+    }
 
-        return collect.collect(Collectors.toList());
+    private Pageable getPageable(int page, int limit, String sort, String sortBy) {
+        if (sortBy != null) {
+            if ("desc".equals(sort)) {
+                return PageRequest.of(page, limit, Sort.by(sortBy).descending());
+            }
+            return (PageRequest.of(page, limit, Sort.by(sortBy)));
+        }
+        return (PageRequest.of(page, limit));
+
+    }
+
+
+    private Slice<Listing> filterQuery(Pageable listingPage, String filter, Authentication authentication) {
+        if (filter==null){
+            return listingRepository.findAll(listingPage);
+        }
+        switch (filter) {
+            case "watchlist":
+                Account account = getAccount(authentication);
+                isAccountExist(account);
+                return listingRepository.findAllWatched(account.getUsername(), listingPage);
+            case "mylist":
+                account = getAccount(authentication);
+                isAccountExist(account);
+                return listingRepository.findAllByCreateFrom(account.getUsername(), listingPage);
+            case "daily_deals":
+                return listingRepository.findAllByCreateOnAfter(LocalDateTime.now().minusDays(1), listingPage);
+
+            case "outlet":
+                return listingRepository.findAllByCreateOnAfter(LocalDateTime.now().minusDays(20), listingPage);
+
+        }
+        return listingRepository.findAll(listingPage);
+    }
+
+    private void isAccountExist(Account account) {
+        if (account == null) {
+            throw new NullPointerException("Please login");
+        }
+    }
+
+    private Account getAccount(Authentication authentication) {
+        UserEntity principal = (UserEntity) authentication.getPrincipal();
+        return accountService.getAccountByUserName(principal.getUsername()).orElse(null);
     }
 
     @Override
@@ -142,8 +193,8 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
             buyer.getWatchList().add(this.getListingById(id)
                     .orElseThrow(() -> new NullPointerException("Listing gone")));
         }
-            accountService.save(buyer);
-            return !unWatched;
+        accountService.save(buyer);
+        return !unWatched;
     }
 
     @Override

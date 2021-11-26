@@ -41,25 +41,21 @@ export class CreateListingComponent implements OnInit {
     this.id = this.activateRoute.snapshot.params['id'];
     this.categoryService.getAll()
       .subscribe(result => {
-        //   console.log(Object(result)['data']['categories'])
         this.categories = responceCategory(result);
       });
     this.conditionService.getAll()
       .subscribe(result => {
-        //    console.log(Object(result)['data']['conditions'])
         this.conditions = responceCondition(result)
       });
 
     this.sellingFormatService.getAll()
       .subscribe(result => {
-        //     console.log(Object(result)['data']['selling-formats'])
-        this.sellingFormats = responceSellingFormat(result)//Object(result)['data']['selling-formats']
+        this.sellingFormats = responceSellingFormat(result)
       });
     this.deliveryService.getAll()
       .subscribe(result => {
-        //    console.log(Object(result)['data']['delivery'])
-        this.deliveryDomestic = responceDeliveryByArea(result, 0) //Object(result)['data']['delivery'][0]['deliveryService']
-        this.deliveryInternatonal = responceDeliveryByArea(result, 1)// Object(result)['data']['delivery'][1]['deliveryService']
+        this.deliveryDomestic = responceDeliveryByArea(result, 0)
+        this.deliveryInternatonal = responceDeliveryByArea(result, 1)
       });
 
     this.isEditMode = this.id != undefined && this.id.length > 0;
@@ -68,7 +64,7 @@ export class CreateListingComponent implements OnInit {
         .subscribe(result => {
           console.log(responceListing(result))
           this.createForm.setValue(responceListing(result));
-          //      console.log(this.createForm.value)
+
         })
       : this.createForm = this.fb.group(ListingCreateForm(fb));
   }
@@ -79,7 +75,6 @@ export class CreateListingComponent implements OnInit {
   }
   onCreate() {
     this.errors = new CreateListingErrors();
-    //  console.log(this.createForm.value)
     var promise = !this.isEditMode
       //create
       ? this.listingService.create(this.createForm.value)
@@ -87,10 +82,8 @@ export class CreateListingComponent implements OnInit {
       : this.listingService.update(this.id, this.createForm.value);
 
     promise.subscribe(result => {
-      //     console.log(result)
-      this.router.navigate(['/item/' + responceId(result)]);
+      this.router.navigate(['/listing/item/' + responceId(result)]);
     }, err => {
-      //   console.log(err);
       this.errors = setErrors(err, this.errors);
     })
   }

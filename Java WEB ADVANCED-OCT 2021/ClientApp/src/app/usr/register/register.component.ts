@@ -30,23 +30,21 @@ export class RegisterComponent implements OnInit {
   }
   onRegister() {
     this.errors = new UserRegisterErrors();
-    //   console.log(this.registerForm.value);
     this.authService.onRegister(this.registerForm.value).subscribe(
       data => {
         console.log(data)
         switch (data.statusCode) {
           case 200:
-            console.log(data)
+            //   console.log(data)
             this.onLoadRegistration(responceConfirm(data));
 
             ; break;
           default:
-            //    console.log(Object(data)['errors']['errors'])
             this.errors.fatalError.push(responseError(data)); break;
         }
       }
       , err => {
-        console.log(Object(err)['error']['errors'])
+        //   console.log(Object(err)['error']['errors'])
         this.errors = setErrors(err, this.errors)
       });
   }
