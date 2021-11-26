@@ -2,7 +2,6 @@ package com.project.shop.web;
 
 import com.project.shop.infrastructure.identity.models.entity.UserEntity;
 import com.project.shop.model.Response;
-import com.project.shop.model.binding.BuyBindingModel;
 import com.project.shop.model.binding.ListingCreateModel;
 import com.project.shop.model.entity.Listing;
 import com.project.shop.model.service.ListingServiceModel;
@@ -11,7 +10,6 @@ import com.project.shop.model.view.ListingViewModel;
 import com.project.shop.service.ListingService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +17,6 @@ import javax.validation.Valid;
 import java.util.Collection;
 import java.util.UUID;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @CrossOrigin
 @RestController
@@ -38,8 +35,8 @@ public class ListingController {
 
     @GetMapping("all")
     public ResponseEntity<Response> getAllListings(@RequestParam("filter") String query,
-            Authentication authentication) {
-        Collection<ListingInListViewModel> allListings = listingService.getAllListings(authentication,query,0, 30);
+                                                   Authentication authentication) {
+        Collection<ListingInListViewModel> allListings = listingService.getAllListings(authentication, query, 0, 30);
         Response response = new Response();
         return ResponseEntity.ok(response
                 .setOkRequestResponse("listings", allListings, "Listings retrieved"));
@@ -53,17 +50,20 @@ public class ListingController {
         try {
             Listing listing = listingService.getListingById(id)
                     .orElseThrow(() -> new NullPointerException("Listing does not exist"));
-            ListingViewModel listingModel  =modelMapper.map( listing,ListingViewModel.class);
+            ListingViewModel listingModel = modelMapper.map(listing, ListingViewModel.class);
             if (authentication != null) {
                 UserEntity principal = (UserEntity) authentication.getPrincipal();
                 listingModel.setOwner(listing.getCreateFrom().equals(principal.getUsername()));
+                listingModel.setWatched(listing.getWatchers()
+                        .stream().
+                        anyMatch(l->l.getUsername().equals(principal.getUsername())));
             }
             return ResponseEntity.ok(response
                     .setOkRequestResponse("listing", listingModel, "Listing with id: " + id.toString() + "  retrieved"));
         } catch (Exception e) {
 
             return ResponseEntity.ok(response
-                    .setBadRequestResponse("id", id, e, "Listing with id:" + id.toString() + "does not exist"));
+                    .setBadRequestResponse("id", id, e, e.getMessage()));
         }
     }
 
@@ -133,6 +133,27 @@ public class ListingController {
 
             return ResponseEntity.ok(response
                     .setBadRequestResponse("listing", listingCreateModel, e, "Listing has errors"));
+        }
+    }
+
+    @GetMapping("watch/{id}")
+    public ResponseEntity<Response> watch(@PathVariable UUID id
+            , Authentication authentication
+    ) {
+        Response response = new Response();
+        try {
+            if (authentication != null) {
+                UserEntity principal = (UserEntity) authentication.getPrincipal();
+                boolean watch = listingService.watchListing(id, principal.getUsername());
+
+            return ResponseEntity.ok(response
+                    .setOkRequestResponse("watch", watch, "Listing with id: " + id.toString() + "  watched"));
+            }
+            throw new NullPointerException("Please Sign - in first");
+        } catch (Exception e) {
+
+            return ResponseEntity.ok(response
+                    .setBadRequestResponse("watch", id, e, e.getMessage()));
         }
     }
 

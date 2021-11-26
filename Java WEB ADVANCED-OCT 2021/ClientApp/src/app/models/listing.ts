@@ -20,7 +20,8 @@ export function ListingCreateForm(fb: FormBuilder) {
         payment: [null, Validators.required],
         createFrom: [null],
         owner: [null],
-        active: [null]
+        active: [null],
+        watchCount: [null]
     }
 }
 
@@ -40,6 +41,7 @@ export class ListingView {
     active: boolean;
     createFrom: string;
     watchCount: number;
+    watched: boolean;
     constructor() {
         this.id = "";
         this.createOn = Date.now();
@@ -56,6 +58,7 @@ export class ListingView {
         this.active = false;
         this.createFrom = "";
         this.watchCount = 0;
+        this.watched = false;
     }
 }
 

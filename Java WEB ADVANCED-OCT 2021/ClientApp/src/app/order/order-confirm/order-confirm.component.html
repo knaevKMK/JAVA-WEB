@@ -1,0 +1,38 @@
+<div   class="container">
+<div class="row">   <h4><h4  *ngIf="!order.completed">Process </h4>Your Order {{order.id}}</h4></div>
+    <form [formGroup]= 'confirmForm' (ngSubmit)='onConfirm()'>
+
+        <div class="row">
+
+            <div class="col-3"><label for="id">
+                <a href="/item/{{order.listingId}}">
+                    <img src="{{order.listingImageUrl}}"  alt="{{order.listingTitle}}" width="70" height="100"
+            data-size="225" data-load-time="1636574198007" style="opacity: 1;">
+
+                       {{order.listingTitle}}
+                </a>
+            </label></div>
+            <div class="col-1"><label for="price" >Price:</label>  </div>
+
+            <div class="col-1">
+                <input  type="number" [attr.disabled]="!order.completed" class="form-control"  value="{{order.price}}" disabled>
+            </div>
+            <div class="col-1"><label for="quantity">qty:</label> </div>
+            <div class="col-1">
+                <input [attr.disabled]="!order.completed" formControlName="quantity"  type="number"  step="1" value="{{order.quantity}}"></div>
+            <div class="col"></div>
+
+
+            <div class="col-4">
+                <textarea *ngIf="!order.completed" formControlName="deliveryAddress"  name="" id="" cols="30" rows="7" placeholder="Please enter Address"
+                ></textarea>
+                <textarea *ngIf="order.completed"  disabled  name="" id="" cols="30" rows="7" >{{order.deliveryAddress}}</textarea>
+            </div>
+            <div class="col"></div>
+        </div>
+        <div class="row">
+
+            <div *ngIf="!order.completed" class="col-1"><input type="submit" value="Complete" ></div>
+        </div>
+    </form>
+</div>

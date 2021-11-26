@@ -34,6 +34,9 @@ export class ListingService {
   }
 
   getWatchList() {
-    return this.http.get(this.url + "/watch-list", httpIfHeader());
+    return this.http.get(this.url + "/watch-list/", httpIfHeader());
+  }
+  onWatch(id: string) {
+    return this.http.get(this.url + "/watch/" + id, httpIfHeader());
   }
 }

@@ -6,10 +6,32 @@ import java.util.UUID;
 public class OrderViewModel {
     private UUID id;
     private UUID listingId;
+    private String listingTitle;
+    private String listingImageUrl;
     private int quantity;
     private BigDecimal price;
+    private boolean isCompleted;
+    private String deliveryAddress;
 
     public OrderViewModel() {
+    }
+
+    public String getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public OrderViewModel setDeliveryAddress(String deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
+        return this;
+    }
+
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public OrderViewModel setCompleted(boolean completed) {
+        isCompleted = completed;
+        return this;
     }
 
     public UUID getId() {
@@ -45,6 +67,24 @@ public class OrderViewModel {
 
     public OrderViewModel setPrice(BigDecimal price) {
         this.price = price;
+        return this;
+    }
+
+    public String getListingTitle() {
+        return listingTitle;
+    }
+
+    public OrderViewModel setListingTitle(String listingTitle) {
+        this.listingTitle = listingTitle;
+        return this;
+    }
+
+    public String getListingImageUrl() {
+        return listingImageUrl;
+    }
+
+    public OrderViewModel setListingImageUrl(String listingImageUrl) {
+        this.listingImageUrl = listingImageUrl;
         return this;
     }
 }

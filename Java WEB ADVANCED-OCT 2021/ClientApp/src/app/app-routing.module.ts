@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { AllListingsComponent } from './listings/all-listings/all-listings.component';
 import { CreateListingComponent } from './listings/create-listing/create-listing.component';
 import { DetailsListingComponent } from './listings/details-listing/details-listing.component';
+import { OrderConfirmComponent } from './order/order-confirm/order-confirm.component';
 import { ProfileComponent } from './usr/profile/profile.component';
 import { RegisterComponent } from './usr/register/register.component';
 import { SettingsComponent } from './usr/settings/settings.component';
@@ -26,8 +27,7 @@ const routes: Routes = [
   { path: 'mySellAccount', component: AllListingsComponent, canActivate: [AuthenticationGuard] },
   { path: 'shoppings', component: AllListingsComponent, canActivate: [AuthenticationGuard] },
 
-  { path: 'order/:id', component: AllListingsComponent, canActivate: [AuthenticationGuard] },
-  { path: 'order/confirm/:id', component: AllListingsComponent, canActivate: [AuthenticationGuard] },
+  { path: 'order/:id', component: OrderConfirmComponent, canActivate: [AuthenticationGuard] },
 
 
 ];

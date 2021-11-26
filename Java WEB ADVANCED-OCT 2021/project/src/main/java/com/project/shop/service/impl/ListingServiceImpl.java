@@ -133,6 +133,20 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
     }
 
     @Override
+    public boolean watchListing(UUID id, String username) {
+        Account buyer = accountService.getAccountByUserName(username)
+                .orElseThrow(() -> new NullPointerException("You must login before watch this listing"));
+
+        boolean unWatched = buyer.getWatchList().removeIf(e -> e.getId().equals(id));
+        if (!unWatched) {
+            buyer.getWatchList().add(this.getListingById(id)
+                    .orElseThrow(() -> new NullPointerException("Listing gone")));
+        }
+            accountService.save(buyer);
+            return !unWatched;
+    }
+
+    @Override
     public Collection<ListingInListViewModel> getWatchListings(String username, int page, int limit) {
         log.info("Fetch Listings from page " + page + " with " + limit + "/page");
         Stream<Listing> listingStream = listingRepository.findAll(PageRequest.of(page, limit))
@@ -149,11 +163,11 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
 
         return collect.collect(Collectors.toList());
     }
+
     @Override
-    public List<Listing> getAllById(List<UUID> ids){
+    public List<Listing> getAllById(List<UUID> ids) {
         return listingRepository.findAllById(ids);
     }
-
 
 
     private Listing setNestedEntities(Listing listingMapped, ListingServiceModel listingServiceModel) {

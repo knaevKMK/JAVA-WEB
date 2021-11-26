@@ -28,4 +28,6 @@ public interface ListingService {
     List<Listing> getAllById(List<UUID> ids);
 
     void updateListing(Listing listing);
+
+    boolean watchListing(UUID id, String username);
 }

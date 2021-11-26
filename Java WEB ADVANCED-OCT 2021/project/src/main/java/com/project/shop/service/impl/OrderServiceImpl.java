@@ -44,8 +44,10 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
         Listing listing = listingService.getListingById(buyModel.getId())
                 .orElseThrow(() -> new NullPointerException("Listing not available"));
         order.setListing(listing);
+//        order.setSeller(listing.getSeller());
         order = this.onCreate(order, buyerAccount.getUsername());
-        order.setActive(false);
+        order.setCompleted(false);
+        order.setDeliveryAddress("Please add delivery Address");
         return orderRepository.saveAndFlush(order);
     }
 
@@ -82,7 +84,9 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
         listing.getSellingFormat().setQuantity(availableQuantity-orderBindingModel.getQuantity());
 
         listingService.updateListing(listing);
-        order.setActive(true);
+        order.setQuantity(orderBindingModel.getQuantity());
+        order.setDeliveryAddress(orderBindingModel.getDeliveryAddress());
+        order.setCompleted(true);
         order=this.onModify(order,username);
 
 

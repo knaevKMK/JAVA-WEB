@@ -62,17 +62,17 @@ private final OrderService orderService;
         return ResponseEntity.ok(response
                 .setOkRequestResponse("order", orderModel, "Order with id: "+id+"retrieved"));
     }
-    @PostMapping("confirm/")
+    @PutMapping("confirm")
     public ResponseEntity<Response> confirm(@RequestBody OrderBindingModel orderBindingModel,
             Authentication authentication) {
         Response response = new Response();
         if (authentication==null){
             return ResponseEntity.ok(response
-                    .setOkRequestResponse("cofirm", null, "You need login"));
+                    .setOkRequestResponse("confirm", null, "You need login"));
         }
         UserEntity user= (UserEntity) authentication.getPrincipal();
         try{
-        var confirmOrder = orderService.confirmOrder(orderBindingModel,user.getUsername());
+                    var confirmOrder = orderService.confirmOrder(orderBindingModel,user.getUsername());
         return ResponseEntity.ok(response
                 .setOkRequestResponse("confirm", confirmOrder, "Order confirmation retrieved"));
         }catch (Exception ex){

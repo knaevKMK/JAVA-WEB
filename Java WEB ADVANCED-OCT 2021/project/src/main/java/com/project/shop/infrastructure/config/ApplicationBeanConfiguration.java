@@ -3,6 +3,7 @@ package com.project.shop.infrastructure.config;
 import com.project.shop.model.binding.ConditionBindingModel;
 import com.project.shop.model.entity.ConditionItem;
 import com.project.shop.model.entity.Listing;
+import com.project.shop.model.entity.Order;
 import com.project.shop.model.entity.SellingFormat;
 import com.project.shop.model.service.ListingServiceModel;
 import com.project.shop.model.view.*;
@@ -28,6 +29,14 @@ public class ApplicationBeanConfiguration {
 
 
         modelMapper.createTypeMap(Listing.class, ListingViewModel.class);
+
+
+        modelMapper.createTypeMap(Order.class, OrderViewModel.class)
+                .addMappings(mapper -> {
+                    mapper.map(src -> src.getListing().getTitle(), OrderViewModel::setListingTitle);
+                    mapper.map(src -> src.getListing().getImageUrl(), OrderViewModel::setListingImageUrl);
+
+                });
 
         return modelMapper;
     }

@@ -10,8 +10,18 @@ public class OrderBindingModel {
     private int quantity;
     private BigDecimal price;
     private String buyerUsername;
+    private String deliveryAddress;
 
     public OrderBindingModel() {
+    }
+
+    public String getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public OrderBindingModel setDeliveryAddress(String deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
+        return this;
     }
 
     public UUID getId() {

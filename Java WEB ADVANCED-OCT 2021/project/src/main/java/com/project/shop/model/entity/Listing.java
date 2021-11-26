@@ -23,21 +23,11 @@ public class Listing extends Item {
     private SellingFormat sellingFormat;
     private DeliveryOptions deliveryDomestic;
     private DeliveryOptions deliveryInternational;
-    private List<Offer> offers;
     private String payment;
 
     public Listing() {
     }
 
-    @OneToMany(mappedBy = "listing")
-    public List<Offer> getOffers() {
-        return offers;
-    }
-
-    public Listing setOffers(List<Offer> offers) {
-        this.offers = offers;
-        return this;
-    }
 
     @OneToMany(mappedBy = "listing")
     public List<Order> getOrders() {
@@ -49,7 +39,7 @@ public class Listing extends Item {
         return this;
     }
 
-    @ManyToMany(mappedBy = "watchList", targetEntity = Account.class)
+    @ManyToMany(mappedBy = "watchList",cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Account.class)
     public Set<Account> getWatchers() {
         return watchers;
     }

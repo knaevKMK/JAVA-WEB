@@ -6,15 +6,35 @@ import java.util.List;
 
 @Entity
 @Table(name = "orders")
-public class Order extends  Item{
+public class Order extends BaseEntity {
     private int quantity;
     private Listing listing;
     private Account buyer;
     private Feedback feedback;
     private BigDecimal price;
-
+    private boolean isCompleted;
+    private String deliveryAddress;
 
     public Order() {
+    }
+
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public Order setCompleted(boolean completed) {
+        isCompleted = completed;
+        return this;
+    }
+
+    @Column(columnDefinition = "TEXT", nullable = false)
+    public String getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public Order setDeliveryAddress(String deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
+        return this;
     }
 
     public BigDecimal getPrice() {
@@ -44,9 +64,10 @@ public class Order extends  Item{
         this.listing = listing;
         return this;
     }
-@ManyToOne(cascade={CascadeType.ALL})
-@JoinColumn(name = "buyer_id")
-public Account getBuyer() {
+
+    @ManyToOne(cascade = {CascadeType.DETACH}, fetch = FetchType.EAGER)
+    @JoinColumn(name = "buyer_id")
+    public Account getBuyer() {
         return buyer;
     }
 
@@ -54,7 +75,8 @@ public Account getBuyer() {
         this.buyer = buyer;
         return this;
     }
-@OneToOne
+
+    @OneToOne
     public Feedback getFeedback() {
         return feedback;
     }
@@ -63,4 +85,5 @@ public Account getBuyer() {
         this.feedback = feedback;
         return this;
     }
+
 }

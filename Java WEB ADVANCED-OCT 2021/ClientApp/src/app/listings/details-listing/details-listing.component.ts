@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ListingView } from 'src/app/models/listing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ListingService } from 'src/app/service/listing.service';
-import { responceListing, responseOrder } from 'src/app/models/response';
+import { responceListing, responseOrder, responseWatch } from 'src/app/models/response';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { BuyForm } from 'src/app/models/buy';
+import { OrderService } from 'src/app/service/order/order.service';
 
 @Component({
   selector: 'app-details-listing',
@@ -21,7 +22,8 @@ export class DetailsListingComponent implements OnInit {
 
   constructor(private activateRouter: ActivatedRoute,
     private fb: FormBuilder,
-    private router: Router, private listingService: ListingService,) {
+    private router: Router, private listingService: ListingService,
+    private orderService: OrderService) {
     this.buyForm = this.fb.group(BuyForm(fb));
   }
 
@@ -30,7 +32,7 @@ export class DetailsListingComponent implements OnInit {
 
     this.listingService.getById(this.id)
       .subscribe(result => {
-        console.log(responceListing(result));
+        console.log((result));
         this.listing = (responceListing(result));
       })
   }
@@ -45,11 +47,19 @@ export class DetailsListingComponent implements OnInit {
     this.buyForm.value['id'] = this.id;
     this.buyForm.value['price'] = this.listing.sellingFormat.price;
     this.buyForm.value['quantity'] = this.buyForm.value['quantity'] ?? 1
-    console.log(this.buyForm.value)
-    this.listingService.buy(this.buyForm.value)
+    this.orderService.buy(this.buyForm.value)
       .subscribe(result => {
         console.log(result)
         this.router.navigate(['/order/' + responseOrder(result)]);
       }, err => { console.log(err) })
+  }
+
+  onWatch() {
+    console.log(this.id)
+    this.listingService.onWatch(this.id)
+      .subscribe(data => {
+        console.log(data)
+        this.listing.watched = responseWatch(data);
+      })
   }
 }

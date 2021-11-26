@@ -15,13 +15,22 @@ public class ListingViewModel {
     private SellingVewModel sellingFormat;
     private DeliveryInListingVewModel deliveryDomestic;
     private DeliveryInListingVewModel deliveryInternational;
-
+private boolean isWatched;
     private String payment;
     private boolean isOwner;
     private String createFrom;
     private boolean isActive;
     private int watchCount;
     public ListingViewModel() {
+    }
+
+    public boolean isWatched() {
+        return isWatched;
+    }
+
+    public ListingViewModel setWatched(boolean watched) {
+        isWatched = watched;
+        return this;
     }
 
     public int getWatchCount() {

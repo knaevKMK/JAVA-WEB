@@ -3,7 +3,7 @@
 <div class="container-fluid">
     <div class="row">
         <!-- todo if isCretor -->
-        <div *ngIf="listing.owner" class="border">
+       <div *ngIf="listing.owner" class="border">
             <div class="row">
                 <div class="col-2"><a href="/edit/{{listing.id}}">Revise</a></div>
                 <div class="col-3">  <p>List starts at:  {{listing.createOn | date:'dd/MM/yyyy HH:mm' }} </p> </div>
@@ -67,7 +67,11 @@
             </form>
             </div>
 
-            <div *ngIf="listing.active" class="row"><div class="col-5"> <button>Add to Watch List</button></div></div>
+            <div *ngIf="listing.active" class="row"><div class="col-5"> <button (click)="onWatch()">
+                <p *ngIf="!listing.watched">Add to Watch List</p>
+                <p *ngIf="listing.watched" >Unwatch listing</p>
+
+            </button></div></div>
 
             <div class="row" *ngIf="listing.deliveryDomestic.price">
                 <div class="row">

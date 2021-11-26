@@ -13,4 +13,5 @@ public interface AccountService {
 
     Optional<Account> getAccountByUserName(String username);
 
+    void save(Account buyer);
 }

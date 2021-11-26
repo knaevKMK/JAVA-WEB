@@ -37,4 +37,9 @@ public class AccountServiceImpl extends BaseServiceImpl<Account> implements Acco
     public Optional<Account> getAccountByUserName(String username) {
         return accountRepository.findByUsername(username);
     }
+
+    @Override
+    public void save(Account buyer) {
+        accountRepository.saveAndFlush(buyer);
+    }
 }

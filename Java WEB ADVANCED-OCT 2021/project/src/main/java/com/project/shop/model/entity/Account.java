@@ -4,14 +4,15 @@ import com.project.shop.infrastructure.identity.models.entity.UserEntity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "accounts")
 public class Account extends BaseEntity {
     private String username;
-    private List<Listing> watchList = new ArrayList<>();
-    private List<Listing> sellingList = new ArrayList<>();
+    private Set<Listing> watchList = new HashSet<>();
     private List<Order> purchaseList = new ArrayList<>();
 
     public Account() {
@@ -36,26 +37,17 @@ public class Account extends BaseEntity {
             name = "buyer_watchings",
             joinColumns = @JoinColumn(name = "buyer_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "listing_id", referencedColumnName = "id"))
-    public List<Listing> getWatchList() {
+    public Set<Listing> getWatchList() {
         return watchList;
     }
 
-    public Account setWatchList(List<Listing> watchList) {
+    public Account setWatchList(Set<Listing> watchList) {
         this.watchList = watchList;
         return this;
     }
 
-    @OneToMany(mappedBy = "seller")
-    public List<Listing> getSellingList() {
-        return sellingList;
-    }
 
-    public Account setSellingList(List<Listing> sellingList) {
-        this.sellingList = sellingList;
-        return this;
-    }
-
-    @OneToMany(mappedBy = "buyer",cascade={CascadeType.REMOVE})
+    @OneToMany(mappedBy = "buyer", cascade = {CascadeType.DETACH})
     public List<Order> getPurchaseList() {
         return purchaseList;
     }
@@ -64,4 +56,6 @@ public class Account extends BaseEntity {
         this.purchaseList = purchaseList;
         return this;
     }
+
+
 }
