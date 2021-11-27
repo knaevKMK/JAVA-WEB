@@ -55,12 +55,12 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
 
     @Override
     public List<ListingInListViewModel> getAllListings(Authentication authentication,
-                                                             int page, int limit, String sortBy, String sort, String filter, String search) {
+                                                       int page, int limit, String sortBy, String sort, String filter, String search) {
         log.info("Fetch Listings from page " + " with " + "/page");
 
         Pageable pageListing = getPageable(page, limit, sort, sortBy);
 
-        List<Listing> listings = filterQuery(pageListing, filter.trim().toLowerCase(), authentication).getContent();
+        List<Listing> listings = filterQuery(pageListing, search, filter, authentication).getContent();
 
         return listings.stream()
                 .map(l -> {
@@ -71,6 +71,7 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
     }
 
     private Pageable getPageable(int page, int limit, String sort, String sortBy) {
+
         if (sortBy != null) {
             if ("desc".equals(sort)) {
                 return PageRequest.of(page, limit, Sort.by(sortBy).descending());
@@ -82,25 +83,32 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
     }
 
 
-    private Slice<Listing> filterQuery(Pageable listingPage, String filter, Authentication authentication) {
-        if (filter==null){
+    private Slice<Listing> filterQuery(Pageable listingPage, String search, String filter, Authentication authentication) {
+        if (filter == null && search == null) {
             return listingRepository.findAll(listingPage);
         }
-        switch (filter) {
-            case "watchlist":
-                Account account = getAccount(authentication);
-                isAccountExist(account);
-                return listingRepository.findAllWatched(account.getUsername(), listingPage);
-            case "mylist":
-                account = getAccount(authentication);
-                isAccountExist(account);
-                return listingRepository.findAllByCreateFrom(account.getUsername(), listingPage);
-            case "daily_deals":
-                return listingRepository.findAllByCreateOnAfter(LocalDateTime.now().minusDays(1), listingPage);
 
-            case "outlet":
-                return listingRepository.findAllByCreateOnAfter(LocalDateTime.now().minusDays(20), listingPage);
+        if (filter != null ) {
 
+            switch (filter.trim().toLowerCase()) {
+                case "watchlist":
+                    Account account = getAccount(authentication);
+                    isAccountExist(account);
+                    return listingRepository.findAllWatched(account.getUsername(), listingPage);
+                case "mylist":
+                    account = getAccount(authentication);
+                    isAccountExist(account);
+                    return listingRepository.findAllByCreateFrom(account.getUsername(), listingPage);
+                case "daily_deals":
+                    return listingRepository.findAllByCreateOnAfter(LocalDateTime.now().minusDays(1), listingPage);
+
+                case "outlet":
+                    return listingRepository.findAllByCreateOnAfter(LocalDateTime.now().minusDays(20), listingPage);
+
+            }
+        }
+        if (search!=null){
+            return listingRepository.findAllByTitleContainingOrDescriptionContaining(search.trim(),search.trim(),listingPage);
         }
         return listingRepository.findAll(listingPage);
     }

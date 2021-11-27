@@ -20,4 +20,6 @@ public interface ListingRepository extends JpaRepository<Listing, UUID> {
     Slice<Listing> findAllByCreateOnAfter(LocalDateTime after, Pageable listingPage);
 
     Slice<Listing> findAllByCreateOnBefore(LocalDateTime before, Pageable listingPage);
+
+    Slice<Listing> findAllByTitleContainingOrDescriptionContaining(String search, String search2, Pageable listingPage);
 }
