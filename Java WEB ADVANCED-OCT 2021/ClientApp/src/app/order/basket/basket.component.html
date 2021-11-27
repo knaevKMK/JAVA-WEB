@@ -1,0 +1,49 @@
+<div class="container">
+    <div class="row"><div class="col"><h3>Your Basket</h3></div></div>
+<h3 *ngIf="orders.length==0" >No Orders</h3>
+    <div *ngFor="let order of orders" id="orders" class="row">
+
+
+        <div   class="row">
+              <form [formGroup]= 'confirmForm' (ngSubmit)='onConfirm()'>
+                    <div class="row">
+                        <div class="col-2">
+                            <a href="/listing/item/{{order.listingId}}">
+                                <p>
+                                    {{order.listingTitle}}
+                                   </p>
+                                <img src="{{order.listingImageUrl}}"  alt="{{order.listingTitle}}" width="70" height="100"
+                              data-size="225" data-load-time="1636574198007" style="opacity: 1;">
+                            </a>
+                            <input formControlName="listingId" type="text" id="listingId"
+                            style="visibility: hidden;"  [(ngModel)]="order.listingId">
+                        </div>
+
+                        <div class="col-2">
+                            <label for="price"  class="form-label">Price: {{order.price | number: '.2'}} </label>
+                            <input  id="price" formControlName="price" type="number"   [(ngModel)]="order.price"
+                            style="visibility: hidden;" >
+                           </div>
+                        <div class="col-2">
+                            <label for="quantity">qty:</label>
+                            <input id="quantity"  formControlName="quantity"  type="number"  step="1"
+                            [(ngModel)]="order.quantity">
+                            <div class="col">   <input type="submit" value="Complete" ></div>
+                        </div>
+
+                            <div class="col-3">
+                                <label for="deliveryAddress">Delivery Address:</label>
+                                <textarea  formControlName="deliveryAddress"
+                                cols="30" rows="4" placeholder="Please enter Address"></textarea>
+
+                                <input formControlName="id"  type="text"
+                                style="visibility: hidden;"   [(ngModel)]="order.id">
+                            </div>
+                    </div>
+
+                </form>
+            </div>
+
+
+    </div>
+</div>

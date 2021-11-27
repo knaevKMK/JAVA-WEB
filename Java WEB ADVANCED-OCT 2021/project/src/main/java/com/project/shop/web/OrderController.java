@@ -23,14 +23,15 @@ private final OrderService orderService;
     }
 
     @GetMapping("purchases")
-    public ResponseEntity<Response> getMyPurchases(Authentication authentication) {
+    public ResponseEntity<Response> getMyPurchases(@RequestParam (required = false) String query,
+            Authentication authentication) {
         Response response = new Response();
         if (authentication==null){
             return ResponseEntity.ok(response
                     .setOkRequestResponse("purchases", null, "You need login"));
         }
         UserEntity user= (UserEntity) authentication.getPrincipal();
-        Collection<OrderViewModel> myPurchase = orderService.getPurchases(user.getUsername(),0, 30);
+        Collection<OrderViewModel> myPurchase = orderService.getPurchases(query,user.getUsername(),0, 30);
         return ResponseEntity.ok(response
                 .setOkRequestResponse("purchases", myPurchase, "My Purchases retrieved"));
     }

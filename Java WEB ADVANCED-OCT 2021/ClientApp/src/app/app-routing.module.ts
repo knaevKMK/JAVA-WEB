@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { AllListingsComponent } from './listings/all-listings/all-listings.component';
 import { CreateListingComponent } from './listings/create-listing/create-listing.component';
 import { DetailsListingComponent } from './listings/details-listing/details-listing.component';
+import { BasketComponent } from './order/basket/basket.component';
 import { OrderConfirmComponent } from './order/order-confirm/order-confirm.component';
 import { OrderListComponent } from './order/order-list/order-list.component';
 import { OrderSoldsComponent } from './order/order-solds/order-solds.component';
@@ -45,7 +46,7 @@ const routes: Routes = [
       { path: 'order/:id', component: OrderConfirmComponent, canActivate: [AuthenticationGuard] },
       { path: 'purchase', component: OrderListComponent, canActivate: [AuthenticationGuard] },
       { path: 'solds', component: OrderSoldsComponent, canActivate: [AuthenticationGuard] },
-      { path: 'basket', component: OrderConfirmComponent, canActivate: [AuthenticationGuard] },
+      { path: 'basket', component: BasketComponent, canActivate: [AuthenticationGuard] },
     ]
   }
 

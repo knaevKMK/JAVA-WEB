@@ -57,6 +57,7 @@ export class DetailsListingComponent implements OnInit {
         console.log(result)
         if (Object(result)['statusCode'] == 400) {
           alert(responseError(result))
+          return;
         }
         this.router.navigate(['/orders/order/' + responseOrder(result)]);
       }, err => { console.log(err) })
@@ -77,6 +78,7 @@ export class DetailsListingComponent implements OnInit {
       .subscribe(data => {
         console.log(data)
       })
+    this.mailCreate = this.fb.group(MailForm());
 
   }
 }

@@ -103,10 +103,16 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
     }
 
     @Override
-    public Collection<OrderViewModel> getPurchases(String buyerUsername, int page, int pcs) {
-        return orderRepository
-                .findAllByActiveIsTrueAndBuyer_Username(buyerUsername)
-                .stream().map(e -> modelMapper.map(e, OrderViewModel.class))
+    public Collection<OrderViewModel> getPurchases(String query, String buyerUsername, int page, int pcs) {
+        Collection<Order> orders= null;
+        if (query.equals("basket")){
+           orders = orderRepository
+                    .findAllByActiveIsTrueAndCompletedIsFalseAndBuyer_Username(buyerUsername);
+        }else {
+            orders = orderRepository
+                    .findAllByActiveIsTrueAndBuyer_Username(buyerUsername);
+        }
+        return orders.stream().map(e -> modelMapper.map(e, OrderViewModel.class))
                 .collect(Collectors.toList());
     }
 

@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="row"><div class="col"><h3>Your Purchases</h3></div></div>
+    <div *ngFor="let order of orders" id="orders" class="row">
+        <div class="row">
+             <div class="col-3"><label for="id">
+                <a href="/listing/item/{{order.listingId}}">
+                    <img src="{{order.listingImageUrl}}"  alt="{{order.listingTitle}}" width="70" height="100"
+            data-size="225" data-load-time="1636574198007" style="opacity: 1;">
+
+                    {{order.listingTitle}}
+                    </a>
+                </label>
+            </div>
+            <div class="col-1"><label for="price" >Price:</label></div>
+
+            <div class="col-2">
+                <p>{{order.price | number:'.2'}} BGN</p>
+                <p>Seller: <a href="/usr/{{order.sellerUsername}}">{{order.sellerUsername}}</a></p>
+            </div>
+            <div class="col-1"><p>qty:</p> </div>
+            <div class="col-1"><p>{{order.quantity}}</p></div>
+            <div class="col"></div>
+            <div *ngIf="order.completed" id="order-address" class="col-3" >
+                <p >Delivery address: </p>
+                <p >{{order.deliveryAddress}}</p>
+            </div>
+            <div *ngIf="!order.completed" class="col-3">
+                <div class="row">
+                    <div  class="col">
+                        <p>Order is not completed</p>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div  class="col-6">
+                        <a href="/orders/order/{{order.id}}"><button>Complete</button></a>
+                    </div>
+                    <div  class="col-3">
+                        <a (click)="onCancel(order.id)"><button>Cancel</button></a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

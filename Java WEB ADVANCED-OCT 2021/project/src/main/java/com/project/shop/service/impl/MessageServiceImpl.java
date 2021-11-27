@@ -5,6 +5,7 @@ import com.project.shop.model.service.MsgServiceModel;
 import com.project.shop.model.view.MsgListViewModel;
 import com.project.shop.model.view.MsgViewModel;
 import com.project.shop.repository.MessageRepository;
+import com.project.shop.service.AccountService;
 import com.project.shop.service.MessageService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -17,17 +18,21 @@ import java.util.stream.Collectors;
 @Service
 public class MessageServiceImpl extends BaseServiceImpl<Message> implements MessageService {
     private final MessageRepository messageRepository;
+    private final AccountService accountService;
     private final ModelMapper modelMapper;
 
-    public MessageServiceImpl(MessageRepository messageRepository, ModelMapper modelMapper) {
+    public MessageServiceImpl(MessageRepository messageRepository, AccountService accountService, ModelMapper modelMapper) {
         this.messageRepository = messageRepository;
+        this.accountService = accountService;
         this.modelMapper = modelMapper;
     }
 
     @Override
     public String sendMessage(MsgServiceModel model, String senderUsername) {
         Message msg = modelMapper.map(model, Message.class);
-        msg = onCreate(msg, senderUsername);
+        msg.setRecipient(accountService.findByUsername(model.getRecipientUsername())
+                .orElseThrow(()->new NullPointerException("Recipient does not exist")));
+                msg = onCreate(msg, senderUsername);
         messageRepository.saveAndFlush(msg);
         return "Message sent";
     }

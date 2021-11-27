@@ -15,11 +15,11 @@
             <div class="col-1"><label for="price" >Price:</label>  </div>
 
             <div class="col-1">
-                <input  type="number" [attr.disabled]="!order.completed" class="form-control"  value="{{order.price}}" disabled>
+                <input  type="number" [attr.disabled]="!order.completed" class="form-control"  [(ngModel)]="order.price" disabled>
             </div>
             <div class="col-1"><label for="quantity">qty:</label> </div>
             <div class="col-1">
-                <input [attr.disabled]="!order.completed" formControlName="quantity"  type="number"  step="1" value="{{order.quantity}}"></div>
+                <input [attr.disabled]="!order.completed" formControlName="quantity"  type="number"  step="1" [(ngModel)]="order.quantity"></div>
             <div class="col"></div>
 
 

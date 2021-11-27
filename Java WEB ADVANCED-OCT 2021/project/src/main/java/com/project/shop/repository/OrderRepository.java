@@ -21,4 +21,6 @@ public interface OrderRepository extends JpaRepository<Order, UUID> {
 
     Collection<Order> findAllByActiveIsTrueAndBuyer_Username(String username );
     Collection<Order> findAllByActiveIsTrueAndListing_CreateFrom(String username);
+
+    Collection<Order> findAllByActiveIsTrueAndCompletedIsFalseAndBuyer_Username(String buyerUsername);
 }

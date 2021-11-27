@@ -19,6 +19,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OrderConfirmComponent } from './order/order-confirm/order-confirm.component';
 import { OrderListComponent } from './order/order-list/order-list.component';
 import { OrderSoldsComponent } from './order/order-solds/order-solds.component';
+import { BasketComponent } from './order/basket/basket.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { OrderSoldsComponent } from './order/order-solds/order-solds.component';
     OrderConfirmComponent,
     OrderListComponent,
     OrderSoldsComponent,
+    BasketComponent,
   ],
   imports: [
     BrowserModule,
