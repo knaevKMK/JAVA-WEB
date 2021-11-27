@@ -2,6 +2,9 @@ package com.project.shop.service.impl;
 
 import com.project.shop.model.entity.BaseEntity;
 import com.project.shop.service.BaseService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.time.LocalDateTime;
 
@@ -33,5 +36,17 @@ public class BaseServiceImpl<T> implements BaseService<T> {
                 .setModifiedOn(LocalDateTime.now())
                 .setModifiedFrom(modifier);
         return entity;
+    }
+
+    protected Pageable getPageable(int page, int limit, String sort, String sortBy) {
+
+        if (sortBy != null) {
+            if ("desc".equals(sort)) {
+                return PageRequest.of(page, limit, Sort.by(sortBy).descending());
+            }
+            return (PageRequest.of(page, limit, Sort.by(sortBy)));
+        }
+        return (PageRequest.of(page, limit));
+
     }
 }

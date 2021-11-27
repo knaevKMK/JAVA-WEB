@@ -6,6 +6,8 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -18,8 +20,8 @@ public class Listing extends Item {
     private ConditionItem condition;
     private Account seller;
 
-    private Set<Account> watchers;
-    private List<Order> orders;
+    private Set<Account> watchers=new HashSet<>();
+    private List<Order> orders=new ArrayList<>();
     private SellingFormat sellingFormat;
     private DeliveryOptions deliveryDomestic;
     private DeliveryOptions deliveryInternational;
@@ -29,7 +31,7 @@ public class Listing extends Item {
     }
 
 
-    @OneToMany(mappedBy = "listing")
+    @OneToMany(mappedBy = "listing",fetch = FetchType.EAGER)
     public List<Order> getOrders() {
         return orders;
     }

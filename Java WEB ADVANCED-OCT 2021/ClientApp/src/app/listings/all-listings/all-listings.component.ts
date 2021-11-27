@@ -21,7 +21,6 @@ export class AllListingsComponent implements OnInit {
     this.activateRoute.queryParams
       .subscribe(params => {
 
-        this.loadQuery(Object(params))
         this.listingService.getAll(this.loadQuery(Object(params)))
           .subscribe(result => {
             console.log(Object(result))
@@ -34,7 +33,7 @@ export class AllListingsComponent implements OnInit {
   ngOnInit(): void {
   }
   loadQuery(data: any) {
-    console.log(data)
+    // console.log(data)
     var result = "";
     Object.keys(this.query)
       .forEach(key => {
@@ -42,7 +41,7 @@ export class AllListingsComponent implements OnInit {
           result += key + "=" + data[key]
         }
       })
-    console.log(result)
+    //   console.log(result)
     return result;
   }
 }

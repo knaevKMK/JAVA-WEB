@@ -6,6 +6,9 @@ import { responceListing, responseOrder, responseWatch } from 'src/app/models/re
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { BuyForm } from 'src/app/models/buy';
 import { OrderService } from 'src/app/service/order/order.service';
+import { responseError } from 'src/app/models/errors';
+import { MailForm } from 'src/app/models/msg';
+import { MsgService } from 'src/app/service/msg/msg.service';
 
 @Component({
   selector: 'app-details-listing',
@@ -16,15 +19,17 @@ import { OrderService } from 'src/app/service/order/order.service';
 export class DetailsListingComponent implements OnInit {
   id: string = "";
   listing = new ListingView();
-
+  mailCreate: FormGroup;
   buyForm: FormGroup;
 
 
   constructor(private activateRouter: ActivatedRoute,
     private fb: FormBuilder,
     private router: Router, private listingService: ListingService,
-    private orderService: OrderService) {
+    private orderService: OrderService,
+    private msgService: MsgService) {
     this.buyForm = this.fb.group(BuyForm(fb));
+    this.mailCreate = this.fb.group(MailForm());
   }
 
   ngOnInit(): void {
@@ -50,6 +55,9 @@ export class DetailsListingComponent implements OnInit {
     this.orderService.buy(this.buyForm.value)
       .subscribe(result => {
         console.log(result)
+        if (Object(result)['statusCode'] == 400) {
+          alert(responseError(result))
+        }
         this.router.navigate(['/orders/order/' + responseOrder(result)]);
       }, err => { console.log(err) })
   }
@@ -61,5 +69,14 @@ export class DetailsListingComponent implements OnInit {
         console.log(data)
         this.listing.watched = responseWatch(data);
       })
+  }
+  onSend() {
+    this.mailCreate.value.listingId = this.listing.id;
+    this.mailCreate.value.recipientUsername = this.listing.createFrom;
+    this.msgService.send(this.mailCreate.value)
+      .subscribe(data => {
+        console.log(data)
+      })
+
   }
 }

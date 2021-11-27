@@ -71,3 +71,18 @@ border-radius: 3px;
 background-color:whitesmoke;
 
     }
+    div#orders{
+        margin: 5px;
+    }
+    #orders{
+border-style: groove;
+border-color: grey;
+border-radius: 2px;
+
+    }
+    #order-address{
+        background-color:#fff;
+    }
+    button{
+        margin: 5px;
+    }

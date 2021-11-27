@@ -28,6 +28,7 @@ export function ListingCreateForm(fb: FormBuilder) {
 export class ListingView {
     id: string;
     createOn: any;
+    endOn: any;
     title: string;
     description: string;
     imageUrl: string;
@@ -42,9 +43,11 @@ export class ListingView {
     createFrom: string;
     watchCount: number;
     watched: boolean;
+    orderedCount: number;
     constructor() {
         this.id = "";
         this.createOn = Date.now();
+        this.endOn = Date.now();
         this.title = "";
         this.description = "";
         this.imageUrl = ""
@@ -59,6 +62,7 @@ export class ListingView {
         this.createFrom = "";
         this.watchCount = 0;
         this.watched = false;
+        this.orderedCount = 0;
     }
 }
 

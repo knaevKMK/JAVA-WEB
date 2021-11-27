@@ -18,6 +18,7 @@ export class ListingService {
     })
   };
   getAll(query: string) {
+    //console.log(query)
     return this.http.get(this.url + "/all?" + query, httpIfHeader())
   }
   getById(id: string) {

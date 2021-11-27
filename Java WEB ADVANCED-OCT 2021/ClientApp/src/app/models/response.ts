@@ -20,6 +20,10 @@ export function responseOrder(data: any) {
 export function responseWatch(data: any) {
     return _allData(data)['watch']
 }
+export function responsePurchases(data: any) {
+    return _allData(data)['purchases']
+}
+
 export function responceDeliveryByArea(data: any, index: number) {
     return _allData(data)['delivery'][index]['deliveryService']
 }

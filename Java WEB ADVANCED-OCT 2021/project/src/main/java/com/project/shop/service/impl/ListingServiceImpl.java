@@ -12,7 +12,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -58,7 +57,7 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
                                                        int page, int limit, String sortBy, String sort, String filter, String search) {
         log.info("Fetch Listings from page " + " with " + "/page");
 
-        Pageable pageListing = getPageable(page, limit, sort, sortBy);
+        Pageable pageListing =getPageable(page, limit, sort, sortBy);
 
         List<Listing> listings = filterQuery(pageListing, search, filter, authentication).getContent();
 
@@ -70,17 +69,17 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
                 }).collect(Collectors.toList());
     }
 
-    private Pageable getPageable(int page, int limit, String sort, String sortBy) {
-
-        if (sortBy != null) {
-            if ("desc".equals(sort)) {
-                return PageRequest.of(page, limit, Sort.by(sortBy).descending());
-            }
-            return (PageRequest.of(page, limit, Sort.by(sortBy)));
-        }
-        return (PageRequest.of(page, limit));
-
-    }
+//    private Pageable getPageable(int page, int limit, String sort, String sortBy) {
+//
+//        if (sortBy != null) {
+//            if ("desc".equals(sort)) {
+//                return PageRequest.of(page, limit, Sort.by(sortBy).descending());
+//            }
+//            return (PageRequest.of(page, limit, Sort.by(sortBy)));
+//        }
+//        return (PageRequest.of(page, limit));
+//
+//    }
 
 
     private Slice<Listing> filterQuery(Pageable listingPage, String search, String filter, Authentication authentication) {

@@ -9,19 +9,40 @@ public class ListingViewModel {
     private String description;
     private String imageUrl;
     private LocalDateTime createOn;
+    private LocalDateTime endOn;
     private CategoryViewModel category;
     private ConditionViewModel condition;
 
     private SellingVewModel sellingFormat;
     private DeliveryInListingVewModel deliveryDomestic;
     private DeliveryInListingVewModel deliveryInternational;
-private boolean isWatched;
+    private boolean isWatched;
     private String payment;
     private boolean isOwner;
     private String createFrom;
     private boolean isActive;
     private int watchCount;
+    private int orderedCount;
+
     public ListingViewModel() {
+    }
+
+    public int getOrderedCount() {
+        return orderedCount;
+    }
+
+    public ListingViewModel setOrderedCount(int orderedCount) {
+        this.orderedCount = orderedCount;
+        return this;
+    }
+
+    public LocalDateTime getEndOn() {
+        return endOn;
+    }
+
+    public ListingViewModel setEndOn(LocalDateTime endOn) {
+        this.endOn = endOn;
+        return this;
     }
 
     public boolean isWatched() {

@@ -3,9 +3,7 @@ package com.project.shop.web;
 import com.project.shop.infrastructure.identity.models.entity.UserEntity;
 import com.project.shop.model.Response;
 import com.project.shop.model.binding.BuyBindingModel;
-import com.project.shop.model.binding.ListingCreateModel;
 import com.project.shop.model.binding.OrderBindingModel;
-import com.project.shop.model.view.ListingInListViewModel;
 import com.project.shop.model.view.OrderViewModel;
 import com.project.shop.service.OrderService;
 import org.springframework.http.ResponseEntity;
@@ -24,30 +22,31 @@ private final OrderService orderService;
         this.orderService = orderService;
     }
 
-    @GetMapping("my-purchase")
+    @GetMapping("purchases")
     public ResponseEntity<Response> getMyPurchases(Authentication authentication) {
         Response response = new Response();
         if (authentication==null){
             return ResponseEntity.ok(response
-                    .setOkRequestResponse("my-purchases", null, "You need login"));
+                    .setOkRequestResponse("purchases", null, "You need login"));
         }
         UserEntity user= (UserEntity) authentication.getPrincipal();
         Collection<OrderViewModel> myPurchase = orderService.getPurchases(user.getUsername(),0, 30);
         return ResponseEntity.ok(response
-                .setOkRequestResponse("my-purchases", myPurchase, "My Purchases retrieved"));
+                .setOkRequestResponse("purchases", myPurchase, "My Purchases retrieved"));
     }
-    @GetMapping("my-order")
+    @GetMapping("solds")
     public ResponseEntity<Response> getMyOrders(Authentication authentication) {
         Response response = new Response();
         if (authentication==null){
             return ResponseEntity.ok(response
-                    .setOkRequestResponse("listings", null, "You need login"));
+                    .setOkRequestResponse("orders", null, "You need login"));
         }
         UserEntity user= (UserEntity) authentication.getPrincipal();
-        Collection<OrderViewModel> watchListing = orderService.getMyOrders(user.getUsername(),0, 30);
+        Collection<OrderViewModel> watchListing = orderService.getSolds(user.getUsername(),0, 30);
         return ResponseEntity.ok(response
-                .setOkRequestResponse("listings", watchListing, "My Orders retrieved"));
+                .setOkRequestResponse("orders", watchListing, "My Orders retrieved"));
     }
+
     @GetMapping("order/{id}")
     public ResponseEntity<Response> getOrderById(@PathVariable UUID id
             , Authentication authentication) {
@@ -56,7 +55,6 @@ private final OrderService orderService;
             return ResponseEntity.ok(response
                     .setOkRequestResponse("order", null, "You must login"));
         }
-        UserEntity user= (UserEntity) authentication.getPrincipal();
         OrderViewModel orderModel = orderService.getOrderBuyId(id).orElseThrow(()->new NullPointerException(
                 "Order with id:"+id+"does not exist"));
         return ResponseEntity.ok(response
@@ -78,7 +76,7 @@ private final OrderService orderService;
         }catch (Exception ex){
 
             return ResponseEntity.ok(response
-                    .setBadRequestResponse("order", orderBindingModel, ex, "Order has errors"));
+                    .setBadRequestResponse("order", orderBindingModel, ex, ex.getMessage()));
         }
     }
     @PostMapping("buy")
@@ -101,7 +99,30 @@ private final OrderService orderService;
         } catch (Exception e) {
 
             return ResponseEntity.ok(response
-                    .setBadRequestResponse("buy", buyBindingModel, e, "Buy it now has errors"));
+                    .setBadRequestResponse("buy", buyBindingModel, e, e.getMessage()));
+        }
+    }
+    @DeleteMapping("cancel/{id}")
+    public ResponseEntity<Response> cancelOrder(  @PathVariable UUID id
+            , Authentication authentication
+    ) {
+        Response response = new Response();
+        try {
+            if (authentication == null) {
+                throw new IllegalStateException("Please Sign-in before continue");
+            }
+            if (id == null) {
+                return ResponseEntity.notFound().build();
+            }
+
+            UserEntity principal = (UserEntity) authentication.getPrincipal();
+            boolean deleted = orderService.cancel(id,principal.getUsername());
+            return ResponseEntity.ok(response
+                    .setOkRequestResponse("delete", deleted, "Order was canceled"));
+        } catch (Exception e) {
+
+            return ResponseEntity.ok(response
+                    .setBadRequestResponse("buy", id, e, e.getMessage()));
         }
     }
 }

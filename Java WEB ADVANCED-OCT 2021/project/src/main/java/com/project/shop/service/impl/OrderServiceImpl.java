@@ -5,7 +5,6 @@ import com.project.shop.model.binding.OrderBindingModel;
 import com.project.shop.model.entity.Account;
 import com.project.shop.model.entity.Listing;
 import com.project.shop.model.entity.Order;
-import com.project.shop.model.service.ListingServiceModel;
 import com.project.shop.model.view.OrderViewModel;
 import com.project.shop.repository.OrderRepository;
 import com.project.shop.service.AccountService;
@@ -34,15 +33,18 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
 
     @Override
     public Order placeOrder(BuyBindingModel buyModel, String buyer) {
+        Listing listing = listingService.getListingById(buyModel.getId())
+                .orElseThrow(() -> new NullPointerException("Listing not available"));
+        if (listing.getCreateFrom().equals(buyer)){
+            throw new IllegalArgumentException("You can`t buy your Item");
+        }
         Order order = new Order();
         order.setQuantity(buyModel.getQuantity())
                 .setPrice(buyModel.getPrice());
         Account buyerAccount = accountService.getAccountByUserName(buyer)
                 .orElseThrow(() -> new NullPointerException(
-                "You are not authorized to buy this item"));
+                        "You are not authorized to buy this item"));
         order.setBuyer(buyerAccount);
-        Listing listing = listingService.getListingById(buyModel.getId())
-                .orElseThrow(() -> new NullPointerException("Listing not available"));
         order.setListing(listing);
 //        order.setSeller(listing.getSeller());
         order = this.onCreate(order, buyerAccount.getUsername());
@@ -72,41 +74,57 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
                 .orElseThrow(() -> new NullPointerException("Listing not available"));
 
 
-        Account buyer = accountService.findByUsername(username)
+         accountService.findByUsername(username)
                 .orElseThrow(() -> new NullPointerException("You are not authorized"));
-        if(!Objects.equals(listing.getSellingFormat().getPrice(), order.getPrice())){
+        if (!Objects.equals(listing.getSellingFormat().getPrice(), order.getPrice())) {
             throw new IllegalArgumentException("Price does not match");
         }
         int availableQuantity = listing.getSellingFormat().getQuantity();
-        if(availableQuantity-orderBindingModel.getQuantity()<0){
+        if (availableQuantity - orderBindingModel.getQuantity() < 0) {
             throw new IllegalArgumentException("Not enough quantity");
         }
-        listing.getSellingFormat().setQuantity(availableQuantity-orderBindingModel.getQuantity());
+        listing.getSellingFormat().setQuantity(availableQuantity - orderBindingModel.getQuantity());
 
         listingService.updateListing(listing);
         order.setQuantity(orderBindingModel.getQuantity());
         order.setDeliveryAddress(orderBindingModel.getDeliveryAddress());
         order.setCompleted(true);
-        order=this.onModify(order,username);
+        order = this.onModify(order, username);
 
 
         return orderRepository.saveAndFlush(order).getId();
     }
 
     @Override
-    public Collection<OrderViewModel> getMyOrders(String sellerUsername, int page, int pcs) {
-        return orderRepository.findAll()
-                .stream().filter(o -> o.getListing().getSeller().getUsername().equals(sellerUsername))
-                .map(e -> modelMapper.map(e, OrderViewModel.class))
+    public Collection<OrderViewModel> getSolds(String sellerUsername, int page, int pcs) {
+        Collection<Order> list = orderRepository.findAllByActiveIsTrueAndListing_CreateFrom(sellerUsername);
+        return     list.stream().map(e -> modelMapper.map(e, OrderViewModel.class))
                 .collect(Collectors.toList());
     }
 
     @Override
     public Collection<OrderViewModel> getPurchases(String buyerUsername, int page, int pcs) {
-        return orderRepository.findAll()
-                .stream().filter(o -> o.getBuyer().getUsername().equals(buyerUsername))
-                .map(e -> modelMapper.map(e, OrderViewModel.class))
+        return orderRepository
+                .findAllByActiveIsTrueAndBuyer_Username(buyerUsername)
+                .stream().map(e -> modelMapper.map(e, OrderViewModel.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean cancel(UUID id, String username) throws IllegalAccessException {
+
+        Order order = orderRepository.findById(id).orElse(null);
+        if (order == null) {
+            return false;
+        }
+        if (!order.getBuyer().getUsername().equals(username)) {
+            throw new IllegalAccessException("You are not authorise to delete this item");
+        }
+
+        order.setActive(false);
+        Order order1 = this.onModify(order, username);
+        orderRepository.saveAndFlush(order1);
+        return true;
     }
 
     @Override

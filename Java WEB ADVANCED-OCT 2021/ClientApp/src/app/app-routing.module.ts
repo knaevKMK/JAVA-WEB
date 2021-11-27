@@ -6,6 +6,8 @@ import { AllListingsComponent } from './listings/all-listings/all-listings.compo
 import { CreateListingComponent } from './listings/create-listing/create-listing.component';
 import { DetailsListingComponent } from './listings/details-listing/details-listing.component';
 import { OrderConfirmComponent } from './order/order-confirm/order-confirm.component';
+import { OrderListComponent } from './order/order-list/order-list.component';
+import { OrderSoldsComponent } from './order/order-solds/order-solds.component';
 import { ProfileComponent } from './usr/profile/profile.component';
 import { RegisterComponent } from './usr/register/register.component';
 import { SettingsComponent } from './usr/settings/settings.component';
@@ -21,6 +23,7 @@ const routes: Routes = [
 
       { path: 'profile/:username', component: ProfileComponent, canActivate: [AuthenticationGuard] },
       { path: 'accountsettings', component: SettingsComponent, canActivate: [AuthenticationGuard] },
+      { path: 'msgs', component: SettingsComponent, canActivate: [AuthenticationGuard] },
       { path: 'mySellAccount', component: AllListingsComponent, canActivate: [AuthenticationGuard] },
     ]
   },
@@ -40,6 +43,9 @@ const routes: Routes = [
   {
     path: 'orders', children: [
       { path: 'order/:id', component: OrderConfirmComponent, canActivate: [AuthenticationGuard] },
+      { path: 'purchase', component: OrderListComponent, canActivate: [AuthenticationGuard] },
+      { path: 'solds', component: OrderSoldsComponent, canActivate: [AuthenticationGuard] },
+      { path: 'basket', component: OrderConfirmComponent, canActivate: [AuthenticationGuard] },
     ]
   }
 

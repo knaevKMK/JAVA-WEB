@@ -19,4 +19,13 @@ export class OrderService {
   confirm(data: any) {
     return this.http.put(this.url + "/confirm", data, httpIfHeader())
   }
+  getPruchases() {
+    return this.http.get(this.url + "/purchases", httpIfHeader())
+  }
+  getSolds() {
+    return this.http.get(this.url + "/solds", httpIfHeader())
+  }
+  cancel(id: string) {
+    return this.http.delete(this.url + "/cancel/" + id, httpIfHeader())
+  }
 }

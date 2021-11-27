@@ -13,11 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 
@@ -37,15 +34,15 @@ public class ListingController {
 
 
     @GetMapping("/all")
-    public ResponseEntity<Response> getAllListings( @RequestParam(required = false) String sortBy,
-                                                    @RequestParam (required = false)String sort,
-                                                    @RequestParam(required = false) String filter,
-                                                    @RequestParam (required = false)String search,
-                                                    @RequestParam(required = false, defaultValue = "0") int page,
-                                                    @RequestParam(required = false, defaultValue = "30") int limit,
+    public ResponseEntity<Response> getAllListings(@RequestParam(required = false) String sortBy,
+                                                   @RequestParam(required = false) String sort,
+                                                   @RequestParam(required = false) String filter,
+                                                   @RequestParam(required = false) String search,
+                                                   @RequestParam(required = false, defaultValue = "0") int page,
+                                                   @RequestParam(required = false, defaultValue = "30") int limit,
                                                    Authentication authentication) {
 
-        List<ListingInListViewModel> allListings = listingService.getAllListings(authentication, page,limit,sortBy,sort,filter,search);
+        List<ListingInListViewModel> allListings = listingService.getAllListings(authentication, page, limit, sortBy, sort, filter, search);
         Response response = new Response();
         return ResponseEntity.ok(response
                 .setOkRequestResponse("listings", allListings, "Listings retrieved"));
@@ -62,7 +59,10 @@ public class ListingController {
             ListingViewModel listingModel = modelMapper.map(listing, ListingViewModel.class);
             if (authentication != null) {
                 UserEntity principal = (UserEntity) authentication.getPrincipal();
+            listingModel.setEndOn(listing.getCreateOn().plusDays(listing.getSellingFormat().getDuration()));
+            listingModel.setOrderedCount(listing.getOrders().size());
                 listingModel.setOwner(listing.getCreateFrom().equals(principal.getUsername()));
+                listingModel.setWatchCount(listing.getWatchers().size());
                 listingModel.setWatched(listing.getWatchers()
                         .stream().
                         anyMatch(l -> l.getUsername().equals(principal.getUsername())));
@@ -90,9 +90,8 @@ public class ListingController {
             return ResponseEntity.ok(response
                     .setOkRequestResponse("deleted", isDeleted, "Listing with id: " + id.toString() + "  deleted"));
         } catch (Exception e) {
-
             return ResponseEntity.ok(response
-                    .setBadRequestResponse("deleted", false, e, "Listing with id:" + id.toString() + "does not exist"));
+                    .setBadRequestResponse("deleted", false, e, e.getMessage()));
         }
     }
 
@@ -114,7 +113,7 @@ public class ListingController {
         } catch (Exception e) {
 
             return ResponseEntity.ok(response
-                    .setBadRequestResponse("listing", listingCreateModel, e, "Listing has errors"));
+                    .setBadRequestResponse("listing", listingCreateModel, e, e.getMessage()));
         }
     }
 
@@ -141,7 +140,7 @@ public class ListingController {
         } catch (Exception e) {
 
             return ResponseEntity.ok(response
-                    .setBadRequestResponse("listing", listingCreateModel, e, "Listing has errors"));
+                    .setBadRequestResponse("listing", listingCreateModel, e, e.getMessage()));
         }
     }
 

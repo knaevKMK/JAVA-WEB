@@ -1,5 +1,6 @@
 package com.project.shop.service;
 
+import com.project.shop.infrastructure.identity.models.entity.UserEntity;
 import com.project.shop.model.binding.BuyBindingModel;
 import com.project.shop.model.binding.OrderBindingModel;
 import com.project.shop.model.entity.Order;
@@ -18,7 +19,9 @@ public interface OrderService {
 
     UUID  confirmOrder(OrderBindingModel orderBindingModel, String username) throws IllegalAccessException;
 
-    Collection<OrderViewModel> getMyOrders(String username, int page, int pcs);
+    Collection<OrderViewModel> getSolds(String username, int page, int pcs);
 
     Collection<OrderViewModel> getPurchases(String username, int page, int pcs);
+
+    boolean cancel(UUID id, String username) throws IllegalAccessException;
 }

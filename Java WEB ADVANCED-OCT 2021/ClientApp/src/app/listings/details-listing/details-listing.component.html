@@ -2,18 +2,20 @@
 
 <div class="container-fluid">
     <div class="row">
-        <!-- todo if isCretor -->
+        <!--  if isCretor -->
        <div *ngIf="listing.owner" class="border">
             <div class="row">
                 <div class="col-2"><a href="/listing/edit/{{listing.id}}">Revise</a></div>
                 <div class="col-3">  <p>List starts at:  {{listing.createOn | date:'dd/MM/yyyy HH:mm' }} </p> </div>
                 <div class="col-3"><p>Selling format: {{listing.sellingFormat.title}}</p> </div>
+                <div class="col-3"><p>Ordered: {{listing.orderedCount}} times</p> </div>
                 <div class="col"></div>
             </div>
             <div class="row"  >
                 <div class="col-2">  <a *ngIf="listing.active" href="#" (click)="onEnd(listing.id)"  >End list</a></div>
-                <div class="col-3">   <p>Time duartion: {{listing.sellingFormat.duration }} days</p> </div>
-                <div class="col-3"><p></p></div>
+                <div class="col-3">  <p>List end at:  {{listing.endOn | date:'dd/MM/yyyy HH:mm' }} </p> </div>
+                <div class="col-3">   <p>Days duartion: {{listing.sellingFormat.duration }} days</p> </div>
+                <div class="col-3"><p>Watchers: {{listing.watchCount}}</p></div>
                 <div class="col"></div>
             </div>
         </div>
@@ -31,7 +33,6 @@
 
             <div class="row" *ngIf="!listing.active">
                 <div class="col-3"><h4>Listing Was Ended</h4></div>
-                <!-- todo order show -->
             </div>
 
              <div  class="row" *ngIf="listing.sellingFormat.title==='FIXED' && listing.active">
@@ -39,7 +40,7 @@
                      <div class="row">
 
                         <div class="col-1"><label for="" >
-                            Price: BGN {{listing.sellingFormat.price | number :'.2-2'}}
+                        <p>    Price: {{listing.sellingFormat.price | number :'.2'}}  BGN</p>
                         </label></div>
                         <div class="col-1" style="visibility: hidden;">
                              <input  formControlName="price" type="number" step="0.01" value="listing.price" /></div>
@@ -49,7 +50,7 @@
                 <div class="row">
                     <div class="col-1"><label for="" >qty:</label></div>
                     <div class="col-1">
-                          <input formControlName="quantity" type="number" value="1" step="1" />
+                          <input formControlName="quantity" type="number" value="1" step="1" min="1" max="{{listing.sellingFormat.quantity}}" />
                         <p>Availble:{{listing.sellingFormat.quantity}}</p></div>
                     <div class="col" ></div>
                 </div>
@@ -60,7 +61,7 @@
 
             <div  *ngIf="listing.sellingFormat.title==='ACTION' && listing.active">
             <form>
-                <h5>Price: BGN</h5>   <input  type="number" step="0.01" value="{{listing.sellingFormat.price}}">
+            Price:   <input  type="number" step="0.01" value="{{listing.sellingFormat.price}}"> BGN
 
                 <input type="submit"value="Place a Bid"/>
 
@@ -68,8 +69,8 @@
             </div>
 
             <div *ngIf="listing.active" class="row"><div class="col-5"> <button (click)="onWatch()">
-                <p *ngIf="!listing.watched">Add to Watch List</p>
-                <p *ngIf="listing.watched" >Unwatch listing</p>
+                <a *ngIf="!listing.watched">Watch</a>
+                <a *ngIf="listing.watched" >Unwatch</a>
 
             </button></div></div>
 
@@ -102,12 +103,36 @@
          </div>
          <div class="col-2">
              <div class="row">
-                 Watch Count: {{listing.watchCount}}
+                Watch from: {{listing.watchCount}} Buyer<a *ngIf="listing.watchCount>1">s</a>
              </div>
              <div class="row">
-                 <a href="/usr/profile/{{listing.createFrom}}"> Seller:  {{listing.createFrom}}</a> <br>
-                 <a href="/usr/shop/{{listing.createFrom}}">Visit {{listing.createFrom}} shop</a> <br>
-                 <a href="/usr/feedback/{{listing.createFrom}}">Look {{listing.createFrom}} Feedbacks</a>
+                 <ul  class="navbar-nav">
+                    <li> <a href="/usr/profile/{{listing.createFrom}}"> Seller:  {{listing.createFrom}}</a> </li>
+                    <li> <a href="/usr/shop/{{listing.createFrom}}">Visit {{listing.createFrom}} shop</a></li>
+                    <li>  <a href="/usr/feedback/{{listing.createFrom}}">Look {{listing.createFrom}} Feedbacks</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Send Message
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                            <form [formGroup]= "mailCreate" (ngSubmit)="onSend()" >
+                                <div class="row">
+
+                                   <div class="col">
+                                       <label for="" >Message:</label>
+                                    <textarea type="text" class="form-control" formControlName="text"></textarea>
+                                </div>
+                               </div>
+
+
+                           <div class="row"> <div class="col">  <button >Send</button></div><div class="col-1"></div> <div class="col"> <button type="button">Cancel</button></div></div>
+                           </form>
+
+                        </div>
+                    </li>
+                 </ul>
+
              </div>
             </div>
     </div>

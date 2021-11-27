@@ -12,8 +12,28 @@ public class OrderViewModel {
     private BigDecimal price;
     private boolean isCompleted;
     private String deliveryAddress;
+    private String sellerUsername;
+    private String buyerUsername;
 
     public OrderViewModel() {
+    }
+
+    public String getSellerUsername() {
+        return sellerUsername;
+    }
+
+    public OrderViewModel setSellerUsername(String sellerUsername) {
+        this.sellerUsername = sellerUsername;
+        return this;
+    }
+
+    public String getBuyerUsername() {
+        return buyerUsername;
+    }
+
+    public OrderViewModel setBuyerUsername(String buyerUsername) {
+        this.buyerUsername = buyerUsername;
+        return this;
     }
 
     public String getDeliveryAddress() {

@@ -12,6 +12,8 @@ export class Order {
     quantity: number = 0;
     deliveryAddress: string = '';
     completed: boolean = false;
+    buyerUsername: string = '';
+    sellerUsername: string = '';
     constructor(orderService: OrderService, id: string) {
 
         orderService.getOrder(id)
@@ -25,7 +27,9 @@ export class Order {
                 this.price = order['price'];
                 this.quantity = order['quantity'];
                 this.deliveryAddress = order['deliveryAddress'];
-                this.completed = order['completed']
+                this.completed = order['completed'];
+                this.buyerUsername = order['buyerUsername'];
+                this.sellerUsername = order['sellerUsername'];
             })
     }
 
