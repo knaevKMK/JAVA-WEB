@@ -12,7 +12,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.UUID;
 
 @CrossOrigin
@@ -37,7 +36,7 @@ public class MessageController {
             UserEntity principal = (UserEntity) authentication.getPrincipal();
             var result= messageService.getMessages(principal.getUsername(),query);
             return ResponseEntity.ok(response
-                    .setOkRequestResponse("msg", result, "Sent messages"));
+                    .setOkRequestResponse("msg", result, "Mail Box sent"));
         } catch (Exception e) {
 
             return ResponseEntity.ok(response
@@ -62,7 +61,7 @@ public class MessageController {
         } catch (Exception e) {
 
             return ResponseEntity.ok(response
-                    .setBadRequestResponse("listing", model, e, e.getMessage()));
+                    .setBadRequestResponse("msg", model, e, e.getMessage()));
         }
     }
     @GetMapping("/{id}")
@@ -87,7 +86,7 @@ public class MessageController {
         Response response = new Response();
         try {
             if (authentication == null) {
-                throw new IllegalStateException("You are not authorize to delete this item");
+                throw new IllegalStateException("You are not authorize to delete this msg");
             }
             UserEntity principal = (UserEntity) authentication.getPrincipal();
             boolean isDeleted = messageService.delete(id, principal.getUsername());

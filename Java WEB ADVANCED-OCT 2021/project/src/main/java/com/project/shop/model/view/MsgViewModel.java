@@ -1,8 +1,10 @@
 package com.project.shop.model.view;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class MsgViewModel {
+    private UUID id;
     private String sender;
     private String recipient;
     private LocalDateTime createOn;
@@ -10,6 +12,15 @@ public class MsgViewModel {
     private String text;
 
     public MsgViewModel() {
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public MsgViewModel setId(UUID id) {
+        this.id = id;
+        return this;
     }
 
     public String getSender() {

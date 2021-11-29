@@ -1,0 +1,62 @@
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MailForm, Msg, openMsg } from 'src/app/models/msg';
+import { MsgService } from 'src/app/service/msg/msg.service';
+
+@Component({
+  selector: 'app-msgs',
+  templateUrl: './msgs.component.html',
+  styleUrls: ['./msgs.component.css']
+})
+export class MsgsComponent implements OnInit {
+  Msgs: Msg[] = [];
+  type: string = 'received';
+  openMsg: openMsg = new openMsg();
+  mailCreate: FormGroup;
+  constructor(private msgService: MsgService,
+    private fb: FormBuilder
+  ) {
+    this.mailCreate = this.fb.group(MailForm());
+  }
+
+  ngOnInit(): void {
+    this.onBox('received');
+  }
+  onBox(query: string) {
+    this.msgService.getAll(query)
+      .subscribe(data => {
+        console.log(data)
+        this.type = query;
+        this.Msgs = Object(data)['data']['msg']
+        this.openMsg = new openMsg();
+      })
+  }
+  onRead(id: string) {
+    console.log(id)
+    this.msgService.getById(id)
+      .subscribe(data => {
+        console.log(Object(data))
+        this.openMsg = Object(data)['data']['msg']
+      })
+  }
+  onDelete(id: string) {
+    console.log(id)
+    this.msgService.getDelete(id)
+      .subscribe(data => {
+        console.log(Object(data))
+        this.openMsg = new openMsg();
+      })
+  }
+  onReply(id: string) {
+    console.log(id)
+
+    this.mailCreate.value.listingId = this.openMsg.listing.id;
+    this.mailCreate.value.recipientUsername = this.openMsg.recipient;
+    this.msgService.send(this.mailCreate.value)
+      .subscribe(data => {
+        console.log(data)
+      })
+    this.mailCreate = this.fb.group(MailForm());
+
+  }
+}

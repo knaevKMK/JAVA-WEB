@@ -20,6 +20,9 @@ import { OrderConfirmComponent } from './order/order-confirm/order-confirm.compo
 import { OrderListComponent } from './order/order-list/order-list.component';
 import { OrderSoldsComponent } from './order/order-solds/order-solds.component';
 import { BasketComponent } from './order/basket/basket.component';
+import { MsgsComponent } from './usr/msgs/msgs.component';
+import { FeedbackComponent } from './feedback/feedback/feedback.component';
+import { FeedbackCreateComponent } from './feedback/feedback-create/feedback-create.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +42,9 @@ import { BasketComponent } from './order/basket/basket.component';
     OrderListComponent,
     OrderSoldsComponent,
     BasketComponent,
+    MsgsComponent,
+    FeedbackComponent,
+    FeedbackCreateComponent,
   ],
   imports: [
     BrowserModule,

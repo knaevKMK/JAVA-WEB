@@ -1,0 +1,117 @@
+<div class="container">
+    <div class="row inbox-wrapper">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-lg-3 email-aside border-lg-right" style="background-color:bisque;">
+                  <div class="aside-content">
+                    <div class="aside-header">
+                        <p class="description">Mail Box</p>
+                        <ul class="nav-item">
+                            <li class="nav-link"><button (click)="onBox('received')"><span class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-inbox"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path></svg></span>Inbox
+                            </button></li>
+                            <li class="nav-link"><button (click)="onBox('sent')">
+                                <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></span>
+                                Sent Mail</button></li>
+                            <li class="nav-link"><button (click)="onBox('deleted')">
+                                <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></span>
+                                Trash</button></li>
+                          </ul>
+                    </div>
+                    <div class="aside-nav collapse">
+
+                      <span class="title">Labels</span>
+                      <!-- <ul class="nav nav-pills nav-stacked">
+                        <li>
+                          <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag text-warning"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg> Important </a>
+                        </li>
+                        <li class="active"><a href="#">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag text-primary"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg> Business </a>
+                        </li>
+                        <li>
+                          <a href="#"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag text-info"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg> Inspiration </a>
+                        </li>
+                      </ul> -->
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-9 email-content" style="background-color:whitesmoke;">
+                  <div *ngIf="openMsg.id" class="email-head">
+
+                    <div class="email-head-sender d-flex align-items-center justify-content-between flex-wrap">
+                      <div class="d-flex align-items-center">
+                        <div class="" >
+                            <div *ngIf="type=='received' || type=='deleted'" class="row"> <div class="col">  <span>sent from:   </span><a href="usr/{{openMsg.recipient}}">{{openMsg.sender}} </a></div></div>
+                            <div  *ngIf="type=='sent'|| type=='deleted'" class="row"> <div class="col">  <span> to </span> <a href="usr/{{openMsg.recipient}}">{{openMsg.recipient}}</a></div></div>
+                            <div class="row">  <div class="col"><span>About item: </span><a href="/listing/item/{{openMsg.listing.id}}"> {{openMsg.listing.title}} </a>     <a (click)="onDelete(openMsg.id)" *ngIf="type!='deleted'" class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash text-muted" data-toggle="tooltip" title="" data-original-title="Delete"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg> </a>
+                            </div></div>
+
+
+
+                        </div>
+                      </div>
+                      <div class="date">sent on: {{openMsg.createOn|date:'MMM dd yy, HH:mm'}}</div>
+                    </div>
+                  </div>
+                  <div *ngIf="openMsg.text" class="email-body">
+                        <div style="background-color:white;">
+                            <p>Message: </p>
+                            <p>{{openMsg.text}}</p>
+                            <div class="nav-item dropdown" *ngIf="type!='deleted'">
+
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-share text-muted hover-primary-muted" data-toggle="tooltip" title="" data-original-title="Forward"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                                    <form [formGroup]= "mailCreate" (ngSubmit)="onReply(openMsg.id)" >
+                                        <div class="row">
+
+                                           <div class="col">
+                                               <label for="text" >Message:</label>
+                                            <textarea type="text" class="form-control" formControlName="text"></textarea>
+                                        </div>
+                                       </div>
+
+
+                                   <div class="row"> <div class="col">  <button >Send</button></div><div class="col-1"></div> <div class="col"> <button type="button">Cancel</button></div></div>
+                                   </form>
+
+                                </div>
+                                 </div>
+                        </div>
+                  </div>
+                  <div class="email-attachments">
+                    <div class="title">{{type.toUpperCase()}} Message List: <span *ngIf="Msgs.length >0 ">{{Msgs.length | number}}</span> <span *ngIf="Msgs.length ===0 ">No messages</span></div>
+                    <table *ngIf="Msgs.length >0 ">
+                        <thead style="background-color:blanchedalmond; text-align: center;">
+                            <th *ngIf="type=='received' ||type=='deleted'">Send from</th>
+                            <th *ngIf="type=='sent' ||type=='deleted'">Sent to</th>
+                            <th>Title</th>
+                            <th>sent at</th>
+                            <th>options</th>
+                        </thead>
+                        <tbody>
+
+                            <tr *ngFor="let msg of Msgs"  >
+                                <td *ngIf="type=='received' ||type=='deleted'">{{msg.sender}}</td>
+                                <td *ngIf="type=='sent' ||type=='deleted'">{{msg.recipient}}</td>
+                                <td >{{msg.title}}</td>
+                                <td>{{msg.createOn | date:'yyyy/MM/dd HH:mm'}}</td>
+                                <td  ><button (click)="onRead(msg.id)">Read</button><button *ngIf="type!=='deleted'" (click)="onDelete(msg.id)">Delete</button></td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

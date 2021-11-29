@@ -14,5 +14,5 @@ public interface MessageRepository extends JpaRepository<Message, UUID> {
 
     Collection<Message> findAllByActiveIsTrueAndRecipient_Username(String recipientUsername);
 
-    Collection<Message> findAllByActiveIsFalseAndCreateFrom(String username);
+    Collection<Message> findAllByActiveIsFalseAndCreateFromOrRecipient_Username(String createFrom,String recipientUsername);
 }
