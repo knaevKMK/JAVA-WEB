@@ -8,7 +8,6 @@ import com.project.shop.model.view.SellingVewModel;
 import java.util.Collection;
 
 public interface SellingFormatService {
-    void seedData();
 
     SellingFormat create(SellingFormatBindingModel sellingFormat);
 

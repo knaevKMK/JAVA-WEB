@@ -23,6 +23,8 @@ import { BasketComponent } from './order/basket/basket.component';
 import { MsgsComponent } from './usr/msgs/msgs.component';
 import { FeedbackComponent } from './feedback/feedback/feedback.component';
 import { FeedbackCreateComponent } from './feedback/feedback-create/feedback-create.component';
+import { HelpComponent } from './support/help/help.component';
+import { CarouselComponent } from './home/fragmets/carousel/carousel.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,8 @@ import { FeedbackCreateComponent } from './feedback/feedback-create/feedback-cre
     MsgsComponent,
     FeedbackComponent,
     FeedbackCreateComponent,
+    HelpComponent,
+    CarouselComponent,
   ],
   imports: [
     BrowserModule,

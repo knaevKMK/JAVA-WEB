@@ -41,7 +41,7 @@ export class AllListingsComponent implements OnInit {
           result += key + "=" + data[key]
         }
       })
-    //   console.log(result)
+    console.log(result)
     return result;
   }
 }

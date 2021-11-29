@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -8,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
+  listingsWatch: string = "filter=watchlist";
+  listingsDaily: string = "filter=daily_deals";
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
+
 }
+

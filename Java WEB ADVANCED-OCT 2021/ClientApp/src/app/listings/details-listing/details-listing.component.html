@@ -50,7 +50,7 @@
                 <div class="row">
                     <div class="col-1"><label for="" >qty:</label></div>
                     <div class="col-1">
-                          <input formControlName="quantity" type="number" value="1" step="1" min="1" max="{{listing.sellingFormat.quantity}}" />
+                          <input formControlName="quantity" type="number" [ngModel]="1" step="1" min="1" max="{{listing.sellingFormat.quantity}}" />
                         <p>Availble:{{listing.sellingFormat.quantity}}</p></div>
                     <div class="col" ></div>
                 </div>

@@ -21,7 +21,10 @@ export function ListingCreateForm(fb: FormBuilder) {
         createFrom: [null],
         owner: [null],
         active: [null],
-        watchCount: [null]
+        watchCount: [null],
+        endOn: [null],
+        orderedCount: [null],
+        watched: [null]
     }
 }
 

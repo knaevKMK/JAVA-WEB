@@ -1,7 +1,5 @@
 package com.project.shop.model.entity;
 
-import com.project.shop.infrastructure.identity.models.entity.UserEntity;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;

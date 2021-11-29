@@ -1,6 +1,6 @@
 package com.project.shop.web;
 
-import com.project.shop.infrastructure.identity.models.entity.UserEntity;
+import com.project.shop.identityArea.models.entity.UserEntity;
 import com.project.shop.model.Response;
 import com.project.shop.model.binding.BuyBindingModel;
 import com.project.shop.model.binding.OrderBindingModel;

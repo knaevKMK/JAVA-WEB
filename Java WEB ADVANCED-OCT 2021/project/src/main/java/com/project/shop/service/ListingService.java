@@ -30,4 +30,6 @@ public interface ListingService {
     void updateListing(Listing listing);
 
     boolean watchListing(UUID id, String username);
+
+    void seedData();
 }

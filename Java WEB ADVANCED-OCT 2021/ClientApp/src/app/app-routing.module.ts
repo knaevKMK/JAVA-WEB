@@ -9,6 +9,7 @@ import { BasketComponent } from './order/basket/basket.component';
 import { OrderConfirmComponent } from './order/order-confirm/order-confirm.component';
 import { OrderListComponent } from './order/order-list/order-list.component';
 import { OrderSoldsComponent } from './order/order-solds/order-solds.component';
+import { MsgsComponent } from './usr/msgs/msgs.component';
 import { ProfileComponent } from './usr/profile/profile.component';
 import { RegisterComponent } from './usr/register/register.component';
 import { SettingsComponent } from './usr/settings/settings.component';
@@ -24,7 +25,7 @@ const routes: Routes = [
 
       { path: 'profile/:username', component: ProfileComponent, canActivate: [AuthenticationGuard] },
       { path: 'accountsettings', component: SettingsComponent, canActivate: [AuthenticationGuard] },
-      { path: 'msgs', component: SettingsComponent, canActivate: [AuthenticationGuard] },
+      { path: 'msgs', component: MsgsComponent, canActivate: [AuthenticationGuard] },
       { path: 'mySellAccount', component: AllListingsComponent, canActivate: [AuthenticationGuard] },
     ]
   },

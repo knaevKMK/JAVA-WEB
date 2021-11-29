@@ -1,6 +1,11 @@
 package com.project.shop.service.impl;
 
-import com.project.shop.infrastructure.identity.models.entity.UserEntity;
+import com.google.gson.Gson;
+import com.project.shop.config.util.IOUtil;
+import com.project.shop.config.util.IOUtilImpl;
+import com.project.shop.constants.Paths;
+import com.project.shop.identityArea.models.binding.RegisterRequest;
+import com.project.shop.identityArea.models.entity.UserEntity;
 import com.project.shop.model.entity.Account;
 import com.project.shop.model.entity.Listing;
 import com.project.shop.model.service.ListingServiceModel;
@@ -17,10 +22,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -37,11 +39,13 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
     private final SellingFormatService sellingFormatService;
     private final DeliveryService deliveryService;
     private final AccountService accountService;
+    private final IOUtil ioUtil;
+    private final Gson gson;
 
     public ListingServiceImpl(ListingRepository listingRepository,
                               ModelMapper modelMapper, CategoryService categoryService,
                               ConditionService conditionService, SellingFormatService sellingFormatService,
-                              DeliveryService deliveryService, AccountService accountService) {
+                              DeliveryService deliveryService, AccountService accountService, Gson gson) {
         this.listingRepository = listingRepository;
         this.modelMapper = modelMapper;
         this.categoryService = categoryService;
@@ -49,6 +53,8 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
         this.sellingFormatService = sellingFormatService;
         this.deliveryService = deliveryService;
         this.accountService = accountService;
+        this.gson = gson;
+        this.ioUtil = new IOUtilImpl();
     }
 
 
@@ -57,7 +63,7 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
                                                        int page, int limit, String sortBy, String sort, String filter, String search) {
         log.info("Fetch Listings from page " + " with " + "/page");
 
-        Pageable pageListing =getPageable(page, limit, sort, sortBy);
+        Pageable pageListing = getPageable(page, limit, sort, sortBy);
 
         List<Listing> listings = filterQuery(pageListing, search, filter, authentication).getContent();
 
@@ -87,7 +93,7 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
             return listingRepository.findAll(listingPage);
         }
 
-        if (filter != null ) {
+        if (filter != null) {
 
             switch (filter.trim().toLowerCase()) {
                 case "watchlist":
@@ -106,8 +112,8 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
 
             }
         }
-        if (search!=null){
-            return listingRepository.findAllByTitleContainingOrDescriptionContaining(search.trim(),search.trim(),listingPage);
+        if (search != null) {
+            return listingRepository.findAllByTitleContainingOrDescriptionContaining(search.trim(), search.trim(), listingPage);
         }
         return listingRepository.findAll(listingPage);
     }
@@ -204,6 +210,7 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
         return !unWatched;
     }
 
+
     @Override
     public Collection<ListingInListViewModel> getWatchListings(String username, int page, int limit) {
         log.info("Fetch Listings from page " + page + " with " + limit + "/page");
@@ -237,4 +244,20 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
         return listingMapped;
     }
 
+    @Override
+    public void seedData() {
+        try {
+            String content = String.join("", ioUtil.readFile(Paths.LISTING_JSON_FILEPATH));
+
+            Arrays.stream(gson.fromJson(content, ListingServiceModel[].class))
+                    .forEach(reader -> {
+                        try {
+                            this.createListing(reader);
+                        } catch (Exception e) {
+
+                        }
+                    });
+        } catch (Exception e) {
+        }
+    }
 }

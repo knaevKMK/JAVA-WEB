@@ -22,10 +22,7 @@ public class SellingFormatServiceImpl extends BaseServiceImpl<SellingFormat> imp
         this.modelMapper = modelMapper;
     }
 
-    @Override
-    public void seedData() {
 
-    }
 
     @Override
     public SellingFormat create(SellingFormatBindingModel sellingFormatModel) {

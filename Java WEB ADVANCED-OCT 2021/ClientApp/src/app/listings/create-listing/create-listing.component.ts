@@ -74,6 +74,7 @@ export class CreateListingComponent implements OnInit {
 
   }
   onCreate() {
+    console.log(this.createForm.value)
     this.errors = new CreateListingErrors();
     var promise = !this.isEditMode
       //create
