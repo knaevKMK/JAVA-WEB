@@ -44,7 +44,7 @@ public class MessageController {
         }
     }
     @PostMapping("/send")
-    public ResponseEntity<Response> send(@Valid @RequestBody MsgBindingModel model
+    public ResponseEntity<Response> send( @RequestBody MsgBindingModel model
             , Authentication authentication
     ) {
         Response response = new Response();

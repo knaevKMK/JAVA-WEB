@@ -134,6 +134,11 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
     }
 
     @Override
+    public Optional<Order> getBuyId(UUID orderId) {
+        return orderRepository.findById(orderId);
+    }
+
+    @Override
     public void seedColumns() {
         orderRepository.addPriceColumn();
         orderRepository.addQuantityColumn();

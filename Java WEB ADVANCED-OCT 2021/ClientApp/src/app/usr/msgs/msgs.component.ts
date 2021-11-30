@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { MailForm, Msg, openMsg } from 'src/app/models/msg';
+import { Msg, openMsg } from 'src/app/models/msg';
 import { MsgService } from 'src/app/service/msg/msg.service';
 
 @Component({
@@ -12,11 +11,8 @@ export class MsgsComponent implements OnInit {
   Msgs: Msg[] = [];
   type: string = 'received';
   openMsg: openMsg = new openMsg();
-  mailCreate: FormGroup;
-  constructor(private msgService: MsgService,
-    private fb: FormBuilder
+  constructor(private msgService: MsgService
   ) {
-    this.mailCreate = this.fb.group(MailForm());
   }
 
   ngOnInit(): void {
@@ -47,16 +43,5 @@ export class MsgsComponent implements OnInit {
         this.openMsg = new openMsg();
       })
   }
-  onReply(id: string) {
-    console.log(id)
 
-    this.mailCreate.value.listingId = this.openMsg.listing.id;
-    this.mailCreate.value.recipientUsername = this.openMsg.recipient;
-    this.msgService.send(this.mailCreate.value)
-      .subscribe(data => {
-        console.log(data)
-      })
-    this.mailCreate = this.fb.group(MailForm());
-
-  }
 }

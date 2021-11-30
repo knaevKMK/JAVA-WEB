@@ -10,8 +10,17 @@ public class Feedback extends BaseEntity{
     private String request;
     private String response;
     private Order order;
-
+    private boolean isPositive;
     public Feedback() {
+    }
+
+    public boolean isPositive() {
+        return isPositive;
+    }
+
+    public Feedback setPositive(boolean positive) {
+        isPositive = positive;
+        return this;
     }
 
     public String getRequest() {

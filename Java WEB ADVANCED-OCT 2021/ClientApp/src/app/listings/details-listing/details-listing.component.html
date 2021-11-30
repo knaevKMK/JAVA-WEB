@@ -116,18 +116,7 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 
-                            <form [formGroup]= "mailCreate" (ngSubmit)="onSend()" >
-                                <div class="row">
-
-                                   <div class="col">
-                                       <label for="" >Message:</label>
-                                    <textarea type="text" class="form-control" formControlName="text"></textarea>
-                                </div>
-                               </div>
-
-
-                           <div class="row"> <div class="col">  <button >Send</button></div><div class="col-1"></div> <div class="col"> <button type="button">Cancel</button></div></div>
-                           </form>
+                            <app-msg-form [list]="listing.id" [recipient]="listing.createFrom"></app-msg-form>
 
                         </div>
                     </li>

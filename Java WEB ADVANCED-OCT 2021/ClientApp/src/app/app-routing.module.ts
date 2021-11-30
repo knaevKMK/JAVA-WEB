@@ -12,7 +12,6 @@ import { OrderSoldsComponent } from './order/order-solds/order-solds.component';
 import { MsgsComponent } from './usr/msgs/msgs.component';
 import { ProfileComponent } from './usr/profile/profile.component';
 import { RegisterComponent } from './usr/register/register.component';
-import { SettingsComponent } from './usr/settings/settings.component';
 import { SiginComponent } from './usr/sigin/sigin.component';
 
 const routes: Routes = [
@@ -24,7 +23,6 @@ const routes: Routes = [
       { path: 'register', component: RegisterComponent },
 
       { path: 'profile/:username', component: ProfileComponent, canActivate: [AuthenticationGuard] },
-      { path: 'accountsettings', component: SettingsComponent, canActivate: [AuthenticationGuard] },
       { path: 'msgs', component: MsgsComponent, canActivate: [AuthenticationGuard] },
       { path: 'mySellAccount', component: AllListingsComponent, canActivate: [AuthenticationGuard] },
     ]

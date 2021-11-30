@@ -35,5 +35,30 @@
     "sellingFormat": { "title": "FIXED", "duration":30  ,"price": "3.50","quantity":27},
     "deliveryDomestic": {"deliveryService": "SIGNED","price": "1.5"},
     "deliveryInternational": {"deliveryService": null,"price": null}
+  },
+  {
+    "title": "Mercedes 190D",
+    "description": "Description for car Mercedes of the 90`s. w201",
+    "imageUrl": "https://i.pinimg.com/originals/d3/7d/b0/d37db09e1a08c1d0a963fe6c0c304da6.jpg",
+    "usernameCreator": "goshakata",
+    "payment": "Cash on Collect",
+    "category": { "parentTitle":"SPORT_ART", "title": "GOODS", "subList": [], "id":"070081f8-7863-496d-9ad4-dfcc0380267d"},
+    "condition": {"title": "Used", "id": "1296531f-e327-4873-8436-332bbd503523"},
+    "sellingFormat": { "title": "FIXED", "duration":30  ,"price": "3212.50","quantity":27},
+    "deliveryDomestic": {"deliveryService": "SIGNED","price": "1.5"},
+    "deliveryInternational": {"deliveryService": null,"price": null}
+  },
+  {
+    "title": "Mercedes S500",
+    "description": "Description for car Mercedes of the 90`s. w140",
+    "imageUrl": "https://www.autoclub.bg/wp-content/uploads/2021/02/s-class-w-140-rendering.jpg",
+    "usernameCreator": "goshakata",
+    "payment": "Cash on Collect",
+    "category": { "parentTitle":"SPORT_ART", "title": "GOODS", "subList": [], "id":"070081f8-7863-496d-9ad4-dfcc0380267d"},
+    "condition": {"title": "Used", "id": "1296531f-e327-4873-8436-332bbd503523"},
+    "sellingFormat": { "title": "FIXED", "duration":30  ,"price": "3212.50","quantity":27},
+    "deliveryDomestic": {"deliveryService": "SIGNED","price": "1.5"},
+    "deliveryInternational": {"deliveryService": null,"price": null}
   }
+
 ]

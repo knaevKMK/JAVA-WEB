@@ -21,18 +21,18 @@ export class CarouselComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.query)
+    // console.log(this.query)
     this.listingService.getAll(this.query)
       .subscribe(result => {
-        console.log(this.query)
-        console.log(Object(result))
+        // console.log(this.query)
+        // console.log(Object(result))
         this.listings = responceListings(result)
         this.mediator = this.listings.slice(0, 3)// [this.listings[0], this.listings[1], this.listings[2]];
       })
 
   }
   leftClick() {
-    console.log('Left')
+    //  console.log('Left')
 
     if (this.startIndex === 0) {
       this.startIndex = this.listings.length - 1
@@ -56,7 +56,7 @@ export class CarouselComponent implements OnInit {
     return
   }
   rightClick() {
-    console.log('Right')
+    //  console.log('Right')
     if (this.listings.length < 3) { return }
     if (this.lastIndex === this.listings.length - 1) {
       this.lastIndex = 0

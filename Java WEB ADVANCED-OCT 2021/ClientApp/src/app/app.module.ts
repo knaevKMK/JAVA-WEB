@@ -13,7 +13,6 @@ import { HomeComponent } from './home/home.component';
 import { SiginComponent } from './usr/sigin/sigin.component';
 import { RegisterComponent } from './usr/register/register.component';
 import { ProfileComponent } from './usr/profile/profile.component';
-import { SettingsComponent } from './usr/settings/settings.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OrderConfirmComponent } from './order/order-confirm/order-confirm.component';
@@ -25,6 +24,8 @@ import { FeedbackComponent } from './feedback/feedback/feedback.component';
 import { FeedbackCreateComponent } from './feedback/feedback-create/feedback-create.component';
 import { HelpComponent } from './support/help/help.component';
 import { CarouselComponent } from './home/fragmets/carousel/carousel.component';
+import { MsgFormComponent } from './fragments/msg-form/msg-form/msg-form.component';
+import { FeedbackFormComponent } from './fragments/feedback/feedback-form/feedback-form.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,6 @@ import { CarouselComponent } from './home/fragmets/carousel/carousel.component';
     SiginComponent,
     RegisterComponent,
     ProfileComponent,
-    SettingsComponent,
     OrderConfirmComponent,
     OrderListComponent,
     OrderSoldsComponent,
@@ -49,6 +49,8 @@ import { CarouselComponent } from './home/fragmets/carousel/carousel.component';
     FeedbackCreateComponent,
     HelpComponent,
     CarouselComponent,
+    MsgFormComponent,
+    FeedbackFormComponent,
   ],
   imports: [
     BrowserModule,

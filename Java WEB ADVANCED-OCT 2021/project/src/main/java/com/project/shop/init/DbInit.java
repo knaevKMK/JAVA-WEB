@@ -10,12 +10,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DbInit implements CommandLineRunner {
-private final ConditionService conditionService;
-private final CategoryService categoryService;
-private  final IdentityService identityService;
-private final RegisterHandler registerHandler;
-private final ListingService listingService;
-
+    private final ConditionService conditionService;
+    private final CategoryService categoryService;
+    private final IdentityService identityService;
+    private final RegisterHandler registerHandler;
+    private final ListingService listingService;
 
 
     public DbInit(ConditionService conditionService, CategoryService categoryService, IdentityService identityService, RegisterHandler registerHandler, ListingService listingService) {
@@ -32,7 +31,7 @@ private final ListingService listingService;
         conditionService.seedData();
         categoryService.seedData();
         identityService.initializeUsersAndRoles();
-       registerHandler.seed5Accounts();
-       listingService.seedData();
+        registerHandler.seed5Accounts();
+        listingService.seedData();
     }
 }

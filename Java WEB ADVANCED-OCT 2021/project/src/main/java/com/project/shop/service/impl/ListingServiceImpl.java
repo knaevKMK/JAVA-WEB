@@ -92,9 +92,7 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
         if (filter == null && search == null) {
             return listingRepository.findAll(listingPage);
         }
-
         if (filter != null) {
-
             switch (filter.trim().toLowerCase()) {
                 case "watchlist":
                     Account account = getAccount(authentication);
@@ -246,6 +244,9 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
 
     @Override
     public void seedData() {
+        if (listingRepository.count() > 0) {
+            return;
+        }
         try {
             String content = String.join("", ioUtil.readFile(Paths.LISTING_JSON_FILEPATH));
 

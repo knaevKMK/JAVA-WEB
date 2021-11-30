@@ -23,4 +23,6 @@ public interface OrderService {
     Collection<OrderViewModel> getPurchases(String query, String username, int page, int pcs);
 
     boolean cancel(UUID id, String username) throws IllegalAccessException;
+
+    Optional<Order> getBuyId(UUID orderId);
 }

@@ -30,6 +30,7 @@ public class MessageServiceImpl extends BaseServiceImpl<Message> implements Mess
     @Override
     public String sendMessage(MsgServiceModel model, String senderUsername) {
         Message msg = modelMapper.map(model, Message.class);
+
         msg.setRecipient(accountService.findByUsername(model.getRecipientUsername())
                 .orElseThrow(()->new NullPointerException("Recipient does not exist")));
                 msg = onCreate(msg, senderUsername);

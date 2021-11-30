@@ -42,6 +42,7 @@ export class OrderConfirmComponent implements OnInit {
       .subscribe(data => {
         console.log((data))
         //    window.location.reload();
+        alert("Order was confirmed")
         this.order = new Order(this.orderService, responceConfirm(data));
       }
         , err => { console.log(err) })
