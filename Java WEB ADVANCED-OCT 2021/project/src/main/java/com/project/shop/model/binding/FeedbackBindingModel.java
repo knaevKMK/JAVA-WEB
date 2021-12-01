@@ -1,6 +1,5 @@
 package com.project.shop.model.binding;
 
-import com.project.shop.model.entity.Order;
 
 import java.util.UUID;
 
