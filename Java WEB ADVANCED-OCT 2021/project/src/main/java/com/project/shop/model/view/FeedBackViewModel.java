@@ -16,6 +16,15 @@ public class FeedBackViewModel {
     public FeedBackViewModel() {
     }
 
+    public boolean isPositive() {
+        return isPositive;
+    }
+
+    public FeedBackViewModel setPositive(boolean positive) {
+        isPositive = positive;
+        return this;
+    }
+
     public String getRecipient() {
         return recipient;
     }

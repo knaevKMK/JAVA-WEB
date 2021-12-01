@@ -18,6 +18,7 @@ export class FeedbackListComponent implements OnInit {
     this.onBox("receiver")
   }
   onBox(query: string) {
+    this.type = query;
     console.log(query)
     console.log(this.username)
     this.feedbackService.getAll(query + "_" + this.username)

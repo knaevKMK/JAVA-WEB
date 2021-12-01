@@ -19,10 +19,10 @@ export function FeedbackResponseForm() {
 
 export class FeedbackInList {
     id: string = '';
-    listingId: string = '';
-    listingTitle: string = '';
-    leftFrom: string = '';
     request: string = '';
-    responce: string = '';
+    sender: string = '';
+    response: string = '';
+    recipient: string = '';
+    listingTitle: string = '';
     positive: boolean = false;
 }

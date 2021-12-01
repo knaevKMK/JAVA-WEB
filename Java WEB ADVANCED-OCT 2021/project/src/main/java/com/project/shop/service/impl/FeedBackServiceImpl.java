@@ -92,6 +92,10 @@ public class FeedBackServiceImpl extends BaseServiceImpl<Feedback> implements Fe
                 return getSentFeedBackByUsername(tokens[1]) ;
             case "receiver":
                 return getReceivedFeedBackByUsername(tokens[1]);
+            case "positive":
+                return getPositiveFeedbacks(tokens[1]);
+            case "negative":
+                return getNegativeFeedbacks(tokens[1]);
             case "id":
                 return getSentFeedBackByOrder(UUID.fromString(tokens[1]));
         }
@@ -102,14 +106,18 @@ public class FeedBackServiceImpl extends BaseServiceImpl<Feedback> implements Fe
 
     @Override
     public List<FeedbackInListVewModel> getPositiveFeedbacks(String username) {
-        return feedBackRepository.findAllByPositiveIsTrueAndOrder_Listing_CreateFrom(username).stream().map(f->modelMapper.map(f,FeedbackInListVewModel.class)).collect(Collectors.toList());
+        return feedBackRepository
+                .findAllByPositiveAndOrder_Listing_CreateFromOrOrder_Buyer_Username(true,username,username)
+                .stream().map(f->modelMapper.map(f,FeedbackInListVewModel.class))
+                .collect(Collectors.toList());
 
 
     }
 
     @Override
     public List<FeedbackInListVewModel> getNegativeFeedbacks(String username) {
-        return feedBackRepository.findAllByPositiveIsFalseAndOrder_Listing_CreateFrom(username)
+        return feedBackRepository.
+        findAllByPositiveAndOrder_Listing_CreateFromOrOrder_Buyer_Username(false,username,username)
                 .stream().map(f->modelMapper.map(f,FeedbackInListVewModel.class))
                 .collect(Collectors.toList());
 

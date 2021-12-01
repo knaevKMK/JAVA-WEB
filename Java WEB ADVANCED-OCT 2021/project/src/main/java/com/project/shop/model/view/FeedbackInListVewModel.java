@@ -5,11 +5,50 @@ import java.util.UUID;
 public class FeedbackInListVewModel {
     private UUID id;
     private String request;
-    private UUID listingId;
+    private String  sender;
+    private String response;
+    private String recipient;
     private String listingTitle;
-    private String leftFrom;
+    private boolean isPositive;
+
 
     public FeedbackInListVewModel() {
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public FeedbackInListVewModel setSender(String sender) {
+        this.sender = sender;
+        return this;
+    }
+
+    public String getResponse() {
+        return response;
+    }
+
+    public FeedbackInListVewModel setResponse(String response) {
+        this.response = response;
+        return this;
+    }
+
+    public String getRecipient() {
+        return recipient;
+    }
+
+    public FeedbackInListVewModel setRecipient(String recipient) {
+        this.recipient = recipient;
+        return this;
+    }
+
+    public boolean isPositive() {
+        return isPositive;
+    }
+
+    public FeedbackInListVewModel setPositive(boolean positive) {
+        isPositive = positive;
+        return this;
     }
 
     public UUID getId() {
@@ -30,14 +69,7 @@ public class FeedbackInListVewModel {
         return this;
     }
 
-    public UUID getListingId() {
-        return listingId;
-    }
 
-    public FeedbackInListVewModel setListingId(UUID listingId) {
-        this.listingId = listingId;
-        return this;
-    }
 
     public String getListingTitle() {
         return listingTitle;
@@ -45,15 +77,6 @@ public class FeedbackInListVewModel {
 
     public FeedbackInListVewModel setListingTitle(String listingTitle) {
         this.listingTitle = listingTitle;
-        return this;
-    }
-
-    public String getLeftFrom() {
-        return leftFrom;
-    }
-
-    public FeedbackInListVewModel setLeftFrom(String leftFrom) {
-        this.leftFrom = leftFrom;
         return this;
     }
 }

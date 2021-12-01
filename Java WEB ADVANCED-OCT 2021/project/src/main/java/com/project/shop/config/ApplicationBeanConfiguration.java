@@ -48,6 +48,12 @@ public class ApplicationBeanConfiguration {
                     mapper.map(src->src.getRecipient().getUsername(),MsgViewModel::setRecipient);
 
                 });
+        modelMapper.createTypeMap(Feedback.class,FeedbackInListVewModel.class)
+                .addMappings(mapper->{
+                   mapper.map(src->src.getOrder().getBuyer().getUsername(),FeedbackInListVewModel::setSender);
+                    mapper.map(src->src.getOrder().getListing().getTitle(),FeedbackInListVewModel::setListingTitle);
+                    mapper.map(src->src.getOrder().getListing().getCreateFrom(),FeedbackInListVewModel::setRecipient);
+                });
         return modelMapper;
     }
 
