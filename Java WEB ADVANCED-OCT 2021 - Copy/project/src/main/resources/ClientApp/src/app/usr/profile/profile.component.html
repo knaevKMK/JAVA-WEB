@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="card shadow-sm">
+          <div class="card-header bg-transparent text-center">
+            <img class="profile_img" src="https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg" alt="student dp">
+            <h3 *ngIf="user.owner">Hello {{user.firstName}} {{user.lastName}}</h3>
+            <h3 *ngIf="!user.owner">User: {{user.username}}</h3>
+          </div>
+          <div class="card-body">
+            <p class="mb-0"><strong class="pr-1">Stars: </strong>({{user.feedbacks.length | number}})⭐</p>
+            <p class="mb-0"><strong class="pr-1">Sell: </strong> {{user.listingsCount}} items</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-transparent border-0">
+                <div id="shortcuts" class="shrtct fr">
+                    <span class="store each fl">
+                        <span class="icons soi fl"></span>
+                        <span class="soi_lk fl"><a href="/listing/all?filter=mylist"
+                            title="Items for sale" _sp="p2545226.m2531.l4586">Items for sale</a></span>
+                        </span>
+                    </div>
+            </div>
+            <div class="card-body pt-0">
+                <p class="mb-0"><strong class="pr-1">{{user.username}} ({{user.stars | number}}) </strong>⭐ is a member from  {{user.createOn | date:'MMM dd, yyyy'}}</p>  </div>
+          </div>
+
+          <div style="height: 26px"></div>
+          <div class="card shadow-sm">
+            <div class="card-header bg-transparent border-0">
+              <app-feedback-list [user]="username" ></app-feedback-list>
+            </div>
+
+          </div>
+      </div>
+    </div>
+  </div>

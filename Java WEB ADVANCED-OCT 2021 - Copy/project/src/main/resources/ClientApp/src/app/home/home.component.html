@@ -1,0 +1,72 @@
+<div class="row"><div class="col">
+    <app-search-bar></app-search-bar>
+</div></div>
+
+
+
+<div class="container"  id="home-container-banner">
+    <div class="row">
+        <div class="col">
+          <h2><a href="/listing/sell">Welcome to Buy Sell 0</a> </h2>
+    </div>
+</div>
+</div>
+
+<div class="container" id="home-container">
+    <div class="row">
+        <div class="col">
+            <h3>You can find  with as the best goods or services</h3>
+        </div>
+    </div>
+
+
+    <div class="container" >
+        <app-carousel  [query]="listingsDaily" ></app-carousel>
+      </div>
+        <div class="row footer">
+            <div class="col-3">
+                <h4 class="hl-card-header__headline">
+                    <a href="/listing/all?filter=daily_deals"><!--F#f_8--><!--F#f_@button-->
+                        <!--F#f_11-->Last Actual Deals<!--F/--><!--F/--><!--F/-->
+                    <svg class="hl-card-header__headline__icon icon icon--search" focusable="false" style="fill:#767676;" aria-hidden="true">
+                    <use xlink:href="#icon-search"></use>
+                    </svg>
+                    </a>
+                </h4>
+            </div>
+        </div>
+</div>
+
+<div class="container"  id="home-container-banner">
+    <div class="row">
+        <div class="col">
+          <h2>Be free! Sell here with 0 (zero) fees.  <a href="/listing/sell">Sell now-></a></h2>
+    </div>
+</div>
+</div>
+
+<div class="container"  id="home-container">
+
+                <div class="row">
+                    <div class="col">
+                    <h3>You still <a href="/listing/all?filter=watchList">watch?</a> </h3>
+                </div>
+            </div>
+            <div class="container" >
+                <app-carousel  [query]="listingsWatch" ></app-carousel>
+              </div>
+        <div class="row footer" >
+            <div class="col-3">
+                <h4 class="hl-card-header__headline">
+                    <a href="/listing/all?filter=watchList"><!--F#f_8--><!--F#f_@button--><!--F#f_11-->Your Watchings<!--F/--><!--F/--><!--F/-->
+                        <svg class="hl-card-header__headline__icon icon icon--search" focusable="false" style="fill:#767676;" aria-hidden="true">
+                            <use xlink:href="#icon-search"></use>
+                        </svg>
+                    </a>
+                </h4>
+            </div>
+        </div>
+
+
+
+    </div>

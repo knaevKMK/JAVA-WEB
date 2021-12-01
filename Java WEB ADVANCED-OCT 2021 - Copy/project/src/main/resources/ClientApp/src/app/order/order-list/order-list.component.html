@@ -1,0 +1,52 @@
+<div class="container">
+    <div class="row"><div class="col"><h3>Your Purchases</h3></div></div>
+    <div *ngFor="let order of orders" id="orders" class="row">
+        <div class="row">
+             <div class="col-3"><label for="id">
+                <a href="/listing/item/{{order.listingId}}">
+                    <img src="{{order.listingImageUrl}}"  alt="{{order.listingTitle}}" width="70" height="100"
+            data-size="225" data-load-time="1636574198007" style="opacity: 1;">
+
+                    {{order.listingTitle}}
+                    </a>
+                </label>
+            </div>
+            <div class="col-1"><label for="price" >Price:</label></div>
+
+            <div class="col-2">
+                <p>{{order.price | number:'.2'}} BGN</p>
+                <p>Seller: <a href="/usr/{{order.sellerUsername}}">{{order.sellerUsername}}</a></p>
+            </div>
+            <div class="col-1"><p>qty:</p> </div>
+            <div class="col-1"><p>{{order.quantity}}</p></div>
+            <div class="col"></div>
+            <div  id="order-address" class="col-3" >
+                <a class="nav-link" href="">
+                    <button  class="btn btn-secondary" type="button" id="dropdownMenuButton">
+                        <strong *ngIf="!order.completed">Complete</strong><strong *ngIf="order.completed">View</strong> order
+                    </button></a>
+
+                    <button class="nav-item dropdown ">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Send Message
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <app-msg-form [list]="order.listingId" [recipient]="order.sellerUsername"></app-msg-form>
+                        </div>
+                    </button>
+                    <button class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Left Feedback
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <app-feedback-form [order]="order.id" [recipient]="order.sellerUsername"></app-feedback-form>
+                        </div>
+                    </button>
+
+            </div>
+
+        </div>
+
+
+    </div>
+</div>

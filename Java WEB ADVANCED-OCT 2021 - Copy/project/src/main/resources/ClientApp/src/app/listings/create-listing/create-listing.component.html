@@ -1,0 +1,210 @@
+<div class="container-fluid">
+    <div class="row g-3 align-items-start">
+<div class="row">
+    <h2 *ngIf="isEditMode">Edit Lsting</h2>
+    <h2 *ngIf="!isEditMode">Create Lsting</h2>
+</div>
+
+<br>
+<div class="col-lg-10 col-md-8">
+            <form [formGroup]= "createForm" (ngSubmit)="onCreate()">
+                <div *ngIf="errors.fatalError && errors.fatalError.length>0" class="alert alert-danger">
+                    <ul><li *ngFor="let err of errors.fatalError">{{err}}</li></ul>
+                </div>
+                <div class="row g-3 align-items-center">
+
+                    <div class="row align-items-start">
+                        <div class="col-1">
+                            <label for="title" class="form-label">Title:</label>
+                        </div>
+                        <div class="col">
+                            <input formControlName="title" type="text" class="form-control" >
+                        </div>
+                        <div *ngIf="errors.title && errors.title.length>0" class="alert alert-danger">
+                            <ul><li *ngFor="let err of errors.title">Title {{err}}</li></ul>
+                        </div>
+                    </div>
+
+                    <div class="row align-items-start">
+                        <div class="row" formGroupName="category">
+                            <div class="col-1">
+                                <label for="title" class="form-label">Category:</label>
+                            </div>
+                            <div class="col-3">
+                                <select formControlName="id" class="form-control">
+                                    <option [ngValue]="null" disabled>Select...</option>
+                                    <optgroup *ngFor="let mainCat of categories" label="{{mainCat.title}}">
+                                    <option *ngFor="let subCat of mainCat.subList" [ngValue]="subCat.id">{{subCat.title}}</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                            <div class="col"></div>
+                        </div>
+                        <div *ngIf="errors.categories && errors.categories.length>0" class="alert alert-danger">
+                            <ul><li *ngFor="let err of errors.categories">Category {{err}}</li></ul>
+                        </div>
+                    </div>
+
+                    <div class="row align-items-start">
+                        <div class="row" formGroupName="condition">
+                            <div class="col-2">
+                                <label for="title" class="form-label">Condition:</label>
+                            </div>
+                            <div class="col-3">
+                                <select formControlName="id" class="form-control">
+                                    <option [ngValue]="null" disabled>Select...</option>
+                                    <option *ngFor="let condition of conditions" [ngValue]="condition.id">{{condition.title}}</option>
+                                </select>
+                            </div>
+                            <div class="col"></div>
+                        </div>
+                    </div>
+
+                    <div class="row align-items-start">
+                        <div class="col-1">
+                            <label for="imageUrl" class="form-label">Image Url</label>
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control" formControlName="imageUrl">
+                        </div>
+                        <div *ngIf="errors.imageUrl && errors.imageUrl.length>0" class="alert alert-danger">
+                            <ul><li *ngFor="let err of errors.imageUrl">Image Url {{err}}</li></ul>
+                        </div>
+                    </div>
+
+                    <div class="row align-items-start">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea type="text" class="form-control" formControlName="description"></textarea>
+                        <div *ngIf="errors.description && errors.description.length>0" class="alert alert-danger">
+                            <ul><li *ngFor="let err of errors.description">Description {{err}}</li></ul>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="container-fluid g-3" formGroupName="sellingFormat" >
+                    <div class="row">
+                        <h5>Selling Format</h5>
+                    </div>
+                    <div class="row align-items-start" >
+                        <div class="col-1">
+                            <label for="title" class="form-label">Format</label>
+                        </div>
+                    <div class="col-3">
+                        <select formControlName="title" class="form-control">
+                            <option [ngValue]="null" disabled>Select...</option>
+                            <option *ngFor="let format of sellingFormats" value="{{format}}">{{format}}</option>
+
+                        </select>
+                     </div>
+                     <div class="col"></div>
+                   <div class="col-1">
+                        <label for="duration" class="form-label">Duraton</label>
+                    </div>
+                    <div class="col-1">
+                        <input type="number" class="form-control" formControlName="duration" value="">
+                    </div>
+                    <div class="col"><p>days</p></div>
+                    <div class="col"></div>
+                </div>
+
+                <div class="row align-items-start">
+                    <div class="col-1">
+                        <label for="price" class="form-label">Price</label>
+                    </div>
+                    <div class="col-2">
+                        <input type="number" formControlName="price" class="form-control"  >
+                    </div>
+                    <div class="col"></div>
+               <div class="col-1">
+                   <label for="quantity" class="form-label">Quantity</label>
+               </div>
+               <div class="col-1">
+                   <input type="number" formControlName="quantity"  class="form-control" >
+               </div>
+            <div class="col">pcs</div>
+            <div class="col"></div>
+            </div>
+            </div>
+
+
+            <div class="row g-3 align-items-center">
+                <div class="row">
+                    <h5>Domestic Delivery</h5>
+                </div>
+                <div class="row" formGroupName="deliveryDomestic">
+                  <div class="col">
+                    <label for="deliveryService" class="form-label">Delivery Service:</label>
+                </div>
+                    <div class="col-5">
+                    <select formControlName="deliveryService" class="form-control">
+                        <option [ngValue]="null" disabled>Select...</option>
+                        <option *ngFor="let _service of deliveryDomestic" [ngValue]="_service">{{_service}}</option>
+                      </select>
+                </div>
+                <div class="col-1"></div>
+                <div class="col-1">
+                    <label for="price" class="form-label">Coast:</label></div>
+                    <div class="col-1">
+                    <input type="number" formControlName="price" class="form-control" >
+                </div>
+
+                <div class="col-3">               </div>
+
+            </div>
+            <div class="row">
+                <h5>Internatonal Delivery</h5>
+            </div>
+            <div class="row" formGroupName="deliveryInternational">
+              <div class="col">
+                <label for="deliveryService" class="form-label">Delivery Service:</label>
+            </div>
+                <div class="col-5">
+                <select formControlName="deliveryService" class="form-control">
+                    <option [ngValue]="null" disabled>Select...</option>
+                    <option *ngFor="let _service of deliveryInternatonal" [ngValue]="_service">{{_service}}</option>
+                  </select>
+            </div>
+            <div class="col-1"></div>
+            <div class="col-1">
+                <label for="price" class="form-label">Coast:</label></div>
+                <div class="col-1">
+                <input type="number" formControlName="price" class="form-control" >
+            </div>
+
+            <div class="col-3">               </div>
+
+        </div>
+            </div>
+
+             <div class="row g-3 align-items-center">
+                <div class="row">
+                    <h5>Payment</h5>
+                </div>
+                    <div class="row align-items-start">
+                        <div class="col-2">
+                            <label class="form-label">Payment Method:</label>
+                       </div>
+                        <div class="col-3">
+                            <input type="text" formControlName="payment" id class="form-control" >
+                        </div>
+                        <div class="col"></div>
+                    </div>
+                    <div *ngIf="errors.payment && errors.payment.length>0" class="alert alert-danger">
+                        <ul><li *ngFor="let err of errors.payment">Payment {{err}}</li></ul>
+                    </div>
+             </div>
+
+                <div class="row">
+                    <div class="col-2">
+                         <button *ngIf="isEditMode" type="submit" class="btn btn-success">Edit</button>
+                         <button *ngIf="!isEditMode"type="submit" class="btn btn-success">Create</button>
+                        </div>
+                    <div class="col-2">  <button type="button" (click)="onBack()" class="btn btn-secondary">Back</button></div>
+                    <div class="col-2"> <button type="button" (click)="onClear()" class="btn btn-danger">Clear</button></div>
+                    <div class="col"></div>
+                </div>
+            </form>
+      </div>
+  </div>
+</div>

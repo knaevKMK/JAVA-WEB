@@ -1,0 +1,36 @@
+
+<div class="container">
+
+    <app-search-bar></app-search-bar>
+
+    <div class="row">
+
+        <div *ngFor="let list of listings"  class="row" >
+            <a href="/listing/item/{{list.id}}" class="hl-item__link">
+            <div class="row">
+                  <div class="col-3">
+                    <div class="hl-image hl-image-js js-only hl-item__bg-image">
+                     <img src="{{list.imageUrl}}" width="100" height="140"
+                         alt="{{list.title}}" data-size="225" data-load-time="1636574198007" style="opacity: 1;">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <div class="col"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">  {{list.title}}</div>
+                        <div class="col"> <span  class="hl-item__displayPrice" >BGN {{list.price | number:'.2-2'}}</span></div>
+                    </div>
+                </div>
+
+            </div>
+             </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col">Page:  1 2 3 4 5 6 7 8 </div>
+        <div class="col-3"></div>
+    </div>
+</div>

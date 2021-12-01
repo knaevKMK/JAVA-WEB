@@ -1,0 +1,84 @@
+
+
+<nav class="navbar  navbar-expand-lg  navbar-light bg-light">
+  <a class="navbar-brand" href="/" >
+    <img src="https://cdn-icons-png.flaticon.com/512/167/167531.png" width="30" height="30" alt=""></a>
+  <button class="navbar-toggler" type="button"
+   role="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon">☰</span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent"></div>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav">
+      <li *ngIf="!loggedUser" class="nav-item dropdown">
+        <p class="nav-link dropdown-toggle"  id="navbarDropdown"  >
+          Hi
+          <span  class="sr-only">
+            <a   class="nav-item" href="/usr/signin">Sign in</a> or <a  class="nav-item" href="/usr/register">register</a>
+          </span>
+        </p>
+      </li>
+
+      <li *ngIf="loggedUser" class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle"
+          href="/usr/profile/{{loggedUser.username}}" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Hi
+            <span  class="sr-only">
+            {{loggedUser.username}}!
+            </span>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <div class="me-eb-u-o">
+
+                <div id="me-bb">
+                <div id="me-up">
+                  <img id="me-upi" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSxT-Ahrvvm0MRIkdXCEKIJ_Ot-N6mwIkIfw5Ah0pxB3vOJH2znW0MzhfqeNMqU_Kclyk&usqp=CAU"
+                  alt="Profile picture"></div>
+
+                <div id="me-un">
+                  <span>{{loggedUser.fullName}}</span>
+                </div>
+                <div id="me-ui">
+                  <a class="dropdown-item"  href="/usr/profile/{{loggedUser.username}}">{{loggedUser.username}} ( {{loggedUser.score}} ) </a>
+                </div>
+                <div id="me-uac"><a class="dropdown-item" href="usr/profile/{{loggedUser.username}}">Account settings</a></div>
+                <div id="nav-uo"> <a class="dropdown-item"(click)="onLogout()">Logout</a></div>
+          </div>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item"> <a class="nav-link" href="/listing/all?filter=daily_deals">Daily Deals</a></li>
+      <li class="nav-item"> <a class="nav-link" href="/listing/all?filter=brand_outlet">Brand Outlet</a></li>
+      <li class="nav-item"> <a class="nav-link" href="/help">Help & Contact</a></li>
+    </ul>
+  </div>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+           <a class="nav-link" href="/listing/sell">Sell</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/listing/all?filter=watchList">
+            Watch List
+            </a>
+
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            My BuySell0
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/listing/all?filter=mylist">My Listings</a>
+            <a class="dropdown-item" href="/orders/purchase">Pruchases</a>
+            <a class="dropdown-item" href="/orders/solds">Sold Listings</a>
+            <a class="dropdown-item" href="/usr/msgs">Messages</a>
+          </div>
+      </li>
+
+      <li class="nav-item"><a class="nav-link" href="/orders/basket">🛒</a></li>
+    </ul>
+  </div>
+</nav>
+
+

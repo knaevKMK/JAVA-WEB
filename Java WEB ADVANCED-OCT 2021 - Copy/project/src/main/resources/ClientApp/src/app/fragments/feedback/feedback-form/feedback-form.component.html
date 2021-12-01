@@ -1,0 +1,23 @@
+<form [formGroup]= "feedbackCreate" (ngSubmit)="onLeft()" >
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="positive" formControlName="positive"  value="true" id="flexRadioDefault1" checked>
+        <label class="form-check-label" for="positive">
+        Positive
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" value="false" type="radio" formControlName="positive"  name="positive" id="flexRadioDefault2" >
+        <label class="form-check-label" for="positive">
+          Negative
+        </label>
+      </div>
+     <div class="row">
+       <div class="col">
+           <label for="text" >Feedback essage:</label>
+        <textarea type="text" class="form-control" formControlName="request"></textarea>
+    </div>
+   </div>
+
+
+<div class="row"> <div class="col">  <button >Send</button></div><div class="col-1"></div> <div class="col"> <button type="button">Cancel</button></div></div>
+</form>
