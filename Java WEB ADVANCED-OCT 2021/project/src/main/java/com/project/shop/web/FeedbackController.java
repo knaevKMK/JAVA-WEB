@@ -4,16 +4,13 @@ import com.project.shop.identityArea.models.entity.UserEntity;
 import com.project.shop.model.Response;
 import com.project.shop.model.binding.FeedbackBindingModel;
 import com.project.shop.model.binding.FeedbackLeftBindingModel;
-import com.project.shop.model.binding.ListingCreateModel;
-import com.project.shop.model.entity.Feedback;
-import com.project.shop.model.service.ListingServiceModel;
 import com.project.shop.model.view.FeedBackViewModel;
+import com.project.shop.model.view.FeedbackInListVewModel;
 import com.project.shop.service.FeedBackService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,15 +25,15 @@ public class FeedbackController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<Response> getAllListings(@RequestParam(required = false) String query,
+    public ResponseEntity<Response> getAll(@RequestParam(required = false) String query,
                                                    @RequestParam(required = false, defaultValue = "0") int page,
                                                    @RequestParam(required = false, defaultValue = "30") int limit,
                                                    Authentication authentication) {
 
-        List<FeedBackViewModel> feedbacks = feedBackService.getAll(authentication, query, page,limit);
+        List<FeedbackInListVewModel> feedbacks = feedBackService.getAll(authentication, query, page,limit);
         Response response = new Response();
         return ResponseEntity.ok(response
-                .setOkRequestResponse("feebacks", feedbacks, "Feedbacks retrieved"));
+                .setOkRequestResponse("feedbacks", feedbacks, "Feedbacks retrieved"));
     }
 
     @PostMapping("add")
@@ -52,7 +49,7 @@ public class FeedbackController {
 
             var result = feedBackService.sendFeedBack(model, principal.getUsername());
             return ResponseEntity.ok(response
-                    .setOkRequestResponse("left", result, "Listing created"));
+                    .setOkRequestResponse("left", result, "Feedback sent"));
         } catch (Exception e) {
 
             return ResponseEntity.ok(response

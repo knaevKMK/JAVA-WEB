@@ -1,0 +1,58 @@
+<div class="container">
+    <div class="row inbox-wrapper">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-lg-3 email-aside border-lg-right" style="background-color:bisque;">
+                  <div class="aside-content">
+                    <div class="aside-header">
+                        <p class="description">Feedbacks</p>
+                    </div>
+                        <div class="nav-item">
+                        <button (click)="onBox('receiver')"> Received
+                            </button>
+                           <button (click)="onBox('sent')">
+
+                                Left Feedbacks</button>
+                           <button (click)="onBox('positive')">
+                                 All Positive</button>
+                               <button (click)="onBox('negative')">
+                                    All Negative</button>
+
+                    </div>
+                    <div class="email-attachments">
+                        <div class="title">{{type.toUpperCase()}} Feedbacks: {{feedbacks.length | number}}</div>
+                        <table *ngIf="feedbacks.length >0 ">
+                            <thead style="background-color:blanchedalmond; text-align: center;">
+                                <th >Send from</th>
+                                <th>Title</th>
+                                <th>sent at</th>
+                                <th>options</th>
+                            </thead>
+                            <tbody>
+
+                                <tr *ngFor="let feedback of feedbacks"  >
+                                    <td >{{feedback.leftFrom}}</td>
+                                    <td >{{feedback.request}}</td>
+                                    <td>{{feedback.positive}}</td>
+                                    <td  ></td>
+
+                                </tr>
+                            </tbody>
+
+                        </table>
+
+                      </div>
+
+
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+    </div>
+</div>

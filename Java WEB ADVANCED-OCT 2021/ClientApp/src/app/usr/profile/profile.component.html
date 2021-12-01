@@ -31,18 +31,9 @@
           <div style="height: 26px"></div>
           <div class="card shadow-sm">
             <div class="card-header bg-transparent border-0">
-              <h3 class="mb-0"><i class="far fa-clone pr-1"></i>Feedbacks:</h3>
+              <app-feedback-list [user]="username" ></app-feedback-list>
             </div>
-            <div class="card-body pt-0">
-              <table class="table table-bordered">
-                <tr *ngFor="let f of user.feedbacks">
-                  <th width="30%">{{f['request']}}</th>
-                  <td width="2%">{{f['sender']}}</td>
-                  <td>Status: <strong *ngIf="!f['positive']">+</strong> <strong *ngIf="f['positive']">-</strong></td>
-                </tr>
 
-              </table>
-            </div>
           </div>
       </div>
     </div>

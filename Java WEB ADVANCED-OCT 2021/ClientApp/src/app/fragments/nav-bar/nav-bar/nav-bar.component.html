@@ -41,7 +41,7 @@
                 <div id="me-ui">
                   <a class="dropdown-item"  href="/usr/profile/{{loggedUser.username}}">{{loggedUser.username}} ( {{loggedUser.score}} ) </a>
                 </div>
-                <div id="me-uac"><a class="dropdown-item" href="usr/accountsettings">Account settings</a></div>
+                <div id="me-uac"><a class="dropdown-item" href="usr/profile/{{loggedUser.username}}">Account settings</a></div>
                 <div id="nav-uo"> <a class="dropdown-item"(click)="onLogout()">Logout</a></div>
           </div>
           </div>

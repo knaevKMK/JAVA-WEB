@@ -25,10 +25,10 @@ export class FeedbackFormComponent implements OnInit {
     this.feedbackCreate.value.orderId = this.orderId;
     this.feedbackCreate.value.ownerListingUsername = this.recipient;
     console.log(this.feedbackCreate.value)
-    // this.feedService.left(this.feedbackCreate.value)
-    //   .subscribe(data => {
-    //     console.log(data)
-    //   })
+    this.feedService.left(this.feedbackCreate.value)
+      .subscribe(data => {
+        console.log(data)
+      })
     // this.feedbackCreate = this.fb.group(FeedbackLeftForm());
 
   }

@@ -1,11 +1,14 @@
 package com.project.shop.service.impl;
 
+import com.project.shop.identityArea.models.entity.UserEntity;
 import com.project.shop.model.binding.FeedbackBindingModel;
 import com.project.shop.model.binding.FeedbackLeftBindingModel;
 import com.project.shop.model.entity.Feedback;
 import com.project.shop.model.entity.Order;
 import com.project.shop.model.view.FeedBackViewModel;
+import com.project.shop.model.view.FeedbackInListVewModel;
 import com.project.shop.repository.FeedBackRepository;
+import com.project.shop.service.BaseService;
 import com.project.shop.service.FeedBackService;
 import com.project.shop.service.OrderService;
 import org.modelmapper.ModelMapper;
@@ -19,7 +22,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class FeedBackServiceImpl implements FeedBackService {
+public class FeedBackServiceImpl extends BaseServiceImpl<Feedback> implements FeedBackService {
     private final FeedBackRepository feedBackRepository;
     private final ModelMapper modelMapper;
     private final OrderService orderService;
@@ -36,19 +39,24 @@ public class FeedBackServiceImpl implements FeedBackService {
     }
 
     @Override
-    public List<Feedback> getSentFeedBackByOrder(UUID orderId) {
-        return feedBackRepository.findAllByOrder_Id(orderId);
+    public List<FeedbackInListVewModel> getSentFeedBackByOrder(UUID orderId) {
+        return feedBackRepository.findAllByOrder_Id(orderId)
+                .stream().map(e->modelMapper.map(e,FeedbackInListVewModel.class))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<Feedback> getSentFeedBackByUsername(String username) {
+    public List<FeedbackInListVewModel> getSentFeedBackByUsername(String username) {
 
-        return feedBackRepository.findAllByOrder_Buyer_Username(username);
+        return feedBackRepository.findAllByOrder_Buyer_Username(username).stream().map(e->modelMapper.map(e,FeedbackInListVewModel.class))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<Feedback> getReceivedFeedBackByUsername(String username) {
-        return feedBackRepository.findAllByOrder_Listing_CreatFrom(username);
+    public List<FeedbackInListVewModel> getReceivedFeedBackByUsername(String username) {
+        return feedBackRepository.findAllByOrder_Listing_CreatFrom(username)
+                .stream().map(e->modelMapper.map(e,FeedbackInListVewModel.class))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -56,7 +64,9 @@ public class FeedBackServiceImpl implements FeedBackService {
         Feedback feedback = modelMapper.map(model, Feedback.class);
         Order order = orderService.getBuyId(model.getOrderId())
                 .orElseThrow(() -> new NullPointerException("Order does not exist"));
+        feedback.setId(null);
         feedback.setOrder(order);
+        feedback = onCreate(feedback, username);
         feedBackRepository.saveAndFlush(feedback);
         return "FeeBack was sent";
     }
@@ -74,25 +84,35 @@ public class FeedBackServiceImpl implements FeedBackService {
         return "FeeBack was sent";
     }
     @Override
-    public List<FeedBackViewModel> getAll(Authentication authentication, String query, int page, int limit) {
-        List<Feedback> result= new ArrayList<>();
+    public List<FeedbackInListVewModel> getAll(Authentication authentication, String query, int page, int limit) {
+//        UserEntity principal = (UserEntity)authentication.getPrincipal();
         String[] tokens = query.split("_");
         switch (tokens[0]) {
             case "sent":
-                result= getSentFeedBackByUsername(tokens[1]) ; break;
+                return getSentFeedBackByUsername(tokens[1]) ;
             case "receiver":
-                result= getReceivedFeedBackByUsername(tokens[1]);break;
+                return getReceivedFeedBackByUsername(tokens[1]);
             case "id":
-                result= getSentFeedBackByOrder(UUID.fromString(tokens[1]));break;
+                return getSentFeedBackByOrder(UUID.fromString(tokens[1]));
         }
-        return result.stream().map(f->modelMapper.map(f,FeedBackViewModel.class)).collect(Collectors.toList());
+        return new ArrayList<FeedbackInListVewModel>();
     }
 
 
 
     @Override
-    public List<Feedback> getPositiveFeedbacks(String username) {
-        return feedBackRepository.findAllByPositiveIsTrueAndOrder_Listing_CreateFrom(username);
+    public List<FeedbackInListVewModel> getPositiveFeedbacks(String username) {
+        return feedBackRepository.findAllByPositiveIsTrueAndOrder_Listing_CreateFrom(username).stream().map(f->modelMapper.map(f,FeedbackInListVewModel.class)).collect(Collectors.toList());
+
+
+    }
+
+    @Override
+    public List<FeedbackInListVewModel> getNegativeFeedbacks(String username) {
+        return feedBackRepository.findAllByPositiveIsFalseAndOrder_Listing_CreateFrom(username)
+                .stream().map(f->modelMapper.map(f,FeedbackInListVewModel.class))
+                .collect(Collectors.toList());
+
 
     }
 

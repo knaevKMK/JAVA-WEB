@@ -16,3 +16,13 @@ export function FeedbackResponseForm() {
         request: [null, Validators.required],
     }
 }
+
+export class FeedbackInList {
+    id: string = '';
+    listingId: string = '';
+    listingTitle: string = '';
+    leftFrom: string = '';
+    request: string = '';
+    responce: string = '';
+    positive: boolean = false;
+}
