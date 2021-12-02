@@ -95,6 +95,7 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
         if (filter != null) {
             switch (filter.trim().toLowerCase()) {
                 case "watchlist":
+
                     Account account = getAccount(authentication);
                     isAccountExist(account);
                     return listingRepository.findAllWatched(account.getUsername(), listingPage);
@@ -123,6 +124,9 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
     }
 
     private Account getAccount(Authentication authentication) {
+        if (authentication==null){
+            throw  new NullPointerException("Please login before continue");
+        }
         UserEntity principal = (UserEntity) authentication.getPrincipal();
         return accountService.getAccountByUserName(principal.getUsername()).orElse(null);
     }
