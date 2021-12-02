@@ -13,6 +13,7 @@ import { MsgsComponent } from './usr/msgs/msgs.component';
 import { ProfileComponent } from './usr/profile/profile.component';
 import { RegisterComponent } from './usr/register/register.component';
 import { SiginComponent } from './usr/sigin/sigin.component';
+import { HelpComponent } from "./support/help/help.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -27,7 +28,7 @@ const routes: Routes = [
       { path: 'mySellAccount', component: AllListingsComponent, canActivate: [AuthenticationGuard] },
     ]
   },
-  { path: 'help', component: AllListingsComponent },
+  { path: 'help', component: HelpComponent },
 
 
   {

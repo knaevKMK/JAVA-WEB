@@ -4,10 +4,19 @@ package com.project.shop.config.security;
 import com.project.shop.config.filter.JwtTokenFilter;
 import com.project.shop.identityArea.service.IdentityService;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -19,7 +28,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     public ApplicationSecurityConfig(
             JwtTokenFilter jwtTokenFilter,
             IdentityService userDetailsService,
-            BCryptPasswordEncoder bCryptPasswordEncoder){
+            BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.jwtTokenFilter = jwtTokenFilter;
         this.userDetailsService = userDetailsService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
@@ -28,52 +37,34 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .httpBasic()
-                .and()
-                .csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/","/*","/**","/api/**").permitAll()
-                .anyRequest().permitAll()
-                .and()
 
-        //           .antMatchers(HttpMethod.GET,"/api/*")
-
-//               .antMatchers(HttpMethod.GET,"/students/*")
-//                .hasAnyRole(STUDENT.name(),TEACHER.name())
-//                .hasAuthority(STUDENT_READ.getPermission())
-//                .anyRequest()
-//                .authenticated()
+        http  .csrf().disable();
+        http.httpBasic().disable();
+        http    .cors()  .configurationSource(corsConfigurationSource())// We need to add CORS support to Spring Security (see https://stackoverflow.com/a/67583232/4964553)
+//                .and()
+//                .authorizeRequests()
 //
-//                .and()
-//                .formLogin()
-//                //  .loginPage("/login").permitAll()
-
-//                .and()
-//                .rememberMe()
-//                .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(21))
-//                .key("somethingverystrong")
-//                .and()
-//                  .exceptionHandling().accessDeniedPage("/accessDenied.jsp")
-        ;
+//                .antMatchers("/api/**").permitAll()
+//                .antMatchers("/usr/**").permitAll() // allow every URI, that begins with '/api/user/'
+//                .antMatchers("/listing/**").permitAll() // allow every URI, that begins with '/api/user/'
+//                .antMatchers("/orders/**").permitAll()
+//                .anyRequest().permitAll()
+//               ;
+        ; // disable cross site request forgery, as we don't use cookies - otherwise ALL PUT, POST, DELETE will get HTTP 403!
+//        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
     }
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedMethods(List.of(
+                HttpMethod.GET.name(),
+                HttpMethod.PUT.name(),
+                HttpMethod.POST.name(),
+                HttpMethod.DELETE.name()
+        ));
 
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.
-//                userDetailsService(userDetailsService).
-//                passwordEncoder(bCryptPasswordEncoder);
-//    }
-//    @Override @Bean
-//    public AuthenticationManager authenticationManagerBean() throws Exception {
-//        return super.authenticationManagerBean();
-//    }
-//    @Bean
-//    public DaoAuthenticationProvider daoAuthenticationProvider(){
-//        DaoAuthenticationProvider dao=new DaoAuthenticationProvider();
-//        dao.setPasswordEncoder(this.bCryptPasswordEncoder);
-//        dao.setUserDetailsService(this.identityService);
-//        return dao;
-//    }
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration.applyPermitDefaultValues());
+        return source;
+    }
 }

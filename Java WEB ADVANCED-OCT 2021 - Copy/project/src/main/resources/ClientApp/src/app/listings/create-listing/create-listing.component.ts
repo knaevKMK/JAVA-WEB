@@ -83,8 +83,10 @@ export class CreateListingComponent implements OnInit {
       : this.listingService.update(this.id, this.createForm.value);
 
     promise.subscribe(result => {
+      console.log(result)
       this.router.navigate(['/listing/item/' + responceId(result)]);
     }, err => {
+      console.log(err)
       this.errors = setErrors(err, this.errors);
     })
   }

@@ -10,6 +10,7 @@ export class HomeComponent implements OnInit {
 
   listingsWatch: string = "filter=watchlist";
   listingsDaily: string = "filter=daily_deals";
+  all: string = "";
   constructor() { }
 
   ngOnInit(): void {
