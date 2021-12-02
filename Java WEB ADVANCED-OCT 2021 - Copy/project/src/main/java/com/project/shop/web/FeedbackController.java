@@ -49,34 +49,12 @@ public class FeedbackController {
 
             var result = feedBackService.sendFeedBack(model, principal.getUsername());
             return ResponseEntity.ok(response
-                    .setOkRequestResponse("left", result, "Feedback sent"));
+                    .setOkRequestResponse("msg", result, "Feedback sent"));
         } catch (Exception e) {
 
             return ResponseEntity.ok(response
-                    .setBadRequestResponse("left", false, e, e.getMessage()));
+                    .setBadRequestResponse("msg", false, e, e.getMessage()));
         }
     }
-    @PutMapping("response/{id}")
-    public ResponseEntity<Response> response(@RequestParam UUID id, @RequestBody FeedbackBindingModel model
-            , Authentication authentication
-    ) {
-        Response response = new Response();
-        try {
-            if (id==null ){
-                throw new NullPointerException("Invalid id");
-            }
-            if (authentication == null) {
-                throw new UnsupportedOperationException("Login before left feedback");
-            }
-            UserEntity principal = (UserEntity) authentication.getPrincipal();
 
-            var result = feedBackService.responseFeedBack(id,model, principal.getUsername());
-            return ResponseEntity.ok(response
-                    .setOkRequestResponse("left", result, "Listing created"));
-        } catch (Exception e) {
-
-            return ResponseEntity.ok(response
-                    .setBadRequestResponse("left", false, e, e.getMessage()));
-        }
-    }
 }

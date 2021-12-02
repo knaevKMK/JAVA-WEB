@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ListingInListView } from 'src/app/models/listing';
-import { responceListings } from 'src/app/models/response';
+import { ApiResponse, responceListings } from 'src/app/models/response';
 import { ListingService } from 'src/app/service/listing.service';
 
 @Component({
@@ -13,7 +13,7 @@ export class CarouselComponent implements OnInit {
   @Input('query') query: string = '';
 
   startIndex = 0;
-  lastIndex = 2;
+  lastIndex = 3;
   listings: ListingInListView[] = [];
   mediator: ListingInListView[] = [];
   constructor(private listingService: ListingService) {
@@ -24,10 +24,10 @@ export class CarouselComponent implements OnInit {
     // console.log(this.query)
     this.listingService.getAll(this.query)
       .subscribe(result => {
-        // console.log(this.query)
-        // console.log(Object(result))
-        this.listings = responceListings(result)
-        this.mediator = this.listings.slice(0, 3)// [this.listings[0], this.listings[1], this.listings[2]];
+        console.log(this.query)
+        console.log(ApiResponse(result).getListings)
+        this.listings = ApiResponse(result).getListings
+        this.mediator = this.listings.slice(0, 3)
       })
 
   }

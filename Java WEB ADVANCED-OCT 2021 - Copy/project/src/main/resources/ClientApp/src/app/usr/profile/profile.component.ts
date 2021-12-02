@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { responeseUser } from 'src/app/models/response';
+import { ApiResponse, responeseUser } from 'src/app/models/response';
 import { Profile } from 'src/app/models/user';
 import { AccountService } from 'src/app/service/account/account.service';
 
@@ -22,7 +22,7 @@ export class ProfileComponent implements OnInit {
     this.profileService.getProfile(this.username)
       .subscribe(data => {
         console.log(data)
-        this.user = responeseUser(data);
+        this.user = ApiResponse(data).getUser;
       })
   }
 

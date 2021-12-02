@@ -6,7 +6,7 @@ import { ConditionView } from 'src/app/models/condition';
 import { DeliveryView } from 'src/app/models/delivery';
 import { CreateListingErrors, setErrors } from 'src/app/models/errors';
 import { ListingCreateForm } from 'src/app/models/listing';
-import { responceCategory, responceCondition, responceDeliveryByArea, responceId, responceListing, responceSellingFormat } from 'src/app/models/response';
+import { ApiResponse, responceCategory, responceCondition, responceDeliveryByArea, responceId, responceListing, responceSellingFormat } from 'src/app/models/response';
 import { CategoryService } from 'src/app/service/category.service';
 import { ConditionService } from 'src/app/service/condition/condition.service';
 import { DeliveryService } from 'src/app/service/delivery/delivery.service';
@@ -41,16 +41,16 @@ export class CreateListingComponent implements OnInit {
     this.id = this.activateRoute.snapshot.params['id'];
     this.categoryService.getAll()
       .subscribe(result => {
-        this.categories = responceCategory(result);
+        this.categories = ApiResponse(result).getCategories;
       });
     this.conditionService.getAll()
       .subscribe(result => {
-        this.conditions = responceCondition(result)
+        this.conditions = ApiResponse(result).getConditions;
       });
 
     this.sellingFormatService.getAll()
       .subscribe(result => {
-        this.sellingFormats = responceSellingFormat(result)
+        this.sellingFormats = ApiResponse(result).getSellingFormat;
       });
     this.deliveryService.getAll()
       .subscribe(result => {
@@ -62,8 +62,8 @@ export class CreateListingComponent implements OnInit {
     this.isEditMode
       ? this.listingService.getById(this.id)
         .subscribe(result => {
-          console.log(responceListing(result))
-          this.createForm.setValue(responceListing(result));
+          console.log(ApiResponse(result).getListing)
+          this.createForm.setValue(ApiResponse(result).getListing);
 
         })
       : this.createForm = this.fb.group(ListingCreateForm(fb));
@@ -84,7 +84,7 @@ export class CreateListingComponent implements OnInit {
 
     promise.subscribe(result => {
       console.log(result)
-      this.router.navigate(['/listing/item/' + responceId(result)]);
+      this.router.navigate(['/listing/item/' + ApiResponse(result).getId]);
     }, err => {
       console.log(err)
       this.errors = setErrors(err, this.errors);

@@ -12,10 +12,10 @@
                        {{order.listingTitle}}
                 </a>
             </label></div>
-            <div class="col-1"><label for="price" >Price:</label>  </div>
+            <div class="col-2"><label for="price" >Price: {{order.price | number:".2"}}</label>  </div>
 
-            <div class="col-1">
-                <input  type="number" [attr.disabled]="!order.completed" class="form-control"  [(ngModel)]="order.price" disabled>
+            <div class="col" >
+                <input style="visibility: hidden;" type="number" disabled class="form-control"  value="order.price" >
             </div>
             <div class="col-1"><label for="quantity">qty:</label> </div>
             <div class="col-1">

@@ -123,8 +123,8 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
         if (order == null) {
             return false;
         }
-        if (!order.getBuyer().getUsername().equals(username)) {
-            throw new IllegalAccessException("You are not authorise to delete this item");
+        if (!order.getBuyer().getUsername().equals(username) && !order.getListing().getCreateFrom().equals(username)) {
+            throw new IllegalAccessException("You are not authorise to delete this order");
         }
 
         order.setActive(false);

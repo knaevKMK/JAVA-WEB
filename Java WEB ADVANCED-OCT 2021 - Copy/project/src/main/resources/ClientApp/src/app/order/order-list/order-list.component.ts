@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Order } from 'src/app/models/order';
-import { responsePurchases } from 'src/app/models/response';
+import { ApiResponse, responsePurchases } from 'src/app/models/response';
 import { OrderService } from 'src/app/service/order/order.service';
 
 @Component({
@@ -14,20 +14,20 @@ export class OrderListComponent implements OnInit {
     this.orderService.getPruchases('all')
       .subscribe(data => {
         console.log(responsePurchases(data))
-        this.orders = responsePurchases(data);
+        this.orders = ApiResponse(data).getPurchses;
       })
   }
   onCancel(id: string) {
     console.log(id)
     this.orderService.cancel(id)
       .subscribe(data => {
-        console.log(data)
-        if (Object(data)['data']['delete']) {
+        console.log(ApiResponse(data))
+        if (ApiResponse(data).isDelete) {
 
           this.orderService.getPruchases('all')
             .subscribe(data => {
-              console.log(responsePurchases(data))
-              this.orders = responsePurchases(data);
+              console.log(ApiResponse(data).getPurchses)
+              this.orders = ApiResponse(data).getPurchses;
             })
         }
         console.log(data)

@@ -1,6 +1,53 @@
 export function _allData(data: any) {
     return Object(data)['data']
 }
+export function ApiResponse(data: Object) {
+    const _data = Object(data)['data'];
+
+    const getId = _data['id'];
+
+
+
+    const confirm = _data['confirm'];
+    const isDelete = _data['delete'];
+
+
+    const getListing = _data['listing']
+    const getListings = _data['listings']
+    const getOrder = _data['order']
+    const getOrders = _data['orders']
+    const getWatch = _data['watch']
+    const getPurchses = _data['purchases'];
+    // const getDelivery =  _data['delivery']
+    const getSellingFormat = _data['selling-formats']
+    const getCategories = _data['categories'];
+    const getConditions = _data['conditions'];
+    const getFeedbacks = _data['feedbacks']
+    const getMessagess = _data['msg']
+
+
+    //msgs
+    const msg = _data['left']
+
+    //identity
+    const getUser = _data['user'];
+    // const getToken = _data['login']['token'];
+
+
+
+    return {
+        getId,
+        getUser,
+        confirm, isDelete,
+        msg,
+        getListing, getListings,
+        getOrder, getOrders,
+        getWatch, getPurchses,
+        getSellingFormat, getCategories, getConditions, getFeedbacks, getMessagess
+    }
+}
+
+
 
 export function responceId(data: any) {
     return _allData(data)['id']

@@ -2,17 +2,24 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, Inject } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { httpConfigHeader, httpIfHeader } from 'src/app/models/http';
-import { SetUser } from 'src/app/models/user';
+import { Profile, SetUser } from 'src/app/models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   url: string = "http://localhost:8080/api/identity";
-  _isLoggedIn = new BehaviorSubject<boolean>(this.getToken() != null);
-  constructor(private http: HttpClient) {
 
+  _isLoggedIn = new BehaviorSubject<boolean>(this.getToken() != null);
+
+  constructor(private http: HttpClient) {
   }
+
+
+  emit(value: any) {
+    this._isLoggedIn.next(value);
+  }
+
   onLogin(data: any): Observable<any> {
     return this.http.post(this.url + "/login", data);
   }

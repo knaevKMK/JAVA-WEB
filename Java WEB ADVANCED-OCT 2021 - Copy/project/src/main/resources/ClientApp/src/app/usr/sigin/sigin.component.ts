@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { responseError, setErrors, UserRegisterErrors } from 'src/app/models/errors';
-import { responceToken, responeseUser } from 'src/app/models/response';
+import { ApiResponse, responceToken, responeseUser } from 'src/app/models/response';
 import { AuthService } from 'src/app/service/usr/auth.service';
 
 @Component({
@@ -25,10 +25,10 @@ export class SiginComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  onSignIn() {
+  async onSignIn() {
     this.errors = new UserRegisterErrors();
     console.log(this.signInForm.value);
-    this.authService.onLogin(this.signInForm.value).subscribe(
+    await this.authService.onLogin(this.signInForm.value).subscribe(
       data => {
         console.log(Object(data));
         switch (data.statusCode) {
@@ -36,9 +36,9 @@ export class SiginComponent implements OnInit {
             this.authService.saveToken(responceToken(data));
             console.log(this.authService.getToken())
             this.authService.getLoggedUser().subscribe(result => {
-              console.log(responeseUser(result))
+              console.log(ApiResponse(result).getUser)
               this.authService.saveUser(responeseUser(result));
-              this.router.navigate(['/']);
+              this.router.navigate(['listing/all']);
             })
             break;
           default:

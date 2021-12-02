@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FeedbackLeftForm } from 'src/app/models/feedback';
+import { ApiResponse } from 'src/app/models/response';
 import { FeadbackService } from 'src/app/service/feedback/feadback.service';
 
 @Component({
@@ -27,9 +28,9 @@ export class FeedbackFormComponent implements OnInit {
     console.log(this.feedbackCreate.value)
     this.feedService.left(this.feedbackCreate.value)
       .subscribe(data => {
-        console.log(data)
+        console.log(ApiResponse(data).msg)
+        //todo notify
+        this.feedbackCreate.reset
       })
-    // this.feedbackCreate = this.fb.group(FeedbackLeftForm());
-
   }
 }

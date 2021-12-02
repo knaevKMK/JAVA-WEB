@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Msg, openMsg } from 'src/app/models/msg';
+import { ApiResponse } from 'src/app/models/response';
 import { MsgService } from 'src/app/service/msg/msg.service';
 
 @Component({
@@ -23,7 +24,7 @@ export class MsgsComponent implements OnInit {
       .subscribe(data => {
         console.log(data)
         this.type = query;
-        this.Msgs = Object(data)['data']['msg']
+        this.Msgs = ApiResponse(data).getMessagess
         this.openMsg = new openMsg();
       })
   }
@@ -32,7 +33,7 @@ export class MsgsComponent implements OnInit {
     this.msgService.getById(id)
       .subscribe(data => {
         console.log(Object(data))
-        this.openMsg = Object(data)['data']['msg']
+        this.openMsg = ApiResponse(data).getMessagess
       })
   }
   onDelete(id: string) {

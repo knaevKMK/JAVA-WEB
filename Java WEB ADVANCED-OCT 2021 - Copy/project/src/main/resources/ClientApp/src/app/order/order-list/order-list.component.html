@@ -15,13 +15,13 @@
 
             <div class="col-2">
                 <p>{{order.price | number:'.2'}} BGN</p>
-                <p>Seller: <a href="/usr/{{order.sellerUsername}}">{{order.sellerUsername}}</a></p>
+                <p>Seller: <a href="/usr/profile/{{order.sellerUsername}}">{{order.sellerUsername}}</a></p>
             </div>
             <div class="col-1"><p>qty:</p> </div>
             <div class="col-1"><p>{{order.quantity}}</p></div>
             <div class="col"></div>
             <div  id="order-address" class="col-3" >
-                <a class="nav-link" href="">
+                <a class="nav-link" href="/orders/order/{{order.id}}">
                     <button  class="btn btn-secondary" type="button" id="dropdownMenuButton">
                         <strong *ngIf="!order.completed">Complete</strong><strong *ngIf="order.completed">View</strong> order
                     </button></a>

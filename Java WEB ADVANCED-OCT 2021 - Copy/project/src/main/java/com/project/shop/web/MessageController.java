@@ -26,7 +26,10 @@ public class MessageController {
         this.modelMapper = modelMapper;
     }
     @GetMapping("/all")
-    public ResponseEntity<Response> getAll(@RequestParam(required = true) String query,
+    public ResponseEntity<Response> getAll(
+            @RequestParam(required = true) String query,
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "30") int limit,
                                                    Authentication authentication) {
         Response response = new Response();
         try {

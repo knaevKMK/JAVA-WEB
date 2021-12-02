@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Filter } from 'src/app/models/filter';
 import { ListingInListView } from 'src/app/models/listing';
-import { responceListings } from 'src/app/models/response';
+import { ApiResponse, responceListings } from 'src/app/models/response';
 import { ListingService } from 'src/app/service/listing.service';
 
 @Component({
@@ -23,8 +23,8 @@ export class AllListingsComponent implements OnInit {
 
         this.listingService.getAll(this.loadQuery(Object(params)))
           .subscribe(result => {
-            console.log(Object(result))
-            this.listings = responceListings(result)
+            console.log(ApiResponse(result).getListings)
+            this.listings = ApiResponse(result).getListings
           })
       });
 

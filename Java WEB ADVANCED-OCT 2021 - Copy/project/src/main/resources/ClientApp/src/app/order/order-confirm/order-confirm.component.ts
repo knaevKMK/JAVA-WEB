@@ -13,7 +13,7 @@ import { OrderService } from 'src/app/service/order/order.service';
 export class OrderConfirmComponent implements OnInit {
   id = this.activateRoute.snapshot.params['id'];
   confirmForm: FormGroup;
-  order: any// = new Order(this.orderService, this.id);
+  order: any;
 
   constructor(
     private orderService: OrderService,

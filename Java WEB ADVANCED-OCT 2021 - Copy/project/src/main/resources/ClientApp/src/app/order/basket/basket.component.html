@@ -8,7 +8,7 @@
         <div   class="row">
               <form [formGroup]= 'confirmForm' (ngSubmit)='onConfirm()'>
                     <div class="row">
-                        <div class="col-2">
+                        <div class="col">
                             <a href="/listing/item/{{order.listingId}}">
                                 <p>
                                     {{order.listingTitle}}
@@ -29,7 +29,7 @@
                             <label for="quantity">qty:</label>
                             <input id="quantity"  formControlName="quantity"  type="number"  step="1"
                             [(ngModel)]="order.quantity">
-                            <div class="col">   <input type="submit" value="Complete" ></div>
+
                         </div>
 
                             <div class="col-3">
@@ -39,6 +39,14 @@
 
                                 <input formControlName="id"  type="text"
                                 style="visibility: hidden;"   [(ngModel)]="order.id">
+                            </div>
+                            <div class="col-2">
+                                <div class="row"><div class="col">
+                                    <button type="submit" class="btn btn-primary" value="Complete" >Complete Order</button>
+                                </div></div>
+                                <div class="row"><div class="col">
+                                    <button class="btn btn-danger" type="button" (click)="onCancel(order.id)">Cancel Order</button>
+                                </div></div>
                             </div>
                     </div>
 

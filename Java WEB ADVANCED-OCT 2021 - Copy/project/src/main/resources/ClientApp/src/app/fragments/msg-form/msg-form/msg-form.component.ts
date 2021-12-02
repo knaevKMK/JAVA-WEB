@@ -22,14 +22,14 @@ export class MsgFormComponent implements OnInit {
   }
   onSend() {
     this.mailCreate.value.listingId = this.listId;
-
     this.mailCreate.value.recipientUsername = this.recipient;
     console.log(this.mailCreate.value)
+
     this.msgService.send(this.mailCreate.value)
       .subscribe(data => {
         console.log(data)
       })
-    this.mailCreate = this.fb.group(MailForm());
+    this.mailCreate.reset
 
   }
 }

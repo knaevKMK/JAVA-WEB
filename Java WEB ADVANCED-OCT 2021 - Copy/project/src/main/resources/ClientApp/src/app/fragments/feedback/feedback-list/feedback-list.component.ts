@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FeedbackInList } from 'src/app/models/feedback';
+import { ApiResponse } from 'src/app/models/response';
 import { FeadbackService } from 'src/app/service/feedback/feadback.service';
 
 @Component({
@@ -24,7 +25,7 @@ export class FeedbackListComponent implements OnInit {
     this.feedbackService.getAll(query + "_" + this.username)
       .subscribe(data => {
         console.log(data)
-        this.feedbacks = Object(data)['data']['feedbacks']
+        this.feedbacks = ApiResponse(data).getFeedbacks;
       })
   }
 }

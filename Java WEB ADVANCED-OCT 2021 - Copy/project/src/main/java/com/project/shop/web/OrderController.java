@@ -23,7 +23,10 @@ private final OrderService orderService;
     }
 
     @GetMapping("purchases")
-    public ResponseEntity<Response> getMyPurchases(@RequestParam (required = false) String query,
+    public ResponseEntity<Response> getMyPurchases(
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "30") int limit,
+            @RequestParam (required = false) String query,
             Authentication authentication) {
         Response response = new Response();
         if (authentication==null){
@@ -36,7 +39,10 @@ private final OrderService orderService;
                 .setOkRequestResponse("purchases", myPurchase, "My Purchases retrieved"));
     }
     @GetMapping("solds")
-    public ResponseEntity<Response> getMyOrders(Authentication authentication) {
+    public ResponseEntity<Response> getMyOrders(
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "30") int limit,
+            Authentication authentication) {
         Response response = new Response();
         if (authentication==null){
             return ResponseEntity.ok(response

@@ -10,7 +10,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent"></div>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav">
-      <li *ngIf="!loggedUser" class="nav-item dropdown">
+      <li *ngIf="!isloggedUser" class="nav-item dropdown">
         <p class="nav-link dropdown-toggle"  id="navbarDropdown"  >
           Hi
           <span  class="sr-only">
@@ -19,9 +19,9 @@
         </p>
       </li>
 
-      <li *ngIf="loggedUser" class="nav-item dropdown">
+      <li *ngIf="isloggedUser" class="nav-item dropdown">
           <a class="nav-link dropdown-toggle"
-          href="/usr/profile/{{loggedUser.username}}" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Hi
             <span  class="sr-only">
             {{loggedUser.username}}!
@@ -39,7 +39,7 @@
                   <span>{{loggedUser.fullName}}</span>
                 </div>
                 <div id="me-ui">
-                  <a class="dropdown-item"  href="/usr/profile/{{loggedUser.username}}">{{loggedUser.username}} ( {{loggedUser.score}} ) </a>
+                  <a class="dropdown-item"  href="/usr/profile/{{loggedUser.username}}">{{loggedUser.username}}  </a>
                 </div>
                 <div id="me-uac"><a class="dropdown-item" href="usr/profile/{{loggedUser.username}}">Account settings</a></div>
                 <div id="nav-uo"> <a class="dropdown-item"(click)="onLogout()">Logout</a></div>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ListingView } from 'src/app/models/listing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ListingService } from 'src/app/service/listing.service';
-import { responceListing, responseOrder, responseWatch } from 'src/app/models/response';
+import { ApiResponse, responceListing, responseOrder, responseWatch } from 'src/app/models/response';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { BuyForm } from 'src/app/models/buy';
 import { OrderService } from 'src/app/service/order/order.service';
@@ -33,7 +33,7 @@ export class DetailsListingComponent implements OnInit {
     this.listingService.getById(this.id)
       .subscribe(result => {
         console.log((result));
-        this.listing = (responceListing(result));
+        this.listing = (ApiResponse(result).getListing);
       })
   }
   onEnd(id: string) {
@@ -41,6 +41,8 @@ export class DetailsListingComponent implements OnInit {
     this.listingService.delete(id)
       .subscribe(result => {
         console.log(result)
+        //todo add note
+        this.router.navigate(['/']);
       });
   }
   onBuy() {

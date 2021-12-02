@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { responceListings } from 'src/app/models/response';
+import { ApiResponse, responceListings } from 'src/app/models/response';
 import { ListingService } from 'src/app/service/listing.service';
 import { AuthService } from 'src/app/service/usr/auth.service';
 
@@ -17,20 +17,14 @@ export class NavBarComponent implements OnInit {
   watchlist = [];
   alert = [];
   constructor(private authService: AuthService,
-    private listingService: ListingService) {
-    // this.listingService.getWatchList()
-    //   .subscribe(result => {
-    //     console.log(responceListings(result));
-    //     this.watchlist = responceListings(result)
-    //   });
-    this.isloggedUser = this.authService.isLoggedIn;
-    this.loggedUser = this.authService.loggedUser;
-    console.log(this.authService.getUser())
+  ) {
+    this.isloggedUser = Object(this.authService.isLoggedIn)['source']['value'];
+    this.loggedUser = this.authService.loggedUser
   }
 
   ngOnInit(): void {
-    this.isloggedUser = this.authService.isLoggedIn;
-    this.loggedUser = (JSON.parse(this.authService.getUser()));
+    console.log(this.isloggedUser)
+    console.log(this.loggedUser)
   }
   onLogout() {
     console.log("logout");
