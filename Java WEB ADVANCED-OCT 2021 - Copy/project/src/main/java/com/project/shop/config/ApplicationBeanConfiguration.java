@@ -1,11 +1,11 @@
 package com.project.shop.config;
 
-import com.project.shop.model.binding.ConditionBindingModel;
 import com.project.shop.model.entity.*;
 import com.project.shop.model.view.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 public class ApplicationBeanConfiguration {
@@ -14,19 +14,8 @@ public class ApplicationBeanConfiguration {
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
 
-        modelMapper.createTypeMap(ConditionBindingModel.class, ConditionItem.class);
-        modelMapper.createTypeMap(SellingFormat.class, SellingVewModel.class);
-
         modelMapper.createTypeMap(Listing.class, ListingInListViewModel.class)
                 .addMappings(mapper -> mapper.map(src -> src.getSellingFormat().getPrice(), ListingInListViewModel::setPrice));
-
-
-        modelMapper.createTypeMap(Listing.class, ListingViewModel.class)
-                .addMappings(mapper -> {
-                    //                  mapper.map(src-> src.getCreateOn().plusDays(src.getSellingFormat().getDuration()),ListingViewModel::setEndOn);
-//                    mapper.map(src-> src.getWatchers().size(),ListingViewModel::setWatchCount);
-                });
-
 
         modelMapper.createTypeMap(Order.class, OrderViewModel.class)
                 .addMappings(mapper -> {
@@ -36,6 +25,7 @@ public class ApplicationBeanConfiguration {
                     mapper.map(src -> src.getListing().getCreateFrom(), OrderViewModel::setSellerUsername);
 
                 });
+
         modelMapper.createTypeMap(Message.class, MsgListViewModel.class)
                 .addMappings(mapper -> {
                     mapper.map(src -> src.getRecipient().getUsername(), MsgListViewModel::setRecipient);
@@ -48,6 +38,7 @@ public class ApplicationBeanConfiguration {
                     mapper.map(src->src.getRecipient().getUsername(),MsgViewModel::setRecipient);
 
                 });
+
         modelMapper.createTypeMap(Feedback.class,FeedbackInListVewModel.class)
                 .addMappings(mapper->{
                    mapper.map(src->src.getOrder().getBuyer().getUsername(),FeedbackInListVewModel::setSender);
@@ -57,5 +48,8 @@ public class ApplicationBeanConfiguration {
         return modelMapper;
     }
 
-
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
 }

@@ -13,11 +13,11 @@
       </div>
      <div class="row">
        <div class="col">
-           <label for="text" >Feedback essage:</label>
+           <label for="text" >Feedback message:</label>
         <textarea type="text" class="form-control" formControlName="request"></textarea>
     </div>
    </div>
 
 
-<div class="row"> <div class="col">  <button >Send</button></div><div class="col-1"></div> <div class="col"> <button type="button">Cancel</button></div></div>
+<div class="row"> <div class="col">  <button type="submit" >Send</button></div><div class="col-1"></div> <div class="col"> <button type="button" (click)="onCancel()">Cancel</button></div></div>
 </form>

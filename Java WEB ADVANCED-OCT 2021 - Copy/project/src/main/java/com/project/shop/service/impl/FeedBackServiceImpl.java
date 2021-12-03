@@ -86,7 +86,7 @@ public class FeedBackServiceImpl extends BaseServiceImpl<Feedback> implements Fe
     @Override
     public List<FeedbackInListVewModel> getAll(Authentication authentication, String query, int page, int limit) {
 //        UserEntity principal = (UserEntity)authentication.getPrincipal();
-        String[] tokens = query.split("_");
+        String[] tokens = query.split(" ");
         switch (tokens[0]) {
             case "sent":
                 return getSentFeedBackByUsername(tokens[1]) ;

@@ -7,9 +7,9 @@ import com.project.shop.constants.Paths;
 import com.project.shop.identityArea.models.binding.RegisterRequest;
 import com.project.shop.identityArea.models.entity.ConfirmationToken;
 import com.project.shop.identityArea.models.entity.UserEntity;
-import com.project.shop.identityArea.models.enums.AppUserRoleEnum;
+import com.project.shop.identityArea.models.enums.RoleEnum;
 import com.project.shop.identityArea.models.service.UserServiceModel;
-import com.project.shop.identityArea.service.AppUserRoleService;
+import com.project.shop.identityArea.service.UserRoleService;
 import com.project.shop.identityArea.service.ConfirmationTokenService;
 import com.project.shop.identityArea.service.IdentityService;
 import org.modelmapper.ModelMapper;
@@ -28,16 +28,16 @@ public class RegisterHandlerImpl implements RegisterHandler {
     private final Gson gson;
     private final ModelMapper modelMapper;
     private final IdentityService identityService;
-    private final AppUserRoleService appUserRoleService;
+    private final UserRoleService userRoleService;
     // private final EmailValidator emailValidator;
     private final ConfirmationTokenService confirmationTokenService;
 
-    public RegisterHandlerImpl(Gson gson, ModelMapper modelMapper, IdentityService identityService, AppUserRoleService appUserRoleService, ConfirmationTokenService confirmationTokenService) {
+    public RegisterHandlerImpl(Gson gson, ModelMapper modelMapper, IdentityService identityService, UserRoleService userRoleService, ConfirmationTokenService confirmationTokenService) {
         this.ioUtil = new IOUtilImpl();
         this.gson = gson;
         this.modelMapper = modelMapper;
         this.identityService = identityService;
-        this.appUserRoleService = appUserRoleService;
+        this.userRoleService = userRoleService;
         this.confirmationTokenService = confirmationTokenService;
     }
 
@@ -54,7 +54,7 @@ public class RegisterHandlerImpl implements RegisterHandler {
         }
 
         UserServiceModel account = modelMapper.map(model, UserServiceModel.class);
-        account.setRole(Set.of(appUserRoleService.getUserRole(AppUserRoleEnum.USER)));
+        account.setAuthorities(Set.of(userRoleService.getUserRole(RoleEnum.USER)));
         return identityService.registerUser(modelMapper.map(account, UserEntity.class));
     }
 

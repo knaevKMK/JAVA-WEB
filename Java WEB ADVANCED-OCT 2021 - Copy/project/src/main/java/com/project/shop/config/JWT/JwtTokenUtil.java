@@ -1,4 +1,4 @@
-package com.project.shop.config.security;
+package com.project.shop.config.JWT;
 
 import com.project.shop.identityArea.models.entity.UserEntity;
 import io.jsonwebtoken.*;
@@ -61,15 +61,15 @@ public class JwtTokenUtil implements Serializable {
     }
     //validate token
     public Boolean validateToken(String token, UserEntity userDetails) {
-//        final String username = getUsernameFromToken(token);
-//        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
-        try {
-            Jws<Claims> claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
-            return true;
-        } catch (SignatureException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException ex) {
-            throw new BadCredentialsException("INVALID_CREDENTIALS", ex);
-        } catch (ExpiredJwtException ex) {
-            throw ex;
-        }
+        final String username = getUsernameFromToken(token);
+        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+//        try {
+//            Jws<Claims> claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
+//            return true;
+//        } catch (SignatureException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException ex) {
+//            throw new BadCredentialsException("INVALID_CREDENTIALS", ex);
+//        } catch (ExpiredJwtException ex) {
+//            throw ex;
+//        }
     }
 }

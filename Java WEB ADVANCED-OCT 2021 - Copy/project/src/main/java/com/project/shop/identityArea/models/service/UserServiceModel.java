@@ -1,8 +1,8 @@
 package com.project.shop.identityArea.models.service;
 
-import com.project.shop.identityArea.models.entity.AppUserRoleEntity;
+import com.project.shop.identityArea.models.entity.UserRole;
 
-import java.util.Set;
+import java.util.Collection;
 
 public class UserServiceModel {
     private String firstName;
@@ -10,7 +10,7 @@ public class UserServiceModel {
     private String username;
     private String email;
     private String password;
-    private Set<AppUserRoleEntity> role;
+    private Collection<UserRole> authorities;
 
     public UserServiceModel() {
     }
@@ -60,12 +60,12 @@ public class UserServiceModel {
         return this;
     }
 
-    public Set<AppUserRoleEntity> getRole() {
-        return role;
+    public Collection<UserRole> getAuthorities() {
+        return authorities;
     }
 
-    public UserServiceModel setRole(Set<AppUserRoleEntity> role) {
-        this.role = role;
+    public UserServiceModel setAuthorities(Collection<UserRole> authorities) {
+        this.authorities = authorities;
         return this;
     }
 }

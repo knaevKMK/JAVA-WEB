@@ -17,7 +17,7 @@ public class UserEntity implements UserDetails {
     private String username;
     private String email;
     private String password;
-    private Collection<AppUserRoleEntity> authorities;
+    private Collection<UserRole> authorities;
     private boolean isAccountNonLocked = false;
     private boolean isEnabled = false;
     private boolean isAccountNonExpired;
@@ -33,7 +33,7 @@ public class UserEntity implements UserDetails {
                       String username,
                       String email,
                       String password,
-                      Set<AppUserRoleEntity> appUserRoleEnum) {
+                      Set<UserRole> appUserRoleEnum) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
@@ -88,7 +88,7 @@ public class UserEntity implements UserDetails {
 
     @Override
     @ManyToMany(fetch = FetchType.EAGER)
-    public Collection<AppUserRoleEntity> getAuthorities() {
+    public Collection<UserRole> getAuthorities() {
         return this.authorities;
     }
 
@@ -139,7 +139,7 @@ public class UserEntity implements UserDetails {
         return this;
     }
 
-    public UserEntity setAuthorities(Collection<AppUserRoleEntity> role) {
+    public UserEntity setAuthorities(Collection<UserRole> role) {
         this.authorities = role;
         return this;
     }

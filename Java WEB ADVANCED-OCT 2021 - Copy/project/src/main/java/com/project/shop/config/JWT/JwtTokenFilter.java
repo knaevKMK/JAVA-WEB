@@ -1,8 +1,8 @@
-package com.project.shop.config.filter;
+package com.project.shop.config.JWT;
 
-import com.project.shop.config.security.JwtTokenUtil;
 import com.project.shop.identityArea.models.entity.UserEntity;
 import com.project.shop.identityArea.service.IdentityService;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static org.apache.logging.log4j.util.Strings.isEmpty;
+import static org.aspectj.util.LangUtil.isEmpty;
 
 @Component
 public class JwtTokenFilter extends OncePerRequestFilter {
@@ -33,7 +33,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain chain) throws ServletException, IOException {
-//todo expired token should ask login again
         try {
 //        // Get authorization header and validate
             final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
@@ -55,7 +54,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
             UsernamePasswordAuthenticationToken
                     authentication = new UsernamePasswordAuthenticationToken(
-                    userDetails, null);
+                    userDetails, null, userDetails.getAuthorities());
 
             authentication.setDetails(
                     new WebAuthenticationDetailsSource().buildDetails(request)

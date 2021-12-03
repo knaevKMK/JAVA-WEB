@@ -22,7 +22,7 @@ export class FeedbackListComponent implements OnInit {
     this.type = query;
     console.log(query)
     console.log(this.username)
-    this.feedbackService.getAll(query + "_" + this.username)
+    this.feedbackService.getAll(query + " " + this.username)
       .subscribe(data => {
         console.log(data)
         this.feedbacks = ApiResponse(data).getFeedbacks;

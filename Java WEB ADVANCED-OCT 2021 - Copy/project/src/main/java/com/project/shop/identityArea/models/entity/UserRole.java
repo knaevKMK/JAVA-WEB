@@ -1,7 +1,6 @@
 package com.project.shop.identityArea.models.entity;
 
-import com.project.shop.identityArea.models.enums.AppUserRoleEnum;
-import com.project.shop.model.entity.BaseEntity;
+import com.project.shop.identityArea.models.enums.RoleEnum;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -10,12 +9,12 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "user_roles")
-public class AppUserRoleEntity implements GrantedAuthority {
+public class UserRole implements GrantedAuthority {
     private UUID id;
-    private AppUserRoleEnum role;
+    private RoleEnum role;
     private String authority;
 
-    public AppUserRoleEntity() {
+    public UserRole() {
     }
 
     @Id
@@ -26,18 +25,18 @@ public class AppUserRoleEntity implements GrantedAuthority {
         return id;
     }
 
-    public AppUserRoleEntity setId(UUID id) {
+    public UserRole setId(UUID id) {
         this.id = id;
         return this;
     }
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    public AppUserRoleEnum getRole() {
+    public RoleEnum getRole() {
         return role;
     }
 
-    public AppUserRoleEntity setRole(AppUserRoleEnum role) {
+    public UserRole setRole(RoleEnum role) {
         this.role = role;
         return this;
     }
@@ -47,7 +46,7 @@ public class AppUserRoleEntity implements GrantedAuthority {
         return this.authority;
     }
 
-    public AppUserRoleEntity setAuthority(String authority) {
+    public UserRole setAuthority(String authority) {
         this.authority = authority;
         return this;
     }

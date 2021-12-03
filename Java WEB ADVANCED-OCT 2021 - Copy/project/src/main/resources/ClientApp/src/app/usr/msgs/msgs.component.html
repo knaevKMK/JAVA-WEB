@@ -43,8 +43,8 @@
                     <div class="email-head-sender d-flex align-items-center justify-content-between flex-wrap">
                       <div class="d-flex align-items-center">
                         <div class="" >
-                            <div *ngIf="type=='received' || type=='deleted'" class="row"> <div class="col">  <span>sent from:   </span><a href="usr/{{openMsg.recipient}}">{{openMsg.sender}} </a></div></div>
-                            <div  *ngIf="type=='sent'|| type=='deleted'" class="row"> <div class="col">  <span> to </span> <a href="usr/{{openMsg.recipient}}">{{openMsg.recipient}}</a></div></div>
+                            <div *ngIf="type=='received' || type=='deleted'" class="row"> <div class="col">  <span>sent from:   </span><a href="usr/profile/{{openMsg.recipient}}">{{openMsg.sender}} </a></div></div>
+                            <div  *ngIf="type=='sent'|| type=='deleted'" class="row"> <div class="col">  <span> to </span> <a href="usr/profile/{{openMsg.recipient}}">{{openMsg.recipient}}</a></div></div>
                             <div class="row">  <div class="col"><span>About item: </span><a href="/listing/item/{{openMsg.listing.id}}"> {{openMsg.listing.title}} </a>     <a (click)="onDelete(openMsg.id)" *ngIf="type!='deleted'" class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash text-muted" data-toggle="tooltip" title="" data-original-title="Delete"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg> </a>
                             </div></div>
 

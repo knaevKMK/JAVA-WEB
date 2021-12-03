@@ -32,4 +32,7 @@ export class MsgFormComponent implements OnInit {
     this.mailCreate.reset
 
   }
+  onCancel() {
+    this.mailCreate.reset;
+  }
 }

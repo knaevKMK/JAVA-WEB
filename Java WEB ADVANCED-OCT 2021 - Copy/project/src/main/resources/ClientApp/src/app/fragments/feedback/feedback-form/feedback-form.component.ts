@@ -33,4 +33,8 @@ export class FeedbackFormComponent implements OnInit {
         this.feedbackCreate.reset
       })
   }
+  onCancel() {
+    this.feedbackCreate.reset;
+  }
+
 }

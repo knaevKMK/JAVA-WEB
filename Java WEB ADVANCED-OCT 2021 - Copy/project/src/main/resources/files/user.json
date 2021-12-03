@@ -3,6 +3,7 @@
 "lastName":"Toshev",
 "username":"peshkata",
 "email":"pesho@abv.bg",
+  "authorities": ["USER"],
 "password":"12345",
 "confirmPassword":"12345"
 },
@@ -10,12 +11,14 @@
 "lastName":"Peshev",
 "username":"toskata",
 "email":"tosho@abv.bg",
+  "authorities": ["USER"],
 "password":"12345",
 "confirmPassword":"12345"
 },{"firstName":"Gosho",
 "lastName":"Ivanov",
 "username":"goshakata",
 "email":"gosho@abv.bg",
+  "authorities": ["USER"],
 "password":"12345",
 "confirmPassword":"12345"
 },
@@ -23,6 +26,7 @@
 "lastName":"Georgiev",
 "username":"ivancho",
 "email":"ivan@abv.bg",
+    "authorities": ["USER"],
 "password":"12345",
 "confirmPassword":"12345"
 },
@@ -30,6 +34,7 @@
 "lastName":"Petrov",
 "username":"milencho",
 "email":"milen@abv.bg",
+  "authorities": ["USER"],
 "password":"12345",
 "confirmPassword":"12345"
 }
