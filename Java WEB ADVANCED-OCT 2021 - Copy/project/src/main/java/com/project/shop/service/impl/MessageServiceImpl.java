@@ -71,7 +71,7 @@ public class MessageServiceImpl extends BaseServiceImpl<Message> implements Mess
             case "received":
                 return messageRepository.findAllByActiveIsTrueAndRecipient_Username(username);
             case "deleted":
-                return messageRepository.findAllByActiveIsFalseAndCreateFromOrRecipient_Username(username,username);
+                return messageRepository.findAllByActiveFalseAndCreateFromOrRecipient_Username(username);
             default:
                 return messageRepository.findAll();
         }

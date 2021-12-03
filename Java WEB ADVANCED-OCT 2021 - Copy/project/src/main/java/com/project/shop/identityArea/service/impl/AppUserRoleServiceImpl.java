@@ -25,7 +25,9 @@ public class AppUserRoleServiceImpl extends BaseServiceImpl<AppUserRoleEntity> i
             Arrays.stream(AppUserRoleEnum.values())
                     .forEach(enumRole->{
                         AppUserRoleEntity userRole = new AppUserRoleEntity();
-                        userRole=this.onCreate(userRole.setRole(enumRole));
+                        userRole.setRole(enumRole)
+                                .setAuthority(enumRole.name());
+
                         appUserRoleRepository.saveAndFlush(userRole);
                     });
         }

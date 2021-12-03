@@ -1,9 +1,6 @@
 package com.project.shop.identityArea.service.impl;
 
-import com.google.gson.Gson;
 import com.project.shop.config.security.JwtTokenUtil;
-import com.project.shop.config.util.IOUtil;
-import com.project.shop.constants.Paths;
 import com.project.shop.identityArea.request.EmailSender;
 import com.project.shop.identityArea.models.entity.AppUserRoleEntity;
 import com.project.shop.identityArea.models.entity.ConfirmationToken;
@@ -17,12 +14,10 @@ import com.project.shop.identityArea.service.IdentityService;
 import com.project.shop.model.entity.Account;
 import com.project.shop.service.AccountService;
 import javassist.NotFoundException;
-import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -143,10 +138,10 @@ public class IdentityServiceImpl implements IdentityService {
                     .setPassword(bCryptPasswordEncoder.encode("owner"))
                     .setFirstName("Admin")
                     .setLastName("Owner")
-                    .setActive(true);
+                    .setEnabled(true);
 
 
-            admin.setRole(Set.of(adminRole, userRole));
+            admin.setAuthorities(Set.of(adminRole, userRole));
             userRepository.save(admin);
 
 

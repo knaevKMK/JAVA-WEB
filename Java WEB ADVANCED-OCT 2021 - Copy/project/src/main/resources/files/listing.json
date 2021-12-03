@@ -1,5 +1,17 @@
 [
   {
+    "title": "Family Vacation",
+    "description": "the best place for your family vacation",
+    "imageUrl": "https://www.rci.com/static/Resorts/Assets/7569E01L.jpg",
+    "usernameCreator": "ivancho",
+    "payment": "Bank transfer",
+    "category": { "parentTitle":"SPORT_ART", "title": "GOODS", "subList": [], "id":"070081f8-7863-496d-9ad4-dfcc0380267d"},
+    "condition": {"title": "Used", "id": "1296531f-e327-4873-8436-332bbd503523"},
+    "sellingFormat": { "title": "FIXED", "duration":20  ,"price": "2123.50","quantity":7},
+    "deliveryDomestic": {"deliveryService": "SIGNED","price": "2"},
+    "deliveryInternational": {"deliveryService": null,"price": null}
+  },
+  {
     "title": "Demo_art_02",
     "description": "Description for demo item",
     "imageUrl": "https://i.pinimg.com/originals/4e/b4/d0/4eb4d021ac49685da573ef0e77dca806.jpg",

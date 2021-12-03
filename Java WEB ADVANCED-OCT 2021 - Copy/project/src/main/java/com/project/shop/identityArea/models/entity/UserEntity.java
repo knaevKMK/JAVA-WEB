@@ -2,13 +2,14 @@ package com.project.shop.identityArea.models.entity;
 
 import com.project.shop.model.entity.Account;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.*;
 
 @Entity
 @Table(name = "users")
-public class UserEntity {
+public class UserEntity implements UserDetails {
 
     private UUID id;
     private String firstName;
@@ -16,9 +17,12 @@ public class UserEntity {
     private String username;
     private String email;
     private String password;
-    private Set<AppUserRoleEntity> role;
-    private boolean isLocked = false;
-    private boolean isActive = false;
+    private Collection<AppUserRoleEntity> authorities;
+    private boolean isAccountNonLocked = false;
+    private boolean isEnabled = false;
+    private boolean isAccountNonExpired;
+    private boolean isCredentialsNonExpired;
+
     private Account account;
 
     public UserEntity() {
@@ -35,7 +39,7 @@ public class UserEntity {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.role = appUserRoleEnum;
+        this.authorities = appUserRoleEnum;
     }
 
     @Id
@@ -67,31 +71,47 @@ public class UserEntity {
         return this.username;
     }
 
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
     @Column(nullable = false, unique = true, length = 30)
     public String getEmail() {
         return email;
+    }
+
+    @Override
+    @ManyToMany(fetch = FetchType.EAGER)
+    public Collection<AppUserRoleEntity> getAuthorities() {
+        return this.authorities;
     }
 
     @Column(nullable = false)
     public String getPassword() {
         return this.password;
     }
-
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    public Set<AppUserRoleEntity> getRole() {
-        return role;
+    @Override
+    public boolean isAccountNonLocked() {
+        return isAccountNonLocked;
     }
 
-    public boolean isLocked() {
-        return isLocked;
-    }
-
+    @Override
     @Column(name = "active")
-    public boolean isActive() {
-        return this.isActive;
+    public boolean isEnabled() {
+        return this.isEnabled;
     }
 
+    @OneToOne(optional = false)
+    @JoinColumn(name = "account_id", referencedColumnName = "id")
+    public Account getAccount() {
+        return account;
+    }
 
     //setters
     public UserEntity setFirstName(String firstName) {
@@ -119,29 +139,33 @@ public class UserEntity {
         return this;
     }
 
-    public UserEntity setRole(Set<AppUserRoleEntity> role) {
-        this.role = role;
+    public UserEntity setAuthorities(Collection<AppUserRoleEntity> role) {
+        this.authorities = role;
         return this;
     }
 
-    public UserEntity setLocked(boolean locked) {
-        isLocked = locked;
+    public UserEntity setAccountNonLocked(boolean accountNonLocked) {
+        isAccountNonLocked = accountNonLocked;
         return this;
     }
 
-    public UserEntity setActive(boolean active) {
-        isActive = active;
+    public UserEntity setEnabled(boolean enabled) {
+        isEnabled = enabled;
         return this;
-    }
-
-    @OneToOne(optional = false)
-    @JoinColumn(name ="account_id" ,referencedColumnName = "id")
-    public Account getAccount() {
-        return account;
     }
 
     public UserEntity setAccount(Account appUser) {
         this.account = appUser;
+        return this;
+    }
+
+    public UserEntity setAccountNonExpired(boolean accountNonExpired) {
+        isAccountNonExpired = accountNonExpired;
+        return this;
+    }
+
+    public UserEntity setCredentialsNonExpired(boolean credentialsNonExpired) {
+        isCredentialsNonExpired = credentialsNonExpired;
         return this;
     }
 }

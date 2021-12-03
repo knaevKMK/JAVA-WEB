@@ -41,7 +41,7 @@ export class MsgsComponent implements OnInit {
     this.msgService.getDelete(id)
       .subscribe(data => {
         console.log(Object(data))
-        this.openMsg = new openMsg();
+        this.onBox(this.type);
       })
   }
 
