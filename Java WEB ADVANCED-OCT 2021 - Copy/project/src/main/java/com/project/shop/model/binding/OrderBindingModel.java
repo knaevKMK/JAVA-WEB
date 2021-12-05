@@ -1,5 +1,7 @@
 package com.project.shop.model.binding;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
@@ -33,6 +35,7 @@ public class OrderBindingModel {
         return this;
     }
 
+    @NotNull
     public UUID getListingId() {
         return listingId;
     }
@@ -42,6 +45,8 @@ public class OrderBindingModel {
         return this;
     }
 
+    @NotNull
+    @Positive
     public int getQuantity() {
         return quantity;
     }
@@ -51,6 +56,8 @@ public class OrderBindingModel {
         return this;
     }
 
+    @NotNull
+    @Positive
     public BigDecimal getPrice() {
         return price;
     }

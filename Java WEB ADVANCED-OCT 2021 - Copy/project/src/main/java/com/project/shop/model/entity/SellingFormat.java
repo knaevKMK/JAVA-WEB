@@ -2,8 +2,10 @@ package com.project.shop.model.entity;
 
 import com.project.shop.model.enums.SellingFormatEnum;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 
 @Entity
@@ -35,6 +37,7 @@ public class SellingFormat extends BaseEntity {
         return this;
     }
 
+    @Positive
     public BigDecimal getPrice() {
         return price;
     }
@@ -44,6 +47,7 @@ public class SellingFormat extends BaseEntity {
         return this;
     }
 
+    @Positive
     public int getQuantity() {
         return quantity;
     }

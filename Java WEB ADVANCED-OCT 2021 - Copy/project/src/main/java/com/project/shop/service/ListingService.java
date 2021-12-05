@@ -1,5 +1,6 @@
 package com.project.shop.service;
 
+import com.project.shop.model.Response;
 import com.project.shop.model.entity.Listing;
 import com.project.shop.model.service.ListingServiceModel;
 import com.project.shop.model.view.ListingInListViewModel;
@@ -13,7 +14,7 @@ import java.util.UUID;
 public interface ListingService {
 
 
-    List<ListingInListViewModel> getAllListings(Authentication authentication, int page, int limit, String s, String sort, String filter, String query);
+    Response getAllListings(Authentication authentication, int page, int limit, String s, String sort, String filter, String query);
 
     Optional<Listing> getListingById(UUID id);
 
@@ -32,4 +33,6 @@ public interface ListingService {
     boolean watchListing(UUID id, String username);
 
     void seedData();
+
+
 }

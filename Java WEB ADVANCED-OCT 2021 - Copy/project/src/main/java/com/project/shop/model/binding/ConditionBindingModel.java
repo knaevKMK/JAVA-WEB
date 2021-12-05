@@ -2,6 +2,7 @@ package com.project.shop.model.binding;
 
 import com.project.shop.model.enums.ConditionEnum;
 
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 public class ConditionBindingModel {
@@ -19,7 +20,7 @@ public class ConditionBindingModel {
         this.title = title;
         return this;
     }
-
+@NotNull
     public UUID getId() {
         return id;
     }

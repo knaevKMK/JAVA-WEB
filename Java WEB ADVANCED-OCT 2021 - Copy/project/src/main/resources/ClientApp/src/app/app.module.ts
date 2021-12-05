@@ -27,6 +27,7 @@ import { CarouselComponent } from './home/fragmets/carousel/carousel.component';
 import { MsgFormComponent } from './fragments/msg-form/msg-form/msg-form.component';
 import { FeedbackFormComponent } from './fragments/feedback/feedback-form/feedback-form.component';
 import { FeedbackListComponent } from './fragments/feedback/feedback-list/feedback-list.component';
+import { PagebleComponent } from './pageble/pageble/pageble.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { FeedbackListComponent } from './fragments/feedback/feedback-list/feedba
     MsgFormComponent,
     FeedbackFormComponent,
     FeedbackListComponent,
+    PagebleComponent,
   ],
   imports: [
     BrowserModule,

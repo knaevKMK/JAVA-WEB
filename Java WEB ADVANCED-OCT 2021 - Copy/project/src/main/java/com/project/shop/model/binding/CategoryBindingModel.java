@@ -2,12 +2,16 @@ package com.project.shop.model.binding;
 
 import com.project.shop.model.enums.CategoryEnum;
 
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 public class CategoryBindingModel {
     private String parentTitle;
     private String title;
     private UUID id;
+
+    public CategoryBindingModel() {
+    }
 
     public CategoryBindingModel(String title, UUID id) {
         this.title = title;
@@ -31,7 +35,7 @@ public class CategoryBindingModel {
         this.title = title;
         return this;
     }
-
+@NotNull
     public UUID getId() {
         return id;
     }

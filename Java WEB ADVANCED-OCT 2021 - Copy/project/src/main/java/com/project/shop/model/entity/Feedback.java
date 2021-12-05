@@ -1,5 +1,6 @@
 package com.project.shop.model.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -22,7 +23,7 @@ public class Feedback extends BaseEntity{
         isPositive = positive;
         return this;
     }
-
+@Column(nullable = false)
     public String getRequest() {
         return request;
     }

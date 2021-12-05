@@ -1,6 +1,7 @@
 package com.project.shop.web;
 
 import com.project.shop.identityArea.models.entity.UserEntity;
+import com.project.shop.model.Page;
 import com.project.shop.model.Response;
 import com.project.shop.model.binding.ListingCreateModel;
 import com.project.shop.model.entity.Listing;
@@ -39,13 +40,12 @@ public class ListingController {
                                                    @RequestParam(required = false) String filter,
                                                    @RequestParam(required = false) String search,
                                                    @RequestParam(required = false, defaultValue = "0") int page,
-                                                   @RequestParam(required = false, defaultValue = "30") int limit,
+                                                   @RequestParam(required = false, defaultValue = "3") int limit,
                                                    Authentication authentication) {
 
-        List<ListingInListViewModel> allListings = listingService.getAllListings(authentication, page, limit, sortBy, sort, filter, search);
-        Response response = new Response();
-        return ResponseEntity.ok(response
-                .setOkRequestResponse("listings", allListings, "Listings retrieved"));
+        Response response = listingService.getAllListings(authentication, page, limit, sortBy, sort, filter, search);
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("listing/{id}")

@@ -1,6 +1,11 @@
 package com.project.shop.model.binding;
 
 
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 public class MsgBindingModel {
@@ -19,7 +24,7 @@ public class MsgBindingModel {
         this.recipientUsername = recipientUsername;
         return this;
     }
-
+@NotNull
     public UUID getListingId() {
         return listingId;
     }
@@ -28,7 +33,10 @@ public class MsgBindingModel {
         this.listingId = listingId;
         return this;
     }
-
+@NotNull
+@NotEmpty
+@NotBlank
+@Length(min = 3,max = 200)
     public String getText() {
         return text;
     }

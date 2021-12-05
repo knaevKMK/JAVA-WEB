@@ -47,7 +47,9 @@ export function ApiResponse(data: Object) {
     }
 }
 
-
+export function responsePageble(data: Object) {
+    return Object(data)['page'];
+}
 
 export function responceId(data: any) {
     return _allData(data)['id']

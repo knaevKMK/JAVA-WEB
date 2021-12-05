@@ -9,16 +9,17 @@ import java.util.List;
 
 @Entity
 @Table(name = "conditions")
-public class ConditionItem extends Item{
-    private ConditionEnum  conditionTitle;
+public class ConditionItem extends Item {
+    private ConditionEnum conditionTitle;
 
 
     private List<Listing> listings;
 
     public ConditionItem() {
     }
-    @OneToMany(mappedBy = "condition",targetEntity = Listing.class,orphanRemoval = true,cascade = CascadeType.ALL)
-    @NotFound(action= NotFoundAction.IGNORE)
+
+    @OneToMany(mappedBy = "condition", targetEntity = Listing.class, orphanRemoval = true, cascade = CascadeType.ALL)
+    @NotFound(action = NotFoundAction.IGNORE)
     public List<Listing> getListings() {
         return listings;
     }
@@ -29,7 +30,7 @@ public class ConditionItem extends Item{
     }
 
     @Enumerated(EnumType.STRING)
-@Column( nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     public ConditionEnum getConditionTitle() {
         return conditionTitle;
     }

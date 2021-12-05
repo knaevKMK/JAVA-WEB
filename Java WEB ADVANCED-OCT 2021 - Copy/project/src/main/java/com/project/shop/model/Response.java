@@ -20,9 +20,24 @@ public class Response {
     protected String developerMessage;
     protected Map<?, ?> data;
     protected Map<String, ?> errors;
+    protected Page page;
 
     public Response() {
         this.timeStamp=LocalDateTime.now();
+    }
+
+    public Response(Page page) {
+        this.page = page;
+        this.timeStamp=LocalDateTime.now();
+    }
+
+    public Page getPage() {
+        return page;
+    }
+
+    public Response setPage(Page page) {
+        this.page = page;
+        return this;
     }
 
     public LocalDateTime getTimeStamp() {

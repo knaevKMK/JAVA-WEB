@@ -1,6 +1,10 @@
 package com.project.shop.model.binding;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
+
 
 public class FeedbackLeftBindingModel {
     private UUID orderId;
@@ -10,7 +14,7 @@ public class FeedbackLeftBindingModel {
 
     public FeedbackLeftBindingModel() {
     }
-
+@NotNull
     public UUID getOrderId() {
         return orderId;
     }
@@ -28,7 +32,9 @@ public class FeedbackLeftBindingModel {
         this.ownerListingUsername = ownerListingUsername;
         return this;
     }
-
+@NotNull
+@NotBlank
+@NotEmpty
     public String getRequest() {
         return request;
     }
@@ -37,7 +43,7 @@ public class FeedbackLeftBindingModel {
         this.request = request;
         return this;
     }
-
+@NotNull
     public boolean isPositive() {
         return positive;
     }

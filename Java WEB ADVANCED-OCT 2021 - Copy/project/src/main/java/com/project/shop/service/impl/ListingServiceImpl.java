@@ -6,6 +6,8 @@ import com.project.shop.config.util.IOUtilImpl;
 import com.project.shop.constants.Paths;
 import com.project.shop.identityArea.models.binding.RegisterRequest;
 import com.project.shop.identityArea.models.entity.UserEntity;
+import com.project.shop.model.Page;
+import com.project.shop.model.Response;
 import com.project.shop.model.entity.Account;
 import com.project.shop.model.entity.Listing;
 import com.project.shop.model.service.ListingServiceModel;
@@ -59,20 +61,27 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
 
 
     @Override
-    public List<ListingInListViewModel> getAllListings(Authentication authentication,
-                                                       int page, int limit, String sortBy, String sort, String filter, String search) {
-        log.info("Fetch Listings from page " + " with " + "/page");
-
+    public Response getAllListings(Authentication authentication,
+                                   int page, int limit, String sortBy, String sort, String filter, String search) {
+        log.info("Fetch Listings from page "+page + " with "+limit + "/page");
+        int size = (int) filterQuery((PageRequest.of(0, (int) listingRepository.count())),
+                search, filter, authentication).getContent().size();
+        int totalPages = (int) Math.ceil(size / (limit*1.00));
         Pageable pageListing = getPageable(page, limit, sort, sortBy);
 
         List<Listing> listings = filterQuery(pageListing, search, filter, authentication).getContent();
 
-        return listings.stream()
+        List<ListingInListViewModel> models = listings.stream()
                 .map(l -> {
                     ListingInListViewModel model = modelMapper.map(l, ListingInListViewModel.class);
                     System.out.println();
                     return model;
                 }).collect(Collectors.toList());
+
+
+        Response response = new Response(new Page(page, limit, totalPages));
+        response.setOkRequestResponse("listings", models, "Listings retrieved");
+        return response;
     }
 
 //    private Pageable getPageable(int page, int limit, String sort, String sortBy) {
@@ -124,8 +133,8 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
     }
 
     private Account getAccount(Authentication authentication) {
-        if (authentication==null){
-            throw  new NullPointerException("Please login before continue");
+        if (authentication == null) {
+            throw new NullPointerException("Please login before continue");
         }
         UserEntity principal = (UserEntity) authentication.getPrincipal();
         return accountService.getAccountByUserName(principal.getUsername()).orElse(null);
@@ -265,4 +274,6 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
         } catch (Exception e) {
         }
     }
+
+
 }
