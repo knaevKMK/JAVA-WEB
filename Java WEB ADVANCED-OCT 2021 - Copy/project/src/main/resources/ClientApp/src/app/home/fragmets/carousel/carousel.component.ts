@@ -13,7 +13,7 @@ export class CarouselComponent implements OnInit {
   @Input('query') query: string = '';
 
   startIndex = 0;
-  lastIndex = 3;
+  lastIndex = 2;
   listings: ListingInListView[] = [];
   mediator: ListingInListView[] = [];
   constructor(private listingService: ListingService) {
@@ -21,13 +21,13 @@ export class CarouselComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // console.log(this.query)
+    console.log(this.query)
     this.listingService.getAll(this.query)
       .subscribe(result => {
         console.log(this.query)
         console.log(ApiResponse(result).getListings)
         this.listings = ApiResponse(result).getListings
-        this.mediator = this.listings.slice(0, 3)
+        this.mediator = this.listings.slice(0, 2)
       })
 
   }

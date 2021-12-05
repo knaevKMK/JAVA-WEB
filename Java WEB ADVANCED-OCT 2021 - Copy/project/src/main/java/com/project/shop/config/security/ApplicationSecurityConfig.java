@@ -11,16 +11,12 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.util.List;
 
 @Configuration
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
@@ -42,50 +38,42 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
+
         http.csrf().disable();
-     //   http.httpBasic().disable();
+        //   http.httpBasic().disable();
         http
-                .cors()//.configurationSource(corsConfigurationSource())
+                .cors()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-               .addFilterAfter(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
 
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET,"/api/identity/**").permitAll()
-                .antMatchers(HttpMethod.POST,"/api/identity/login","/api/identity/register").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/categories/all","/api/condition/all", "/api/delivery/all").permitAll()
-                .antMatchers(HttpMethod.GET,"/api/feedback/all").permitAll()
-                .antMatchers(HttpMethod.GET,"/api/listings/listing/*", "/api/listings/all").permitAll()
-                .antMatchers(HttpMethod.GET,"/api/selling-format/all").permitAll()
-               //   .antMatchers("/api/**").hasRole(STUDENT.name())
+
+                .antMatchers(HttpMethod.GET, "/*","/listing/**","/orders/**","/usr/**","/help").permitAll()
+              //  .antMatchers(HttpMethod.POST, "/usr/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/identity/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/identity/login", "/api/identity/register").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/categories/all", "/api/condition/all", "/api/delivery/all").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/feedback/all").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/listings/listing/*", "/api/listings/all").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/selling-format/all").permitAll()
+
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
-               ;
+        ;
     }
 
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedMethods(List.of(
-                HttpMethod.GET.name(),
-                HttpMethod.PUT.name(),
-                HttpMethod.POST.name(),
-                HttpMethod.DELETE.name()
-        ));
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration.applyPermitDefaultValues());
-        return source;
-    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-          auth
+        auth
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(bCryptPasswordEncoder);
     }
