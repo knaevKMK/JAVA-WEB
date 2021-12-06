@@ -12,4 +12,6 @@ public interface ConditionService {
     ConditionItem find(ConditionBindingModel itemCondition);
 
     Collection<ConditionViewModel> getAll();
+
+    ConditionItem findByTitle(String title);
 }

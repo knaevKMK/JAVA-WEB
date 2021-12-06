@@ -14,6 +14,8 @@ import com.project.shop.identityArea.service.IdentityService;
 import com.project.shop.model.entity.Account;
 import com.project.shop.service.AccountService;
 import javassist.NotFoundException;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -40,10 +42,11 @@ public class IdentityServiceImpl implements IdentityService {
     private final EmailSender emailSender;
 
 
-    public IdentityServiceImpl(UserRepository userRepository, UserRoleService userRoleService,
+    public IdentityServiceImpl( UserRepository userRepository, UserRoleService userRoleService,
                                AccountService accountService, BCryptPasswordEncoder bCryptPasswordEncoder,
                                ConfirmationTokenService confirmationTokenService,
                                JwtTokenUtil jwtTokenUtil, EmailSender emailSender) {
+
         this.userRepository = userRepository;
         this.userRoleService = userRoleService;
         this.accountService = accountService;
@@ -90,6 +93,11 @@ public class IdentityServiceImpl implements IdentityService {
             throw new NotFoundException("Username does not exist");
         }
         //todo match password
+        UsernamePasswordAuthenticationToken token= new UsernamePasswordAuthenticationToken(
+                username,password,account.get().getAuthorities()
+        );
+
+
         return new JwtResponse(jwtTokenUtil.generateToken(account.get()));
     }
 
@@ -106,6 +114,11 @@ public class IdentityServiceImpl implements IdentityService {
     @Override
     public Optional<UserEntity> findByEmail(String email) {
         return userRepository.findAppUserByEmail(email);
+    }
+
+    @Override
+    public long getCount() {
+        return userRepository.count();
     }
 
     @Override

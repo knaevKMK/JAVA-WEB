@@ -19,6 +19,7 @@ export function ApiResponse(data: Object) {
     const getWatch = _data['watch']
     const getPurchses = _data['purchases'];
     // const getDelivery =  _data['delivery']
+    const getPayments = _data['payments'];
     const getSellingFormat = _data['selling-formats']
     const getCategories = _data['categories'];
     const getConditions = _data['conditions'];
@@ -43,7 +44,7 @@ export function ApiResponse(data: Object) {
         getListing, getListings,
         getOrder, getOrders,
         getWatch, getPurchses,
-        getSellingFormat, getCategories, getConditions, getFeedbacks, getMessagess
+        getPayments, getSellingFormat, getCategories, getConditions, getFeedbacks, getMessagess
     }
 }
 

@@ -16,10 +16,10 @@ public class ListingCreateModel {
     private ConditionBindingModel condition;
     private String sellerUsername;
     private SellingFormatBindingModel sellingFormat;
-    private DeliveryBindingModel  deliveryDomestic;
-    private DeliveryBindingModel  deliveryInternational;
+    private DeliveryBindingModel deliveryDomestic;
+    private DeliveryBindingModel deliveryInternational;
 
-    private String payment;
+    private UUID payment;
 
     public ListingCreateModel() {
     }
@@ -32,9 +32,10 @@ public class ListingCreateModel {
         this.id = id;
         return this;
     }
-@NotNull
-@NotEmpty
-@Length(min = 7,max = 70)
+
+    @NotNull
+    @NotEmpty
+    @Length(min = 7, max = 70)
     public String getTitle() {
         return title;
     }
@@ -43,9 +44,10 @@ public class ListingCreateModel {
         this.title = title;
         return this;
     }
+
     @NotNull
     @NotEmpty
-    @Length(min = 20,max = 1000)
+    @Length(min = 20, max = 1000)
     public String getDescription() {
         return description;
     }
@@ -54,6 +56,7 @@ public class ListingCreateModel {
         this.description = description;
         return this;
     }
+
     @NotNull
     @NotEmpty
     public String getImageUrl() {
@@ -64,7 +67,8 @@ public class ListingCreateModel {
         this.imageUrl = imageUrl;
         return this;
     }
-@NotNull
+
+    @NotNull
     public CategoryBindingModel getCategory() {
         return category;
     }
@@ -73,7 +77,8 @@ public class ListingCreateModel {
         this.category = category;
         return this;
     }
-@NotNull
+
+    @NotNull
     public ConditionBindingModel getCondition() {
         return condition;
     }
@@ -82,7 +87,8 @@ public class ListingCreateModel {
         this.condition = condition;
         return this;
     }
-@NotNull
+
+    @NotNull
     public SellingFormatBindingModel getSellingFormat() {
         return sellingFormat;
     }
@@ -91,7 +97,8 @@ public class ListingCreateModel {
         this.sellingFormat = sellingFormat;
         return this;
     }
-@NotNull
+
+    @NotNull
     public DeliveryBindingModel getDeliveryDomestic() {
         return deliveryDomestic;
     }
@@ -109,12 +116,13 @@ public class ListingCreateModel {
         this.deliveryInternational = deliveryInternational;
         return this;
     }
-@NotNull
-    public String getPayment() {
+
+    @NotNull
+    public UUID getPayment() {
         return payment;
     }
 
-    public ListingCreateModel setPayment(String payment) {
+    public ListingCreateModel setPayment(UUID payment) {
         this.payment = payment;
         return this;
     }

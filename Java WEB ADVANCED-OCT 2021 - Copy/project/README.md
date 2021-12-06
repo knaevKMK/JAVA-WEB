@@ -11,6 +11,6 @@ Client side app called ClinetApp (Front-End) - Angular. It response on localhost
 **Angular**<br/>
 	-security with *Authentication Guard*<br/><br/>
 
-**RUN** as:<br/>
+**RUN** :<br/>
 	- at once (build together Spring and Angular)- just run *ShopApplicaiton* and load in browser loaclhost:8080<br/>
-	- single apps:  run *ShopApplication*(Java-Ide) and *ClientApp* with commnad "**ng serve --o**" (use **Command Promt**)<br/>
+	- as single apps:  run *ShopApplication*(Java-Ide) and *ClientApp* with commnad "**ng serve --o**" (use **Command Promt**)<br/>

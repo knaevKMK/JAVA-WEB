@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "user_roles")
+@Table(name = "authorities")
 public class UserRole implements GrantedAuthority {
     private UUID id;
     private RoleEnum role;

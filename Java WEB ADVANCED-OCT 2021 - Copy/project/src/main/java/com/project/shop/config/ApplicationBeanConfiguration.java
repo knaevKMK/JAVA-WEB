@@ -1,12 +1,12 @@
 package com.project.shop.config;
 
 import com.project.shop.model.entity.*;
+import com.project.shop.model.service.ListingReadModel;
 import com.project.shop.model.view.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 @Configuration
 public class ApplicationBeanConfiguration {
 
@@ -16,6 +16,9 @@ public class ApplicationBeanConfiguration {
 
         modelMapper.createTypeMap(Listing.class, ListingInListViewModel.class)
                 .addMappings(mapper -> mapper.map(src -> src.getSellingFormat().getPrice(), ListingInListViewModel::setPrice));
+modelMapper.createTypeMap(Listing.class, ListingViewModel.class)
+                .addMappings(mapper->mapper.map(src->src.getPayment().getTitle(),ListingViewModel::setPayment));
+
 
         modelMapper.createTypeMap(Order.class, OrderViewModel.class)
                 .addMappings(mapper -> {
@@ -52,4 +55,5 @@ public class ApplicationBeanConfiguration {
     public BCryptPasswordEncoder bCryptPasswordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
 }

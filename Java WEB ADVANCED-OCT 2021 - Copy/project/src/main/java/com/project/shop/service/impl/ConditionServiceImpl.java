@@ -64,4 +64,10 @@ public class ConditionServiceImpl extends BaseServiceImpl<ConditionItem> impleme
                 .map(e -> modelMapper.map(e, ConditionViewModel.class))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public ConditionItem findByTitle(String title) {
+        return conditionRepository.findByTitle(title)
+                .orElseThrow(()->new NullPointerException("condition does not exist"));
+    }
 }

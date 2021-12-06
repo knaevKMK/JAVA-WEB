@@ -4,14 +4,13 @@ package com.project.shop.config.security;
 import com.project.shop.config.JWT.JwtAuthenticationEntryPoint;
 import com.project.shop.config.JWT.JwtTokenFilter;
 import com.project.shop.identityArea.service.IdentityService;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -61,6 +60,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/identity/login", "/api/identity/register").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/categories/all", "/api/condition/all", "/api/delivery/all").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/feedback/all").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/payments/all").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/listings/listing/*", "/api/listings/all").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/selling-format/all").permitAll()
 
@@ -69,6 +69,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
         ;
     }
+
+
 
 
     @Override

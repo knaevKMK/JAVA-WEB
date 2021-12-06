@@ -20,4 +20,5 @@ public interface IdentityService extends UserDetailsService {
     Optional<UserEntity> findByEmail(String email);
 
 
+    long getCount();
 }

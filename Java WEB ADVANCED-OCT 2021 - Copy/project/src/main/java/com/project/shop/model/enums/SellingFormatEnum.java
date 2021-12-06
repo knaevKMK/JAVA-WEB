@@ -4,6 +4,6 @@ import java.math.BigDecimal;
 
 public enum SellingFormatEnum {
     FIXED,
-    ACTION,
-   HYBRID;
+//    ACTION,
+//   HYBRID;
 }

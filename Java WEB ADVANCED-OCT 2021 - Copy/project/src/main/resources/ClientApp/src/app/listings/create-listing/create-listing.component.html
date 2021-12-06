@@ -186,7 +186,11 @@
                             <label class="form-label">Payment Method:</label>
                        </div>
                         <div class="col-3">
-                            <input type="text" formControlName="payment" id class="form-control" >
+                            <select formControlName="payment" class="form-control">
+                                <option [ngValue]="null" disabled>Select...</option>
+                                <option *ngFor="let _payment of payments" [ngValue]="_payment['id']" >{{_payment['title']}}</option>
+                              </select>
+                            <!-- <input type="text" formControlName="payment" id class="form-control" > -->
                         </div>
                         <div class="col"></div>
                     </div>

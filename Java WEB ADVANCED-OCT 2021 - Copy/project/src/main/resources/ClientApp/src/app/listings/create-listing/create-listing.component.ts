@@ -11,6 +11,7 @@ import { CategoryService } from 'src/app/service/category.service';
 import { ConditionService } from 'src/app/service/condition/condition.service';
 import { DeliveryService } from 'src/app/service/delivery/delivery.service';
 import { ListingService } from 'src/app/service/listing.service';
+import { PaymentService } from 'src/app/service/payment/payment.service';
 import { SellingFormatService } from 'src/app/service/selling-fromat/selling-format.service';
 
 @Component({
@@ -25,6 +26,7 @@ export class CreateListingComponent implements OnInit {
   sellingFormats: string[] = [];
   deliveryDomestic: DeliveryView[] = [];
   deliveryInternatonal: DeliveryView[] = [];
+  payments: any = [];
   id: string;
   errors: any = new CreateListingErrors();
   isEditMode: boolean = false;
@@ -35,7 +37,8 @@ export class CreateListingComponent implements OnInit {
     private categoryService: CategoryService,
     private conditionService: ConditionService,
     private sellingFormatService: SellingFormatService,
-    private deliveryService: DeliveryService
+    private deliveryService: DeliveryService,
+    private paymentService: PaymentService
   ) {
     this.createForm = this.fb.group(ListingCreateForm(fb));
     this.id = this.activateRoute.snapshot.params['id'];
@@ -57,6 +60,10 @@ export class CreateListingComponent implements OnInit {
         this.deliveryDomestic = responceDeliveryByArea(result, 0)
         this.deliveryInternatonal = responceDeliveryByArea(result, 1)
       });
+    this.paymentService.getAll().subscribe(data => {
+      console.log(ApiResponse(data).getPayments)
+      this.payments = (ApiResponse(data).getPayments)
+    });
 
     this.isEditMode = this.id != undefined && this.id.length > 0;
     this.isEditMode
@@ -81,7 +88,7 @@ export class CreateListingComponent implements OnInit {
       ? this.listingService.create(this.createForm.value)
       //update
       : this.listingService.update(this.id, this.createForm.value);
-
+    // this.createForm.value['payment']=
     promise.subscribe(result => {
       console.log(result)
       this.router.navigate(['/listing/item/' + ApiResponse(result).getId]);

@@ -129,7 +129,7 @@ private final OrderService orderService;
         } catch (Exception e) {
 
             return ResponseEntity.ok(response
-                    .setBadRequestResponse("buy", id, e, e.getMessage()));
+                    .setBadRequestResponse("delete", id, e, e.getMessage()));
         }
     }
 }

@@ -80,6 +80,9 @@ public class RegisterHandlerImpl implements RegisterHandler {
 
     @Override
     public void seed5Accounts() throws IOException {
+        if (identityService.getCount()>3){
+            return;
+        }
         try {
             String content = String.join("", ioUtil.readFile(Paths.USER_JSON_FILEPATH));
 

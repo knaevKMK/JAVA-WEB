@@ -4,9 +4,9 @@
     "description": "the best place for your family vacation",
     "imageUrl": "https://www.rci.com/static/Resorts/Assets/7569E01L.jpg",
     "usernameCreator": "ivancho",
-    "payment": "Bank transfer",
-    "category": { "parentTitle":"SPORT_ART", "title": "GOODS", "subList": [], "id":"070081f8-7863-496d-9ad4-dfcc0380267d"},
-    "condition": {"title": "Used", "id": "1296531f-e327-4873-8436-332bbd503523"},
+    "paymentTitle": "Cash",
+    "category": { "parentTitle":"SPORT_ART", "title": "GOODS", "subList": [], "id":null},
+    "condition": "Used",
     "sellingFormat": { "title": "FIXED", "duration":20  ,"price": "2123.50","quantity":7},
     "deliveryDomestic": {"deliveryService": "SIGNED","price": "2"},
     "deliveryInternational": {"deliveryService": null,"price": null}
@@ -16,9 +16,9 @@
     "description": "Description for demo item",
     "imageUrl": "https://i.pinimg.com/originals/4e/b4/d0/4eb4d021ac49685da573ef0e77dca806.jpg",
     "usernameCreator": "peshkata",
-    "payment": "PayPal",
-    "category": { "parentTitle":"SPORT_ART", "title": "GOODS", "subList": [], "id":"070081f8-7863-496d-9ad4-dfcc0380267d"},
-    "condition": {"title": "Used", "id": "1296531f-e327-4873-8436-332bbd503523"},
+    "paymentTitle": "Cash on Collect",
+    "category": { "parentTitle":"SPORT_ART", "title": "GOODS", "subList": [], "id":null},
+    "condition": "Used",
     "sellingFormat": { "title": "FIXED", "duration":30  ,"price": "23.50","quantity":7},
     "deliveryDomestic": {"deliveryService": "SIGNED","price": "2"},
     "deliveryInternational": {"deliveryService": null,"price": null}
@@ -28,9 +28,9 @@
     "description": "Description for demo secks",
     "imageUrl": "https://cdn.shopify.com/s/files/1/0004/4652/9572/products/possum-down-socks_2048x.jpg?v=1575923179",
     "usernameCreator": "peshkata",
-    "payment": "PayPal",
-    "category": { "parentTitle":"SPORT_ART", "title": "GOODS", "subList": [], "id":"070081f8-7863-496d-9ad4-dfcc0380267d"},
-    "condition": {"title": "Used", "id": "1296531f-e327-4873-8436-332bbd503523"},
+    "paymentTitle": "PayPal",
+    "category": { "parentTitle":"SPORT_ART", "title": "GOODS", "subList": [], "id":null},
+    "condition":  "Used",
     "sellingFormat": { "title": "FIXED", "duration":30  ,"price": "3.50","quantity":27},
     "deliveryDomestic": {"deliveryService": "SIGNED","price": "1.5"},
     "deliveryInternational": {"deliveryService": null,"price": null}
@@ -41,9 +41,9 @@
     "description": "Description for car  of the 90`s",
     "imageUrl": "https://automedia.investor.bg//media/files/resized/article/w1200x630/0f6/92223a6ed65ad69a7ec7cb74b07880f6-01.jpg",
     "usernameCreator": "peshkata",
-    "payment": "Cash",
-    "category": { "parentTitle":"SPORT_ART", "title": "GOODS", "subList": [], "id":"070081f8-7863-496d-9ad4-dfcc0380267d"},
-    "condition": {"title": "Used", "id": "1296531f-e327-4873-8436-332bbd503523"},
+    "paymentTitle": "Cash",
+    "category": { "parentTitle":"SPORT_ART", "title": "GOODS", "subList": [], "id":null},
+    "condition": "Used",
     "sellingFormat": { "title": "FIXED", "duration":30  ,"price": "3.50","quantity":27},
     "deliveryDomestic": {"deliveryService": "SIGNED","price": "1.5"},
     "deliveryInternational": {"deliveryService": null,"price": null}
@@ -53,9 +53,9 @@
     "description": "Description for car Mercedes of the 90`s. w201",
     "imageUrl": "https://i.pinimg.com/originals/d3/7d/b0/d37db09e1a08c1d0a963fe6c0c304da6.jpg",
     "usernameCreator": "goshakata",
-    "payment": "Cash on Collect",
-    "category": { "parentTitle":"SPORT_ART", "title": "GOODS", "subList": [], "id":"070081f8-7863-496d-9ad4-dfcc0380267d"},
-    "condition": {"title": "Used", "id": "1296531f-e327-4873-8436-332bbd503523"},
+    "paymentTitle": "Bank Transfer",
+    "category": { "parentTitle":"SPORT_ART", "title": "GOODS", "subList": [], "id":null},
+    "condition":  "Used",
     "sellingFormat": { "title": "FIXED", "duration":30  ,"price": "3212.50","quantity":27},
     "deliveryDomestic": {"deliveryService": "SIGNED","price": "1.5"},
     "deliveryInternational": {"deliveryService": null,"price": null}
@@ -65,12 +65,23 @@
     "description": "Description for car Mercedes of the 90`s. w140",
     "imageUrl": "https://www.autoclub.bg/wp-content/uploads/2021/02/s-class-w-140-rendering.jpg",
     "usernameCreator": "goshakata",
-    "payment": "Cash on Collect",
-    "category": { "parentTitle":"SPORT_ART", "title": "GOODS", "subList": [], "id":"070081f8-7863-496d-9ad4-dfcc0380267d"},
-    "condition": {"title": "Used", "id": "1296531f-e327-4873-8436-332bbd503523"},
+    "paymentTitle": "Bank Transfer",
+    "category": { "parentTitle":"SPORT_ART", "title": "GOODS", "subList": [], "id":null},
+    "condition":"Used",
     "sellingFormat": { "title": "FIXED", "duration":30  ,"price": "3212.50","quantity":27},
     "deliveryDomestic": {"deliveryService": "SIGNED","price": "1.5"},
     "deliveryInternational": {"deliveryService": null,"price": null}
   }
-
+, {
+  "title": "ThinkPad mouse",
+  "description": "Description for car Lenovo Think Pad mouse",
+  "imageUrl": "",
+  "usernameCreator": "milencho",
+  "paymentTitle": "Bank Transfer",
+  "category": { "parentTitle":"SPORT_ART", "title": "GOODS", "subList": [], "id":null},
+  "condition":  "New",
+  "sellingFormat": { "title": "FIXED", "duration":30  ,"price": "3212.50","quantity":27},
+  "deliveryDomestic": {"deliveryService": "SIGNED","price": "1.5"},
+  "deliveryInternational": {"deliveryService": null,"price": null}
+}
 ]

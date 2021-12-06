@@ -4,7 +4,6 @@ import com.project.shop.model.binding.CategoryBindingModel;
 import com.project.shop.model.binding.ConditionBindingModel;
 import com.project.shop.model.binding.DeliveryBindingModel;
 import com.project.shop.model.binding.SellingFormatBindingModel;
-import com.project.shop.model.entity.*;
 
 import java.util.UUID;
 
@@ -21,7 +20,7 @@ public class ListingServiceModel {
     private DeliveryBindingModel deliveryDomestic;
     private DeliveryBindingModel deliveryInternational;
 
-    private String payment;
+    private UUID payment;
 
     public ListingServiceModel() {
     }
@@ -34,6 +33,8 @@ public class ListingServiceModel {
         this.id = id;
         return this;
     }
+
+
 
     public String getUsernameCreator() {
         return usernameCreator;
@@ -82,11 +83,11 @@ public class ListingServiceModel {
         return this;
     }
 
-    public String getPayment() {
+    public UUID getPayment() {
         return payment;
     }
 
-    public ListingServiceModel setPayment(String payment) {
+    public ListingServiceModel setPayment(UUID payment) {
         this.payment = payment;
         return this;
     }

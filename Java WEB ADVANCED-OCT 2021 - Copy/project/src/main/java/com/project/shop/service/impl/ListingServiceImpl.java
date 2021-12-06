@@ -4,12 +4,13 @@ import com.google.gson.Gson;
 import com.project.shop.config.util.IOUtil;
 import com.project.shop.config.util.IOUtilImpl;
 import com.project.shop.constants.Paths;
-import com.project.shop.identityArea.models.binding.RegisterRequest;
 import com.project.shop.identityArea.models.entity.UserEntity;
 import com.project.shop.model.Page;
 import com.project.shop.model.Response;
 import com.project.shop.model.entity.Account;
+import com.project.shop.model.entity.BaseEntity;
 import com.project.shop.model.entity.Listing;
+import com.project.shop.model.service.ListingReadModel;
 import com.project.shop.model.service.ListingServiceModel;
 import com.project.shop.model.view.ListingInListViewModel;
 import com.project.shop.repository.ListingRepository;
@@ -41,13 +42,14 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
     private final SellingFormatService sellingFormatService;
     private final DeliveryService deliveryService;
     private final AccountService accountService;
+    private final PaymentService paymentService;
     private final IOUtil ioUtil;
     private final Gson gson;
 
     public ListingServiceImpl(ListingRepository listingRepository,
                               ModelMapper modelMapper, CategoryService categoryService,
                               ConditionService conditionService, SellingFormatService sellingFormatService,
-                              DeliveryService deliveryService, AccountService accountService, Gson gson) {
+                              DeliveryService deliveryService, AccountService accountService, PaymentService paymentService, Gson gson) {
         this.listingRepository = listingRepository;
         this.modelMapper = modelMapper;
         this.categoryService = categoryService;
@@ -55,6 +57,7 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
         this.sellingFormatService = sellingFormatService;
         this.deliveryService = deliveryService;
         this.accountService = accountService;
+        this.paymentService = paymentService;
         this.gson = gson;
         this.ioUtil = new IOUtilImpl();
     }
@@ -63,10 +66,17 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
     @Override
     public Response getAllListings(Authentication authentication,
                                    int page, int limit, String sortBy, String sort, String filter, String search) {
-        log.info("Fetch Listings from page "+page + " with "+limit + "/page");
+        log.info("Fetch Listings from page " + page + " with " + limit + "/page");
+
+
+        if (listingRepository.count() == 0) {
+            Response response = new Response(new Page(0, 1, 1));
+            response.setOkRequestResponse("listings", new ArrayList<ListingInListViewModel>(), "Listings retrieved");
+            return response;
+        }
         int size = (int) filterQuery((PageRequest.of(0, (int) listingRepository.count())),
                 search, filter, authentication).getContent().size();
-        int totalPages = (int) Math.ceil(size / (limit*1.00));
+        int totalPages = (int) Math.ceil(size / (limit * 1.00));
         Pageable pageListing = getPageable(page, limit, sort, sortBy);
 
         List<Listing> listings = filterQuery(pageListing, search, filter, authentication).getContent();
@@ -77,9 +87,8 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
                     System.out.println();
                     return model;
                 }).collect(Collectors.toList());
-
-
         Response response = new Response(new Page(page, limit, totalPages));
+
         response.setOkRequestResponse("listings", models, "Listings retrieved");
         return response;
     }
@@ -169,6 +178,7 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
         Account account = this.accountService.findByUsername(listingServiceModel.getUsernameCreator()).orElseThrow(() ->
                 new NullPointerException("You are not make registration yet"));
         listing.setSeller(account);
+
         setNestedEntities(listing, listingServiceModel);
         listing = this.onCreate(listing, account.getUsername());
 
@@ -227,8 +237,7 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
         log.info("Fetch Listings from page " + page + " with " + limit + "/page");
         Stream<Listing> listingStream = listingRepository.findAll(PageRequest.of(page, limit))
                 .stream()
-//                   .filter(BaseEntity::isActive)
-                //todo replace from my to watch
+                .filter(BaseEntity::isActive)
                 .filter(e -> e.getSeller().getUsername().equals(username));
         Stream<ListingInListViewModel> collect = listingStream
                 .map(l -> {
@@ -247,6 +256,8 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
 
 
     private Listing setNestedEntities(Listing listingMapped, ListingServiceModel listingServiceModel) {
+        listingMapped.setPayment(paymentService.getPaymentById(listingServiceModel.getPayment())
+                .orElseThrow(() -> new NullPointerException("Payment does not exist")));
         listingMapped.setCategory(categoryService.find(listingServiceModel.getCategory()));
         listingMapped.setCondition(conditionService.find(listingServiceModel.getCondition()));
         listingMapped.setSellingFormat(sellingFormatService.create(listingServiceModel.getSellingFormat()));
@@ -258,15 +269,25 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
     @Override
     public void seedData() {
         if (listingRepository.count() > 0) {
-            return;
+                   return;
         }
         try {
             String content = String.join("", ioUtil.readFile(Paths.LISTING_JSON_FILEPATH));
 
-            Arrays.stream(gson.fromJson(content, ListingServiceModel[].class))
+            Arrays.stream(gson.fromJson(content, ListingReadModel[].class))
                     .forEach(reader -> {
                         try {
-                            this.createListing(reader);
+                            Listing model = modelMapper.map(reader, Listing.class);
+                            model.setCategory(categoryService.find(reader.getCategory()));
+                            model.setCondition(conditionService.findByTitle(reader.getCondition()));
+                            model.setSellingFormat(sellingFormatService.create(reader.getSellingFormat()));
+                            model.setDeliveryDomestic(deliveryService.create(reader.getDeliveryDomestic()));
+                            model.setDeliveryInternational(deliveryService.create(reader.getDeliveryInternational()));
+                            model.setPayment(paymentService.findByTitle(reader.getPaymentTitle()));
+                            model.setSeller(this.accountService.findByUsername(reader.getUsernameCreator()).orElseThrow(() ->
+                                    new NullPointerException("You are not make registration yet")));
+                            model = this.onCreate(model, reader.getUsernameCreator());
+                            listingRepository.saveAndFlush(model);
                         } catch (Exception e) {
 
                         }

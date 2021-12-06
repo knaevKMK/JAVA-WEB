@@ -34,7 +34,7 @@ public class IdentityController {
         try{
         String register = registerHandler.register(request);
             return ResponseEntity.ok(response
-                    .setOkRequestResponse("confirm",register,"Successful registration "));
+                    .setOkRequestResponse("confirm",register,"Successful registration"));
         }catch (Exception e) {
             request.setPassword(null)
             .setConfirmPassword(null);
@@ -48,7 +48,7 @@ public class IdentityController {
         try{
             JwtResponse login = loginHandler.login(request);
             return ResponseEntity.ok(response
-                    .setOkRequestResponse("login",login,"Successful Sing-in "));
+                    .setOkRequestResponse("login",login,"Successful Sing-in"));
         }catch (Exception e){
             request.setPassword(null);
             return ResponseEntity.ok(response
@@ -70,13 +70,19 @@ public class IdentityController {
     @GetMapping("/confirm")
     public ResponseEntity<Response> confirm(@RequestParam("token") String token) {
         Response response  =new  Response();
+        try{
         response=response.setOkRequestResponse("confirmed", registerHandler.confirmToken(token),"Successful confirmed");
         return ResponseEntity.ok(response);
+
+        }catch (Exception e){
+            response.setBadRequestResponse("confirmed",false,e,e.getMessage());
+            return ResponseEntity.ok(response);
+        }
     }
     @GetMapping("/logout")
     public ResponseEntity<Response> logout(){
       Response response  =new  Response();
-      response=response.setOkRequestResponse("logout",true,"Successful Log Out ");
+      response=response.setOkRequestResponse("logout",true,"Successful Log Out");
         return ResponseEntity.ok(response);
     }
 }

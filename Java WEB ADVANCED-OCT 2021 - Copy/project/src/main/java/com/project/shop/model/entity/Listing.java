@@ -25,7 +25,7 @@ public class Listing extends Item {
     private SellingFormat sellingFormat;
     private DeliveryOptions deliveryDomestic;
     private DeliveryOptions deliveryInternational;
-    private String payment;
+    private Payment payment;
 
     public Listing() {
     }
@@ -127,12 +127,13 @@ public class Listing extends Item {
         return this;
     }
 
- //   @ManyToOne
-    public String getPayment() {
+   @ManyToOne(cascade = {CascadeType.ALL})
+   @JoinColumn(name = "payment_id")
+    public Payment getPayment() {
         return payment;
     }
 
-    public Listing setPayment(String payment) {
+    public Listing setPayment(Payment payment) {
         this.payment = payment;
         return this;
     }

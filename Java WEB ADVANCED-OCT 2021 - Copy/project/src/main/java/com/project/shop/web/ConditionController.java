@@ -30,7 +30,7 @@ public class ConditionController {
                         .builder()
                         .timeStamp(LocalDateTime.now())
                         .data(Map.of("conditions",all))
-                        .message("Category list")
+                        .message("Condition list")
                         .status(HttpStatus.OK)
                         .statusCode(HttpStatus.OK.value())
                         .build()
