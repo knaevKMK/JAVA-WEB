@@ -92,10 +92,10 @@ public class IdentityServiceImpl implements IdentityService {
         if (account.isEmpty()) {
             throw new NotFoundException("Username does not exist");
         }
-        //todo match password
-        UsernamePasswordAuthenticationToken token= new UsernamePasswordAuthenticationToken(
-                username,password,account.get().getAuthorities()
-        );
+        boolean matches = bCryptPasswordEncoder.matches(password, account.get().getPassword());
+        if (!matches){
+            throw new NotFoundException("Try again");
+        }
 
 
         return new JwtResponse(jwtTokenUtil.generateToken(account.get()));
