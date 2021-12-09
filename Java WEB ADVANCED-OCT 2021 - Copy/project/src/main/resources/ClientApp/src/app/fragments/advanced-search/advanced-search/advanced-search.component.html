@@ -1,0 +1,96 @@
+<div class="container-fluid">
+
+    <form class="form-inline"  [formGroup]= "filterForm" (ngSubmit)="onFilter()">
+
+
+        <div class="input-group">
+                <div class="input-group-text"  id="basic-addon1">
+                    <label >Listing title:</label>
+                    <input  formControlName="title" value="{{null}}" placeholder="Listing title..." />
+                    <label>Sort:</label>
+                            <select   formControlName="titleSort">
+                                <option  value="0">A to Z</option>
+                                <option value="1">Z to A</option>
+                             </select>
+                </div>
+        </div>
+        <div class="input-group">
+            <div class="input-group-text"  id="basic-addon1">
+                <label >Description:</label>
+                <input  formControlName="description" value="{{null}}" placeholder="Look in listing description..." />
+
+            </div>
+    </div>
+        <div class="input-group">
+            <div class="input-group-text" id="basic-addon1">
+            <label>Category:</label>
+            <select formControlName="category" class="form-control">
+                <option [ngValue]="null" disabled>Select...</option>
+                <optgroup *ngFor="let mainCat of categories" label="{{mainCat.title}}">
+                <option *ngFor="let subCat of mainCat.subList" [ngValue]="subCat.id">{{subCat.title}}</option>
+                </optgroup>
+            </select>
+
+    </div>
+    </div>
+
+    <div class="input-group">
+        <div class="input-group-text" id="basic-addon1">
+        <label>Condition:</label>
+        <select formControlName="condition" class="form-control">
+            <option [ngValue]="null" disabled>Select...</option>
+            <option *ngFor="let condition of conditions" [ngValue]="condition.id">{{condition.title}}</option>
+        </select>
+    </div>
+    </div>
+    <div class="input-group">
+        <div class="input-group-text"  id="basic-addon1">
+            <label >Seller:</label>
+            <input  formControlName="seller" value="{{null}}" placeholder="Seller username" />
+        </div>
+</div>
+
+<div class="input-group">
+    <div class="input-group-text" id="basic-addon1">
+    <label>Selling Format:</label>
+    <select formControlName="sellingFormat" class="form-control">
+        <option [ngValue]="null" disabled>Select...</option>
+        <option *ngFor="let format of sellingFormats" value="{{format}}">{{format}}</option>
+    </select>
+</div>
+</div>
+
+
+    <div class="input-group">
+        <div class="input-group-text" id="basic-addon1">
+            <label>Price:</label>
+            <input formControlName="price" type="number"
+            class="form-control me-2" placeholder="Price..." />
+            <select formControlName="priceArrow">
+                <option selected value="Current">Current</option>
+                <option value="0">Under</option>
+                <option value="1">Over</option>
+            </select>
+            <label>Sort:</label>
+            <select formControlName="priceSort">
+                <option  value="0">Low >> High </option>
+                <option  value="1">High >> Low</option>
+        </select>
+        </div>
+        </div>
+
+        <div class="input-group">
+            <div class="input-group-text" id="basic-addon1">
+                <label>Sort by Date Listing:</label>
+                <select  formControlName="timeSort">
+                    <option  value="0">Past First </option>
+                    <option  value="1">Current First</option>
+            </select>
+            </div>
+            </div>
+            <div class="input-group">
+            <button class="btn btn-outline-success me-2" type="submit">Search 🔎</button>
+            <button class="btn btn-outline-success me-2" type="button" (click)=onClear()>Clear</button>
+        </div>
+        </form>
+    </div>

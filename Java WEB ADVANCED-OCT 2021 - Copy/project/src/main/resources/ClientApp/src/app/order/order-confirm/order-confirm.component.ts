@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ErrorResponse } from 'src/app/models/errors';
 import { Order, OrderFb } from 'src/app/models/order';
 import { responceConfirm, responseOrder } from 'src/app/models/response';
 import { OrderService } from 'src/app/service/order/order.service';
@@ -45,7 +46,10 @@ export class OrderConfirmComponent implements OnInit {
         alert("Order was confirmed")
         this.order = new Order(this.orderService, responceConfirm(data));
       }
-        , err => { console.log(err) })
+        , err => {
+          console.log(err);
+          ErrorResponse(err)
+        })
   }
   ngOnInit(): void {
     console.log(this.order)

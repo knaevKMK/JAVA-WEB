@@ -20,14 +20,13 @@ import { OrderListComponent } from './order/order-list/order-list.component';
 import { OrderSoldsComponent } from './order/order-solds/order-solds.component';
 import { BasketComponent } from './order/basket/basket.component';
 import { MsgsComponent } from './usr/msgs/msgs.component';
-import { FeedbackComponent } from './feedback/feedback/feedback.component';
-import { FeedbackCreateComponent } from './feedback/feedback-create/feedback-create.component';
 import { HelpComponent } from './support/help/help.component';
 import { CarouselComponent } from './home/fragmets/carousel/carousel.component';
 import { MsgFormComponent } from './fragments/msg-form/msg-form/msg-form.component';
 import { FeedbackFormComponent } from './fragments/feedback/feedback-form/feedback-form.component';
 import { FeedbackListComponent } from './fragments/feedback/feedback-list/feedback-list.component';
 import { PagebleComponent } from './pageble/pageble/pageble.component';
+import { AdvancedSearchComponent } from './fragments/advanced-search/advanced-search/advanced-search.component';
 
 @NgModule({
   declarations: [
@@ -47,14 +46,13 @@ import { PagebleComponent } from './pageble/pageble/pageble.component';
     OrderSoldsComponent,
     BasketComponent,
     MsgsComponent,
-    FeedbackComponent,
-    FeedbackCreateComponent,
     HelpComponent,
     CarouselComponent,
     MsgFormComponent,
     FeedbackFormComponent,
     FeedbackListComponent,
     PagebleComponent,
+    AdvancedSearchComponent,
   ],
   imports: [
     BrowserModule,

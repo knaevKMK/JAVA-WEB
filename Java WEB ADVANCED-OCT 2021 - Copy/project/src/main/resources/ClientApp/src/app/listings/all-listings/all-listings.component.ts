@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { startWith } from 'rxjs/operators';
 import { Filter } from 'src/app/models/filter';
 import { ListingInListView } from 'src/app/models/listing';
 import { ApiResponse, responceListings, responsePageble } from 'src/app/models/response';
@@ -23,6 +24,20 @@ export class AllListingsComponent implements OnInit {
     this.activateRoute.queryParams
       .subscribe(params => {
 
+        let str: string = params['query'];
+        if (str !== undefined && str.startsWith('advsearch')) {
+          console.log(str)
+          console.log(JSON.parse(str.slice(10)))
+          this.listingService.search(JSON.parse(str.slice(10))).
+            subscribe(result => {
+
+              console.log(result);
+              this.listings = ApiResponse(result).getListings
+            })
+          return;
+        }
+        str = this.loadQuery(Object(params));
+        console.log(str)
         this.listingService.getAll(this.loadQuery(Object(params)))
           .subscribe(result => {
             this.pageble = responsePageble(result);

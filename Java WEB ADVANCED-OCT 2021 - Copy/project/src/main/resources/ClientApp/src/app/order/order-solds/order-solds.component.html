@@ -15,8 +15,7 @@
 
             <div class="col-2">
                 <p>{{order.price | number:'.2'}} BGN</p>
-                <p>Seller: <a href="/usr/{{order.sellerUsername}}">{{order.sellerUsername}}</a></p>
-                <p>Seller: <a href="/usr/{{order.buyerUsername}}">{{order.buyerUsername}}</a></p>
+                <p>Buyer: <a href="/usr/{{order.buyerUsername}}">{{order.buyerUsername}}</a></p>
             </div>
             <div class="col-1"><p>qty:</p> </div>
             <div class="col-1"><p>{{order.quantity}}</p></div>

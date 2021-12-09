@@ -3,6 +3,7 @@ package com.project.shop.web;
 import com.project.shop.identityArea.models.entity.UserEntity;
 import com.project.shop.model.Page;
 import com.project.shop.model.Response;
+import com.project.shop.model.binding.AdvSearch;
 import com.project.shop.model.binding.ListingCreateModel;
 import com.project.shop.model.entity.Listing;
 import com.project.shop.model.service.ListingServiceModel;
@@ -44,6 +45,15 @@ public class ListingController {
                                                    Authentication authentication) {
 
         Response response = listingService.getAllListings(authentication, page, limit, sortBy, sort, filter, search);
+
+        return ResponseEntity.ok(response);
+    }
+    @PostMapping("adv-search")
+    public ResponseEntity<Response> getAllListings(@RequestParam(required = false, defaultValue = "0") int page,
+                                                   @RequestParam(required = false, defaultValue = "3") int limit,
+                                                   @RequestBody AdvSearch search
+                                                   ){
+        Response response = listingService.getAdvSearch(search, page, limit);
 
         return ResponseEntity.ok(response);
     }

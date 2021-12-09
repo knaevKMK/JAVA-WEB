@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Repository
@@ -16,7 +17,6 @@ public interface ListingRepository extends JpaRepository<Listing, UUID> {
 
     @Query(value = "SELECT l.watchList FROM Account l where l.username= :watcherName" )
     Slice<Listing> findAllWatched(String watcherName, Pageable listingPage);
-
     Slice<Listing> findAllByCreateOnAfter(LocalDateTime after, Pageable listingPage);
 
     Slice<Listing> findAllByCreateOnBefore(LocalDateTime before, Pageable listingPage);

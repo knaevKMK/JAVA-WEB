@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryView } from 'src/app/models/category';
 import { ConditionView } from 'src/app/models/condition';
 import { DeliveryView } from 'src/app/models/delivery';
-import { CreateListingErrors, setErrors } from 'src/app/models/errors';
+import { CreateListingErrors, ErrorResponse, setErrors } from 'src/app/models/errors';
 import { ListingCreateForm } from 'src/app/models/listing';
 import { ApiResponse, responceCategory, responceCondition, responceDeliveryByArea, responceId, responceListing, responceSellingFormat } from 'src/app/models/response';
 import { CategoryService } from 'src/app/service/category.service';
@@ -93,6 +93,7 @@ export class CreateListingComponent implements OnInit {
       console.log(result)
       this.router.navigate(['/listing/item/' + ApiResponse(result).getId]);
     }, err => {
+      ErrorResponse(err)
       console.log(err)
       this.errors = setErrors(err, this.errors);
     })

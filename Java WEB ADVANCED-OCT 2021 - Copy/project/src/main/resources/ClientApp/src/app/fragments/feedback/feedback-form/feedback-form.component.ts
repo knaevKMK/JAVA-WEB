@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ErrorResponse } from 'src/app/models/errors';
 import { FeedbackLeftForm } from 'src/app/models/feedback';
 import { ApiResponse } from 'src/app/models/response';
 import { FeadbackService } from 'src/app/service/feedback/feadback.service';
@@ -31,7 +32,7 @@ export class FeedbackFormComponent implements OnInit {
         console.log(ApiResponse(data).msg)
         //todo notify
         this.feedbackCreate.reset
-      })
+      }, err => { ErrorResponse(err) })
   }
   onCancel() {
     this.feedbackCreate.reset;

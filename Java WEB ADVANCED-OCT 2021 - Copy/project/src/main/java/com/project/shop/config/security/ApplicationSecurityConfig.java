@@ -62,8 +62,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/feedback/all").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/payments/all").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/listings/listing/*", "/api/listings/all").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/listings/adv-search").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/selling-format/all").permitAll()
-
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)

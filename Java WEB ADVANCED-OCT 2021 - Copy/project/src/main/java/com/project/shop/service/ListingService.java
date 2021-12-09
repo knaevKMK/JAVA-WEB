@@ -1,6 +1,7 @@
 package com.project.shop.service;
 
 import com.project.shop.model.Response;
+import com.project.shop.model.binding.AdvSearch;
 import com.project.shop.model.entity.Listing;
 import com.project.shop.model.service.ListingServiceModel;
 import com.project.shop.model.view.ListingInListViewModel;
@@ -35,4 +36,5 @@ public interface ListingService {
     void seedData();
 
 
+    Response getAdvSearch(AdvSearch search, int page, int limit);
 }

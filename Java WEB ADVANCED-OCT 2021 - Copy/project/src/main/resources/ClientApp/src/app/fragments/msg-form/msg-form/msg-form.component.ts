@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ErrorResponse } from 'src/app/models/errors';
 import { MailForm } from 'src/app/models/msg';
 import { MsgService } from 'src/app/service/msg/msg.service';
 
@@ -28,7 +29,7 @@ export class MsgFormComponent implements OnInit {
     this.msgService.send(this.mailCreate.value)
       .subscribe(data => {
         console.log(data)
-      })
+      }, err => { ErrorResponse(err) })
     this.mailCreate.reset
 
   }

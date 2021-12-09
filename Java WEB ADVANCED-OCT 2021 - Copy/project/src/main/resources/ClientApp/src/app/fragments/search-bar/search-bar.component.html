@@ -1,13 +1,15 @@
 
-    <nav class="navbar navbar-darks bg-dark justify-content-between">
+    <nav class="navbar navbar-expand-lg navbar">
+
+
 
 
       <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="d-flex">
         <div class="row">
-          <div class="col-2">
+          <div class="col-3">
             <a class="navbar-brand" > Search:</a>
           </div>
-          <div class="col-8">
+          <div class="col-7">
             <input formControlName="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
           </div>
           <div class="col-2">
@@ -15,4 +17,25 @@
           </div>
         </div>
       </form>
-      </nav>
+</nav>
+<nav>
+  <div class="container-fluid">
+
+
+        <div class=" navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Advanced Search ☰
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <app-advanced-search></app-advanced-search>
+                </ul>
+              </li>
+
+          </ul>
+      </div>
+      </div>
+</nav>
+
+

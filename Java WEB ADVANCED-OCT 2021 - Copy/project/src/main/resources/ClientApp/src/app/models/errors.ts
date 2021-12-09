@@ -53,3 +53,24 @@ export function setErrors(err: any, errors: any) {
     }));
     return errors;
 }
+
+export function ErrorResponse(data: Object) {
+    console.log(data)
+    const baseError = Object(data)['error'];
+    // console.log(baseError)
+
+    const errorStatus = baseError['status'];
+    const errorMessage = baseError['message'];
+    const errors = baseError['errors'];
+    //   const errorLists = Object(data)['errors']['errors'];
+    console.log(errorStatus)
+    if (errorStatus == 401 && errorMessage === "200_Full authentication is required to access this resource") {
+        //  console.log(errorMessage)
+        // console.log(localStorage.getItem('token'))
+        // console.log(localStorage.getItem('user'))
+        localStorage.clear();
+        window.location.reload();
+    }
+    return { errors };
+}
+

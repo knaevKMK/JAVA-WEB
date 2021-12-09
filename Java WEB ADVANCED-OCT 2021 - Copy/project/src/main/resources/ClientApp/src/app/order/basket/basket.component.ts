@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ErrorResponse } from 'src/app/models/errors';
 import { Order, OrderFb } from 'src/app/models/order';
 import { ApiResponse } from 'src/app/models/response';
 import { OrderService } from 'src/app/service/order/order.service';
@@ -27,12 +28,18 @@ export class BasketComponent implements OnInit {
         if (ApiResponse(data).isDelete) {
           this.ngOnInit();
         }
+      }, err => {
+        console.log(err);
+        ErrorResponse(err)
       })
   }
   ngOnInit(): void {
     this.orderService.getPruchases('basket')
       .subscribe(data => {
         this.orders = ApiResponse(data).getPurchses;
+      }, err => {
+        console.log(err);
+        ErrorResponse(err)
       })
   }
   onConfirm() {
@@ -46,6 +53,9 @@ export class BasketComponent implements OnInit {
 
     this.orderService.confirm(this.confirmForm.value)
       .subscribe(data => this.ngOnInit()
-        , err => { console.log(err) })
+        , err => {
+          console.log(err);
+          ErrorResponse(err)
+        })
   }
 }

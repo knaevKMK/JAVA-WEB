@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ErrorResponse } from 'src/app/models/errors';
 import { Msg, openMsg } from 'src/app/models/msg';
 import { ApiResponse } from 'src/app/models/response';
 import { MsgService } from 'src/app/service/msg/msg.service';
@@ -26,7 +27,8 @@ export class MsgsComponent implements OnInit {
         this.type = query;
         this.Msgs = ApiResponse(data).getMessagess
         this.openMsg = new openMsg();
-      })
+      },
+        err => ErrorResponse(err))
   }
   onRead(id: string) {
     console.log(id)

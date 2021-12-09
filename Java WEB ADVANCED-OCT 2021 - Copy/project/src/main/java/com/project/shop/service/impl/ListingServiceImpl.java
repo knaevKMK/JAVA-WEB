@@ -7,6 +7,7 @@ import com.project.shop.constants.Paths;
 import com.project.shop.identityArea.models.entity.UserEntity;
 import com.project.shop.model.Page;
 import com.project.shop.model.Response;
+import com.project.shop.model.binding.AdvSearch;
 import com.project.shop.model.entity.Account;
 import com.project.shop.model.entity.BaseEntity;
 import com.project.shop.model.entity.Listing;
@@ -16,18 +17,28 @@ import com.project.shop.model.view.ListingInListViewModel;
 import com.project.shop.repository.ListingRepository;
 import com.project.shop.service.*;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Hibernate;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.*;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import javax.management.Query;
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
+import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.*;
 
 
 @Service
@@ -45,6 +56,7 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
     private final PaymentService paymentService;
     private final IOUtil ioUtil;
     private final Gson gson;
+    //EntityManager em = new ;
 
     public ListingServiceImpl(ListingRepository listingRepository,
                               ModelMapper modelMapper, CategoryService categoryService,
@@ -92,18 +104,6 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
         response.setOkRequestResponse("listings", models, "Listings retrieved");
         return response;
     }
-
-//    private Pageable getPageable(int page, int limit, String sort, String sortBy) {
-//
-//        if (sortBy != null) {
-//            if ("desc".equals(sort)) {
-//                return PageRequest.of(page, limit, Sort.by(sortBy).descending());
-//            }
-//            return (PageRequest.of(page, limit, Sort.by(sortBy)));
-//        }
-//        return (PageRequest.of(page, limit));
-//
-//    }
 
 
     private Slice<Listing> filterQuery(Pageable listingPage, String search, String filter, Authentication authentication) {
@@ -269,7 +269,7 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
     @Override
     public void seedData() {
         if (listingRepository.count() > 0) {
-                   return;
+            return;
         }
         try {
             String content = String.join("", ioUtil.readFile(Paths.LISTING_JSON_FILEPATH));
@@ -294,6 +294,97 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
                     });
         } catch (Exception e) {
         }
+    }
+
+    @Override
+    public Response getAdvSearch(AdvSearch search, int page, int limit) {
+
+        if (listingRepository.count() == 0) {
+            Response response = new Response(new Page(0, 1, 1));
+            response.setOkRequestResponse("listings", new ArrayList<ListingInListViewModel>(), "Listings retrieved");
+            return response;
+        }
+        int size = (int) listingRepository.count() / limit;
+        int totalPages = (int) Math.ceil(size / (limit * 1.00));
+        Pageable pageListing = PageRequest.of(page, limit, getSorting(search));
+
+        ExampleMatcher matcher = ExampleMatcher
+                .matchingAny()
+//                .withMatcher("title", contains().ignoreCase())
+//                .withMatcher("description", contains().ignoreCase())
+//                .withMatcher("createFrom", contains().ignoreCase())
+                .withIgnoreCase()
+                .withIgnoreNullValues()
+                .withIgnorePaths("id");
+        Listing example = new Listing();
+        for (Field field : search.getClass().getDeclaredFields()) {
+            try {
+                if (field.get(search) != null) {
+                    getQueryFilter(matcher, example, field.getName(), field.get(search).toString(), search);
+                }
+            } catch (IllegalAccessException e) {
+                continue;
+            }
+        }
+
+        List<ListingInListViewModel> listings = listingRepository.findAll(Example.of(example, matcher), pageListing)
+                .stream().map(l -> {
+                    ListingInListViewModel model = modelMapper.map(l, ListingInListViewModel.class);
+
+                    return model;
+                }).collect(Collectors.toList());
+        Response response = new Response(new Page(page, limit, totalPages));
+        try {
+            response.setOkRequestResponse("listings", listings, "Listings retrieved");
+        } catch (Exception e) {
+            response.setBadRequestResponse("listings", listings, e, e.getMessage());
+        }
+
+        return response;
+    }
+
+    private Sort getSorting(AdvSearch search) {
+        //  Sort price = mySort("price", search.getPriceSort());
+        Sort title = mySort("title", search.getPriceSort());
+        Sort time = mySort("createFrom", search.getPriceSort());
+        return title.and(time);
+    }
+
+    private Sort mySort(String fieldName, Byte value) {
+        if (value != null && value == 1) {
+            return Sort.by(fieldName).descending();
+        } else {
+            return Sort.by(fieldName).ascending();
+        }
+    }
+
+    private void getQueryFilter(
+            ExampleMatcher matcher, Listing example, String fieldName,
+            String value,
+            AdvSearch search) {
+
+        switch (fieldName) {
+            case "title":
+                example.setTitle(value);
+                break;
+            case "description":
+                example.setDescription(value);
+                break;
+            case "seller":
+                example.setCreateFrom(value);
+                break;
+            case "category":break;
+            case "condition":break;
+            case "sellingFormat":break;
+            case "price":
+                switch (search.getPriceArrow()) {
+                    case 1:
+                    case 0:
+                    default:
+                }
+                break;
+        }
+
     }
 
 

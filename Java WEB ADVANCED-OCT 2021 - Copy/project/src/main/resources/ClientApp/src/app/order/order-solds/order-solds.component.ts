@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ErrorResponse } from 'src/app/models/errors';
 import { Order } from 'src/app/models/order';
 import { ApiResponse, responsePurchases } from 'src/app/models/response';
 import { OrderService } from 'src/app/service/order/order.service';
@@ -30,6 +31,8 @@ export class OrderSoldsComponent implements OnInit {
               this.orders = ApiResponse(data).getOrders;
             })
         }
+      }, err => {
+        ErrorResponse(err)
       })
   }
   ngOnInit(): void {

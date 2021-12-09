@@ -40,4 +40,7 @@ export class ListingService {
   onWatch(id: string) {
     return this.http.get(this.url + "/watch/" + id, httpIfHeader());
   }
+  search(data: any) {
+    return this.http.post(this.url + "/adv-search", data, httpIfHeader())
+  }
 }
