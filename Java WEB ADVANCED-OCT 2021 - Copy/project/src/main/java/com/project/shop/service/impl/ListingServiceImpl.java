@@ -11,6 +11,7 @@ import com.project.shop.model.binding.AdvSearch;
 import com.project.shop.model.entity.Account;
 import com.project.shop.model.entity.BaseEntity;
 import com.project.shop.model.entity.Listing;
+import com.project.shop.model.enums.SellingFormatEnum;
 import com.project.shop.model.service.ListingReadModel;
 import com.project.shop.model.service.ListingServiceModel;
 import com.project.shop.model.view.ListingInListViewModel;
@@ -310,17 +311,18 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
 
         ExampleMatcher matcher = ExampleMatcher
                 .matchingAny()
+                .withIgnoreNullValues()
 //                .withMatcher("title", contains().ignoreCase())
 //                .withMatcher("description", contains().ignoreCase())
-//                .withMatcher("createFrom", contains().ignoreCase())
-                .withIgnoreCase()
-                .withIgnoreNullValues()
-                .withIgnorePaths("id");
+              //  .withMatcher("createFrom", contains().ignoreCase())
+//                .withIgnoreCase()
+//                .withIgnorePaths("id")
+                ;
         Listing example = new Listing();
         for (Field field : search.getClass().getDeclaredFields()) {
             try {
                 if (field.get(search) != null) {
-                    getQueryFilter(matcher, example, field.getName(), field.get(search).toString(), search);
+                    getQueryFilter(example, field.getName(), field.get(search).toString());
                 }
             } catch (IllegalAccessException e) {
                 continue;
@@ -328,16 +330,12 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
         }
 
         List<ListingInListViewModel> listings = listingRepository.findAll(Example.of(example, matcher), pageListing)
-                .stream().map(l -> {
-                    ListingInListViewModel model = modelMapper.map(l, ListingInListViewModel.class);
-
-                    return model;
-                }).collect(Collectors.toList());
+                .stream().map(l -> modelMapper.map(l, ListingInListViewModel.class)).collect(Collectors.toList());
         Response response = new Response(new Page(page, limit, totalPages));
         try {
             response.setOkRequestResponse("listings", listings, "Listings retrieved");
         } catch (Exception e) {
-            response.setBadRequestResponse("listings", listings, e, e.getMessage());
+            response.setBadRequestResponse("listings", listingRepository.findAll().stream().map(l->modelMapper.map(l, ListingInListViewModel.class)).collect(Collectors.toList()), e, e.getMessage());
         }
 
         return response;
@@ -359,9 +357,8 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
     }
 
     private void getQueryFilter(
-            ExampleMatcher matcher, Listing example, String fieldName,
-            String value,
-            AdvSearch search) {
+            Listing example, String fieldName,
+            String value) {
 
         switch (fieldName) {
             case "title":
@@ -373,15 +370,16 @@ public class ListingServiceImpl extends BaseServiceImpl<Listing> implements List
             case "seller":
                 example.setCreateFrom(value);
                 break;
-            case "category":break;
-            case "condition":break;
-            case "sellingFormat":break;
+            case "category":
+                example.getCategory().setId(UUID.fromString(value));
+                break;
+            case "condition":
+                example.getCondition().setId(UUID.fromString(value));
+                break;
+            case "sellingFormat":
+                example.getSellingFormat().setTitle(SellingFormatEnum.valueOf(value));
             case "price":
-                switch (search.getPriceArrow()) {
-                    case 1:
-                    case 0:
-                    default:
-                }
+                example.getSellingFormat().setPrice(new BigDecimal(value));
                 break;
         }
 
